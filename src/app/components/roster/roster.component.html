@@ -1,0 +1,55 @@
+<h2>Roster ({{ players?.length }})</h2>
+
+<mat-card>
+  <form class="example-form" style="padding: 15px" [formGroup]="rosterForm">
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="string" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Graduation Year</mat-label>
+      <input matInput formControlName="graduationYear" type="number" />
+    </mat-form-field>
+  </form>
+  <div style="text-align: center; padding: 15px">
+    <button type="button" mat-raised-button color="primary" (click)="save()">
+      Save
+    </button>
+  </div>
+</mat-card>
+
+<mat-table [dataSource]="players" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payload.doc.data().name }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Year Column -->
+  <ng-container matColumnDef="graduationYear">
+    <mat-header-cell *matHeaderCellDef> Graduation Year </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payload.doc.data().graduationYear }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span
+        class="material-icons"
+        style="color: red; cursor: pointer"
+        (click)="delete(element)"
+      >
+        delete_forever
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

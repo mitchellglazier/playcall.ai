@@ -1,0 +1,80 @@
+<h2>Playbook ({{ plays?.length }})</h2>
+
+<mat-card>
+  <form class="example-form" style="padding: 15px" [formGroup]="playForm">
+    <mat-form-field class="example-full-width">
+      <mat-label>Formation</mat-label>
+      <input matInput formControlName="formation" type="string" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="string" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Play Category</mat-label>
+      <input matInput formControlName="playCat" type="string" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Run / Pass</mat-label>
+      <input matInput formControlName="runPass" type="string" />
+    </mat-form-field>
+  </form>
+  <div style="text-align: center; padding: 15px">
+    <button type="button" mat-raised-button color="primary" (click)="save()">
+      Save
+    </button>
+  </div>
+</mat-card>
+
+<mat-table [dataSource]="plays" class="mat-elevation-z8">
+  <!-- Formation Column -->
+  <ng-container matColumnDef="formation">
+    <mat-header-cell *matHeaderCellDef> Formation </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payload.doc.data().formation }}
+    </mat-cell>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payload.doc.data().name }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Play Category Column -->
+  <ng-container matColumnDef="playCat">
+    <mat-header-cell *matHeaderCellDef> Play Category </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payload.doc.data().playCat }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Run Pass Column -->
+  <ng-container matColumnDef="runPass">
+    <mat-header-cell *matHeaderCellDef> Run / Pass </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      {{ element.payload.doc.data().runPass }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <span
+        class="material-icons"
+        style="color: red; cursor: pointer"
+        (click)="delete(element)"
+      >
+        delete_forever
+      </span>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
