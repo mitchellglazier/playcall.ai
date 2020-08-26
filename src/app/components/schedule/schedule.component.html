@@ -82,5 +82,9 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  <mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    style="cursor: pointer"
+    [routerLink]="['/game/', row.payload.doc.id]"
+  ></mat-row>
 </mat-table>

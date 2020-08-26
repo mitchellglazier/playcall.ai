@@ -17,8 +17,16 @@ export class PlaysService {
     });
   }
 
+  getPlay(userKey: any) {
+    return this.db.collection("plays").doc(userKey).snapshotChanges();
+  }
+
   getPlays() {
     return this.db.collection("plays").snapshotChanges();
+  }
+
+  updatePlay(userKey: any, value: any) {
+    return this.db.collection("plays").doc(userKey).set(value);
   }
 
   deletePlay(userKey: any) {

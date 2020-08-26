@@ -15,8 +15,16 @@ export class PlayersService {
     });
   }
 
+  getPlayer(userKey: any) {
+    return this.db.collection("players").doc(userKey).snapshotChanges();
+  }
+
   getPlayers() {
     return this.db.collection("players").snapshotChanges();
+  }
+
+  updatePlayer(userKey: any, value: any) {
+    return this.db.collection("players").doc(userKey).set(value);
   }
 
   deletePlayer(userKey: any) {

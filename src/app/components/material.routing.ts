@@ -4,6 +4,10 @@ import { RosterComponent } from "./roster/roster.component";
 import { PlaybookComponent } from "./playbook/playbook.component";
 import { TeamsComponent } from "./teams/teams.component";
 import { ScheduleComponent } from "./schedule/schedule.component";
+import { GameComponent } from "./game/game.component";
+import { PlayComponent } from "./play/play.component";
+import { TeamComponent } from "./team/team.component";
+import { PlayerComponent } from "./player/player.component";
 
 export const MaterialRoutes: Routes = [
   {
@@ -21,5 +25,21 @@ export const MaterialRoutes: Routes = [
   {
     path: "schedule",
     component: ScheduleComponent,
+  },
+  {
+    path: "game/:id",
+    component: GameComponent,
+  },
+  {
+    path: "play/:id",
+    component: PlayComponent,
+  },
+  {
+    path: "team/:id",
+    component: TeamComponent,
+  },
+  {
+    path: "player/:id",
+    component: PlayerComponent,
   },
 ];

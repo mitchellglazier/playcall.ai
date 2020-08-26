@@ -17,8 +17,16 @@ export class TeamsService {
     });
   }
 
+  getTeam(userKey: any) {
+    return this.db.collection("teams").doc(userKey).snapshotChanges();
+  }
+
   getTeams() {
     return this.db.collection("teams").snapshotChanges();
+  }
+
+  updateTeam(userKey: any, value: any) {
+    return this.db.collection("teams").doc(userKey).set(value);
   }
 
   deleteTeam(userKey: any) {
