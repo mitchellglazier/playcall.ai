@@ -9,12 +9,23 @@ export class PlaysService {
   constructor(private db: AngularFirestore) {}
 
   createPlay(play: Play) {
-    return this.db.collection("plays").add({
-      formation: play.formation,
-      name: play.name,
-      playCat: play.playCat,
-      runPass: play.runPass,
-    });
+    if (play.formation && play.name) {
+      return this.db.collection("plays").add({
+        formation: play.formation,
+        name: play.name,
+        playCat: play.playCat,
+        runPass: play.runPass,
+        fullPlay: play.formation + " " + play.name,
+      });
+    } else {
+      return this.db.collection("plays").add({
+        formation: play.formation,
+        name: play.name,
+        playCat: play.playCat,
+        runPass: play.runPass,
+        fullPlay: play.name,
+      });
+    }
   }
 
   getPlay(userKey: any) {

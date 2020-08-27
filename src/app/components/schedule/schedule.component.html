@@ -1,90 +1,114 @@
 <h2>Schedule</h2>
 
-<mat-card>
-  <form class="example-form" style="padding: 15px" [formGroup]="gameForm">
-    <mat-form-field class="example-full-width">
-      <mat-label>Team</mat-label>
-      <mat-select formControlName="team">
-        <mat-option *ngFor="let team of teams" [value]="team">
-          {{ team.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div fxLayout="row wrap">
+  <!-- column -->
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-table
+      [dataSource]="games"
+      class="mat-elevation-z8"
+      style="margin: 15px"
+    >
+      <!-- Team Column -->
+      <ng-container matColumnDef="team">
+        <mat-header-cell *matHeaderCellDef> Team </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().team?.name }}
+        </mat-cell>
+      </ng-container>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Date</mat-label>
-      <input matInput formControlName="date" [matDatepicker]="picker" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+      <!-- Date Column -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().date.toDate() | date }}
+        </mat-cell>
+      </ng-container>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Location</mat-label>
-      <mat-select formControlName="location">
-        <mat-option value="Home">Home</mat-option>
-        <mat-option value="Away">Away</mat-option>
-        <mat-option value="Neutral">Neutral</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-  <div style="text-align: center; padding: 15px">
-    <button type="button" mat-raised-button color="primary" (click)="save()">
-      Save
-    </button>
+      <!-- Score Column -->
+      <ng-container matColumnDef="score">
+        <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().score }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Location Column -->
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().location }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Delete Column -->
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span
+            class="material-icons"
+            style="color: red; cursor: pointer"
+            (click)="delete(element)"
+          >
+            delete_forever
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        style="cursor: pointer"
+        [routerLink]="['/game/', row.payload.doc.id]"
+      ></mat-row>
+    </mat-table>
   </div>
-</mat-card>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Schedule New Game</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" style="padding: 15px" [formGroup]="gameForm">
+        <mat-form-field class="example-full-width">
+          <mat-label>Team</mat-label>
+          <mat-select formControlName="team">
+            <mat-option *ngFor="let team of teams" [value]="team">
+              {{ team.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-<mat-table [dataSource]="games" class="mat-elevation-z8">
-  <!-- Team Column -->
-  <ng-container matColumnDef="team">
-    <mat-header-cell *matHeaderCellDef> Team </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().team?.name }}
-    </mat-cell>
-  </ng-container>
+        <mat-form-field class="example-full-width">
+          <mat-label>Date</mat-label>
+          <input matInput formControlName="date" [matDatepicker]="picker" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-  <!-- Date Column -->
-  <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().date.seconds }}
-    </mat-cell>
-  </ng-container>
-
-  <!-- Score Column -->
-  <ng-container matColumnDef="score">
-    <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().score }}
-    </mat-cell>
-  </ng-container>
-
-  <!-- Location Column -->
-  <ng-container matColumnDef="location">
-    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().location }}
-    </mat-cell>
-  </ng-container>
-
-  <!-- Delete Column -->
-  <ng-container matColumnDef="delete">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <span
-        class="material-icons"
-        style="color: red; cursor: pointer"
-        (click)="delete(element)"
-      >
-        delete_forever
-      </span>
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row
-    *matRowDef="let row; columns: displayedColumns"
-    style="cursor: pointer"
-    [routerLink]="['/game/', row.payload.doc.id]"
-  ></mat-row>
-</mat-table>
+        <mat-form-field class="example-full-width">
+          <mat-label>Location</mat-label>
+          <mat-select formControlName="location">
+            <mat-option value="Home">Home</mat-option>
+            <mat-option value="Away">Away</mat-option>
+            <mat-option value="Neutral">Neutral</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <div style="text-align: center; padding: 15px">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="save()"
+        >
+          Save
+        </button>
+      </div>
+    </mat-card>
+  </div>
+  <!-- column -->
+</div>

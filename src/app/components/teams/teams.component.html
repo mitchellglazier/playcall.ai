@@ -1,84 +1,105 @@
 <h2>Opposition List ({{ teams?.length }})</h2>
 
-<mat-card>
-  <form class="example-form" style="padding: 15px" [formGroup]="teamForm">
-    <mat-form-field class="example-full-width">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" type="string" />
-    </mat-form-field>
+<div fxLayout="row wrap">
+  <!-- column -->
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-table
+      [dataSource]="teams"
+      class="mat-elevation-z8"
+      style="margin: 15px"
+    >
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().name }}
+        </mat-cell>
+      </ng-container>
+      <!-- Mascot Column -->
+      <ng-container matColumnDef="mascot">
+        <mat-header-cell *matHeaderCellDef> Mascot </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().mascot }}
+        </mat-cell>
+      </ng-container>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Mascot</mat-label>
-      <input matInput formControlName="mascot" type="string" />
-    </mat-form-field>
+      <!-- Location Category Column -->
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().location }}
+        </mat-cell>
+      </ng-container>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Location</mat-label>
-      <input matInput formControlName="location" type="string" />
-    </mat-form-field>
+      <!-- Primary Color Column -->
+      <ng-container matColumnDef="primaryColor">
+        <mat-header-cell *matHeaderCellDef> Primary Color </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().primaryColor }}
+        </mat-cell>
+      </ng-container>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Primary Color</mat-label>
-      <input matInput formControlName="primaryColor" type="string" />
-    </mat-form-field>
-  </form>
-  <div style="text-align: center; padding: 15px">
-    <button type="button" mat-raised-button color="primary" (click)="save()">
-      Save
-    </button>
+      <!-- Delete Column -->
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span
+            class="material-icons"
+            style="color: red; cursor: pointer"
+            (click)="delete(element)"
+          >
+            delete_forever
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        style="cursor: pointer"
+        [routerLink]="['/team/', row.payload.doc.id]"
+      ></mat-row>
+    </mat-table>
   </div>
-</mat-card>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Create New Opposing Team</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" style="padding: 15px" [formGroup]="teamForm">
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="string" />
+        </mat-form-field>
 
-<mat-table [dataSource]="teams" class="mat-elevation-z8">
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().name }}
-    </mat-cell>
-  </ng-container>
-  <!-- Mascot Column -->
-  <ng-container matColumnDef="mascot">
-    <mat-header-cell *matHeaderCellDef> Mascot </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().mascot }}
-    </mat-cell>
-  </ng-container>
+        <mat-form-field class="example-full-width">
+          <mat-label>Mascot</mat-label>
+          <input matInput formControlName="mascot" type="string" />
+        </mat-form-field>
 
-  <!-- Location Category Column -->
-  <ng-container matColumnDef="location">
-    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().location }}
-    </mat-cell>
-  </ng-container>
+        <mat-form-field class="example-full-width">
+          <mat-label>Location</mat-label>
+          <input matInput formControlName="location" type="string" />
+        </mat-form-field>
 
-  <!-- Primary Color Column -->
-  <ng-container matColumnDef="primaryColor">
-    <mat-header-cell *matHeaderCellDef> Primary Color </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      {{ element.payload.doc.data().primaryColor }}
-    </mat-cell>
-  </ng-container>
-
-  <!-- Delete Column -->
-  <ng-container matColumnDef="delete">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <span
-        class="material-icons"
-        style="color: red; cursor: pointer"
-        (click)="delete(element)"
-      >
-        delete_forever
-      </span>
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row
-    *matRowDef="let row; columns: displayedColumns"
-    style="cursor: pointer"
-    [routerLink]="['/team/', row.payload.doc.id]"
-  ></mat-row>
-</mat-table>
+        <mat-form-field class="example-full-width">
+          <mat-label>Primary Color</mat-label>
+          <input matInput formControlName="primaryColor" type="string" />
+        </mat-form-field>
+      </form>
+      <div style="text-align: center; padding: 15px">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="save()"
+        >
+          Save
+        </button>
+      </div>
+    </mat-card>
+  </div>
+  <!-- column -->
+</div>

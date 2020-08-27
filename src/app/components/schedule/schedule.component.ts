@@ -26,6 +26,8 @@ export class ScheduleComponent implements OnInit {
       date: new FormControl(null),
       score: new FormControl(null),
       location: new FormControl(null),
+      gamePlays: new FormControl([]),
+      outcome: new FormControl(null),
     });
     this.gamesService.getGames().subscribe((result) => {
       this.games = result;
@@ -38,6 +40,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   save() {
+    // console.log(this.gameForm.value);
     this.gamesService.createGame(this.gameForm.value);
     this.gameForm.reset();
   }

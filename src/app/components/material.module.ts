@@ -16,10 +16,10 @@ import { PlaybookComponent } from "./playbook/playbook.component";
 import { TeamsComponent } from "./teams/teams.component";
 import { ScheduleComponent } from "./schedule/schedule.component";
 import { RosterComponent } from "./roster/roster.component";
-import { PlayComponent } from './play/play.component';
-import { TeamComponent } from './team/team.component';
-import { GameComponent } from './game/game.component';
-import { PlayerComponent } from './player/player.component';
+import { PlayComponent } from "./play/play.component";
+import { TeamComponent } from "./team/team.component";
+import { GameComponent } from "./game/game.component";
+import { PlayerComponent } from "./player/player.component";
 
 @NgModule({
   imports: [

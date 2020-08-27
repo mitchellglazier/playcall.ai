@@ -1,1 +1,249 @@
-<p>{{ game?.team?.name }}</p>
+<div style="margin-left: 15px">
+  <h2 *ngIf="game?.location === 'Home'">{{ game?.team?.name }} @ Kanab</h2>
+  <h2 *ngIf="game?.location === 'Away'">Kanab @ {{ game?.team?.name }}</h2>
+  <h2 *ngIf="game?.location === 'Neutral'">Kanab vs. {{ game?.team?.name }}</h2>
+
+  <h6 style="color: darkgrey">{{ game?.date.toDate() | date }}</h6>
+</div>
+
+<div fxLayout="row wrap">
+  <!-- column -->
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <div fxLayout="row wrap">
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Total Plays</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ gamePlaysArray.length }}</b></i
+                >
+              </p>
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Total Yards</mat-card-title> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ totalYards }}</b></i
+                >
+              </p>
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Avg. Yards</mat-card-title> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ avgYards }}</b></i
+                >
+              </p>
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Run Plays</mat-card-title> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ runPlays.length }}</b></i
+                >
+              </p>
+              <!-- <p>
+                <i>{{ totalRushYards }}</i>
+              </p> -->
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Pass Plays</mat-card-title> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ passPlays.length }}</b></i
+                >
+              </p>
+              <!-- <p>
+                <i>{{ totalPassYards }}</i>
+              </p> -->
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+    </div>
+
+    <div style="margin: 15px">
+      <mat-form-field>
+        <input
+          matInput
+          (keyup)="applyFilterOne($event.target.value)"
+          placeholder="Search Plays"
+        />
+      </mat-form-field>
+      <mat-table
+        [dataSource]="playsArray"
+        matSort
+        #TableOneSort="matSort"
+        class="mat-elevation-z8"
+      >
+        <!-- play Column -->
+        <ng-container matColumnDef="play">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Play
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.fullPlay }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- gameCount Column -->
+        <ng-container matColumnDef="gameCount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Game Count
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.gameCount }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- gameAvg Column -->
+        <ng-container matColumnDef="gameAvg">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Game Average
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.gameAvg }} </mat-cell>
+        </ng-container>
+
+        <!-- seasonAvg Column -->
+        <ng-container matColumnDef="seasonAvg">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Season Average
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.seasonAvg }}
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns2"></mat-row>
+      </mat-table>
+
+      <mat-paginator
+        #TableOnePaginator="matPaginator"
+        [pageSize]="20"
+        [pageSizeOptions]="[10, 20, 50, 100]"
+        class="mat-elevation-z8"
+      ></mat-paginator>
+    </div>
+  </div>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Create New Game Play</mat-card-title>
+      </mat-card-header>
+      <form
+        class="example-form"
+        style="padding: 15px"
+        [formGroup]="gamePlayForm"
+      >
+        <mat-form-field class="example-full-width">
+          <mat-label>Play</mat-label>
+          <mat-select formControlName="play">
+            <mat-option *ngFor="let play of selectPlays" [value]="play">
+              {{ play.fullPlay }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Result</mat-label>
+          <input matInput formControlName="result" type="number" />
+        </mat-form-field>
+      </form>
+      <div style="text-align: center; padding: 15px">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="saveGamePlay()"
+          [disabled]="gamePlayForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </mat-card>
+
+    <mat-table
+      [dataSource]="game?.gamePlays"
+      class="mat-elevation-z8"
+      style="margin: 15px"
+    >
+      <!-- play Column -->
+      <ng-container matColumnDef="play">
+        <mat-header-cell *matHeaderCellDef> Play </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.play.fullPlay }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- result Column -->
+      <ng-container matColumnDef="result">
+        <mat-header-cell *matHeaderCellDef> Result </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.result }}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Delete Column -->
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span
+            class="material-icons"
+            style="color: red; cursor: pointer"
+            (click)="delete(element)"
+          >
+            delete_forever
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns1"></mat-row>
+    </mat-table>
+  </div>
+  <!-- column -->
+</div>

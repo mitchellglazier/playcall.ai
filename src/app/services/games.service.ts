@@ -14,6 +14,8 @@ export class GamesService {
       date: game.date,
       score: game.score,
       location: game.location,
+      gamePlays: game.gamePlays,
+      outcome: game.outcome,
     });
   }
 
