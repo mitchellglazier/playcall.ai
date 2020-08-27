@@ -1,1 +1,114 @@
-<p>settings works!</p>
+<h2 style="margin-left: 15px">Settings</h2>
+
+<div fxLayout="row wrap">
+  <!-- column -->
+  <div fxFlex="25">
+    <mat-card
+      ><mat-card-header
+        ><mat-card-title>Play Categories</mat-card-title></mat-card-header
+      ><mat-card-content>
+        <form class="example-form" style="padding: 15px" [formGroup]="catForm">
+          <div fxLayout="row wrap">
+            <!-- column -->
+            <div fxFlex="80" style="margin-right: 10px">
+              <mat-form-field class="example-full-width">
+                <mat-label>Category Name*</mat-label>
+                <input matInput formControlName="name" type="string" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="10">
+              <div style="text-align: center; padding: 15px">
+                <button type="button" mat-icon-button color="primary">
+                  <span class="material-icons" (click)="saveCat()"
+                    >done_all</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- column -->
+          </div>
+        </form>
+        <ul>
+          <li *ngFor="let cat of currentSetting?.playCats">
+            <div fxLayout="row wrap">
+              <!-- column -->
+              <div fxFlex="85">{{ cat.name }}</div>
+              <!-- column -->
+
+              <!-- column -->
+              <div fxFlex="15">
+                <span
+                  class="material-icons"
+                  style="color: red; cursor: pointer"
+                  (click)="deleteCat(cat)"
+                  [disabled]="catForm.invalid"
+                >
+                  delete_forever
+                </span>
+              </div>
+              <!-- column -->
+            </div>
+          </li>
+        </ul>
+      </mat-card-content></mat-card
+    >
+  </div>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex="25">
+    <mat-card
+      ><mat-card-header
+        ><mat-card-title>Offensive Positions</mat-card-title></mat-card-header
+      ><mat-card-content>
+        <form class="example-form" style="padding: 15px" [formGroup]="posForm">
+          <div fxLayout="row wrap">
+            <!-- column -->
+            <div fxFlex="80" style="margin-right: 10px">
+              <mat-form-field class="example-full-width">
+                <mat-label>Position Name*</mat-label>
+                <input matInput formControlName="name" type="string" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="10">
+              <div style="text-align: center; padding: 15px">
+                <button type="button" mat-icon-button color="primary">
+                  <span class="material-icons" (click)="savePos()"
+                    >done_all</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- column -->
+          </div>
+        </form>
+        <ul>
+          <li *ngFor="let pos of currentSetting?.positions">
+            <div fxLayout="row wrap">
+              <!-- column -->
+              <div fxFlex="85">{{ pos.name }}</div>
+              <!-- column -->
+
+              <!-- column -->
+              <div fxFlex="15">
+                <span
+                  class="material-icons"
+                  style="color: red; cursor: pointer"
+                  (click)="deletePos(pos)"
+                  [disabled]="posForm.invalid"
+                >
+                  delete_forever
+                </span>
+              </div>
+              <!-- column -->
+            </div>
+          </li>
+        </ul>
+      </mat-card-content></mat-card
+    >
+  </div>
+  <!-- column -->
+</div>
