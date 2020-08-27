@@ -81,12 +81,19 @@
 
         <mat-form-field class="example-full-width">
           <mat-label>Play Category</mat-label>
-          <input matInput formControlName="playCat" type="string" />
+          <mat-select formControlName="playCat">
+            <mat-option *ngFor="let cat of playCats" [value]="cat.value">
+              {{ cat.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Run / Pass</mat-label>
-          <input matInput formControlName="runPass" type="string" />
+          <mat-select formControlName="runPass">
+            <mat-option value="Run"> Run </mat-option>
+            <mat-option value="Pass"> Pass </mat-option>
+          </mat-select>
         </mat-form-field>
       </form>
       <div style="text-align: center; padding: 15px">

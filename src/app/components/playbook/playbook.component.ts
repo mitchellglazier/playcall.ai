@@ -19,6 +19,24 @@ export class PlaybookComponent implements OnInit {
   playForm!: FormGroup;
   plays!: Array<any>;
 
+  playCats = [
+    { name: "Sweep", value: "Sweep" },
+    { name: "Trap", value: "Trap" },
+    { name: "Boot", value: "Boot" },
+    { name: "Wedge", value: "Wedge" },
+    { name: "Pop Pass", value: "Pop Pass" },
+    { name: "Cross Block", value: "Cross Block" },
+    { name: "Counter", value: "Counter" },
+    { name: "Belly", value: "Belly" },
+    { name: "Down", value: "Down" },
+    { name: "Keep Pass", value: "Keep Pass" },
+    { name: "Reverse", value: "Reverse" },
+    { name: "Power", value: "Power" },
+    { name: "Pass", value: "Pass" },
+    { name: "Special", value: "Special" },
+    { name: "Screen", value: "Screen" },
+  ];
+
   constructor(private playsService: PlaysService) {}
 
   ngOnInit(): void {
