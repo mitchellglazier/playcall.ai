@@ -116,7 +116,6 @@ export class GameComponent implements OnInit {
     this.gamePlaysArray.paginator = this.tableTwoPaginator;
     this.playsArray.paginator = this.tableOnePaginator;
     this.playsArray.sort = this.tableOneSort;
-    console.log(this.playCats);
   }
 
   delete(element: any) {
