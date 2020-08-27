@@ -2,7 +2,9 @@
   <img src="assets/images/users/peck.jpeg" alt="Peck" class="profile-pic" />
 </button>
 <mat-menu #profile="matMenu" class="mymegamenu">
-  <button mat-menu-item><mat-icon>settings</mat-icon> Settings</button>
+  <button mat-menu-item [routerLink]="['/settings']">
+    <mat-icon>settings</mat-icon> Settings
+  </button>
   <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>account_box</mat-icon> Profile
   </button>

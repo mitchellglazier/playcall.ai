@@ -9,6 +9,7 @@ import { PlayComponent } from "./play/play.component";
 import { TeamComponent } from "./team/team.component";
 import { PlayerComponent } from "./player/player.component";
 import { ProfileComponent } from "./profile/profile.component";
+import { SettingsComponent } from "./settings/settings.component";
 
 export const MaterialRoutes: Routes = [
   {
@@ -30,6 +31,10 @@ export const MaterialRoutes: Routes = [
   {
     path: "profile",
     component: ProfileComponent,
+  },
+  {
+    path: "settings",
+    component: SettingsComponent,
   },
   {
     path: "game/:id",
