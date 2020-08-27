@@ -20,6 +20,7 @@ import { PlayComponent } from "./play/play.component";
 import { TeamComponent } from "./team/team.component";
 import { GameComponent } from "./game/game.component";
 import { PlayerComponent } from "./player/player.component";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { PlayerComponent } from "./player/player.component";
     TeamComponent,
     GameComponent,
     PlayerComponent,
+    ProfileComponent,
   ],
 })
 export class MaterialComponentsModule {}

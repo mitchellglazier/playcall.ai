@@ -8,6 +8,7 @@ import { GameComponent } from "./game/game.component";
 import { PlayComponent } from "./play/play.component";
 import { TeamComponent } from "./team/team.component";
 import { PlayerComponent } from "./player/player.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 export const MaterialRoutes: Routes = [
   {
@@ -25,6 +26,10 @@ export const MaterialRoutes: Routes = [
   {
     path: "schedule",
     component: ScheduleComponent,
+  },
+  {
+    path: "profile",
+    component: ProfileComponent,
   },
   {
     path: "game/:id",

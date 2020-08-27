@@ -39,8 +39,13 @@ export class GameComponent implements OnInit {
   totalPassYards!: number;
   totalYards!: number;
   avgYards!: string;
+
   runAvg!: number;
   passAvg!: number;
+
+  sweepPlays: GamePlay[] = [];
+  sweepYards!: number;
+  sweepAvg!: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,6 +73,9 @@ export class GameComponent implements OnInit {
         } else {
           this.passPlays.push(gamePlay);
         }
+        if (gamePlay.play.playCat === "Sweep") {
+          this.sweepPlays.push(gamePlay);
+        }
       });
       this.totalRushYards = this.runPlays
         .map((p) => p.result * 1)
@@ -75,8 +83,12 @@ export class GameComponent implements OnInit {
       this.totalPassYards = this.passPlays
         .map((p) => p.result * 1)
         .reduce((acc, value) => acc + value, 0);
+      this.sweepYards = this.sweepPlays
+        .map((p) => p.result * 1)
+        .reduce((acc, value) => acc + value, 0);
       this.runAvg = this.totalRushYards / this.runPlays.length;
       this.passAvg = this.totalPassYards / this.passPlays.length;
+      this.sweepAvg = this.sweepYards / this.sweepPlays.length;
     });
     this.playsService.getPlays().subscribe((result) => {
       result.map((play) => {

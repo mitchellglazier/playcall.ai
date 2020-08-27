@@ -1,0 +1,122 @@
+<h2 style="margin-left: 15px">Team Profile</h2>
+
+<div fxLayout="row wrap">
+  <!-- column -->
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card
+      ><mat-card-header
+        ><mat-card-title>Edit Team</mat-card-title></mat-card-header
+      ><mat-card-content
+        ><form
+          class="example-form"
+          style="padding: 15px"
+          [formGroup]="profileForm"
+        >
+          <mat-form-field class="example-full-width">
+            <mat-label>Name*</mat-label>
+            <input matInput formControlName="name" type="string" />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Mascot</mat-label>
+            <input matInput formControlName="mascot" type="string" />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location" type="string" />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Primary Color</mat-label>
+            <input matInput formControlName="primaryColor" type="string" />
+          </mat-form-field>
+        </form>
+        <div style="text-align: center; padding: 15px">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="save()"
+            [disabled]="profileForm.invalid || profileForm.pristine"
+          >
+            Save
+          </button>
+        </div></mat-card-content
+      ></mat-card
+    >
+  </div>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card
+      ><mat-card-header
+        ><mat-card-title>Coaches</mat-card-title></mat-card-header
+      ><mat-card-content>
+        <form
+          class="example-form"
+          style="padding: 15px"
+          [formGroup]="coachesForm"
+        >
+          <div fxLayout="row wrap">
+            <!-- column -->
+            <div fxFlex="40" style="margin-right: 10px">
+              <mat-form-field class="example-full-width">
+                <mat-label>Coach's name*</mat-label>
+                <input matInput formControlName="name" type="string" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="40">
+              <mat-form-field class="example-full-width">
+                <mat-label>Coach's Position</mat-label>
+                <input matInput formControlName="position" type="string" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="10">
+              <div style="text-align: center; padding: 15px">
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="primary"
+                  (click)="saveCoach()"
+                  [disabled]="coachesForm.invalid"
+                >
+                  <span class="material-icons">done_all</span>
+                </button>
+              </div>
+            </div>
+            <!-- column -->
+          </div>
+        </form>
+        <ul>
+          <li *ngFor="let coach of currentProfile?.coaches">
+            <div fxLayout="row wrap">
+              <!-- column -->
+              <div fxFlex="33">Coach {{ coach.name }}</div>
+              <!-- column -->
+              <!-- column -->
+              <div fxFlex="33">{{ coach.position }}</div>
+              <!-- column -->
+              <!-- column -->
+              <div fxFlex="33">
+                <span
+                  class="material-icons"
+                  style="color: red; cursor: pointer"
+                  (click)="deleteCoach(coach)"
+                >
+                  delete_forever
+                </span>
+              </div>
+              <!-- column -->
+            </div>
+          </li>
+        </ul>
+      </mat-card-content></mat-card
+    >
+  </div>
+  <!-- column -->
+</div>

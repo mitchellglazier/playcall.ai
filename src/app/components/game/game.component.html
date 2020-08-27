@@ -210,6 +210,36 @@
       <mat-card-header>
         <mat-card-title>Play Type Stats</mat-card-title>
       </mat-card-header>
+      <mat-card-content>
+        <div fxFlex="50">
+          <p><b>Sweep</b></p>
+          <p>
+            Sweep Yards: {{ sweepYards }} ({{
+              sweepYards / totalYards | percent
+            }})
+          </p>
+          <p>
+            Sweep Plays: {{ sweepPlays.length }} ({{
+              sweepPlays.length / gamePlaysArray.data.length | percent
+            }})
+          </p>
+          <p>Sweep Average: {{ sweepAvg }}</p>
+        </div>
+        <div fxFlex="50">
+          <p><b>Cross Block</b></p>
+          <p>
+            Cross Block Yards: {{ sweepYards }} ({{
+              sweepYards / totalYards | percent
+            }})
+          </p>
+          <p>
+            Cross Block Plays: {{ sweepPlays.length }} ({{
+              sweepPlays.length / gamePlaysArray.data.length | percent
+            }})
+          </p>
+          <p>Cross Block Average: {{ sweepAvg }}</p>
+        </div>
+      </mat-card-content>
     </mat-card>
 
     <mat-card
