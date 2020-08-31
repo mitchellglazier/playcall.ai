@@ -42,7 +42,7 @@
       <!-- Delete Column -->
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
           <span
             class="material-icons"
             style="color: red; cursor: pointer"

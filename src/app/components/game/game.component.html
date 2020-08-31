@@ -1,7 +1,32 @@
 <div style="margin-left: 15px">
-  <h2 *ngIf="game?.location === 'Home'">{{ game?.team?.name }} @ Kanab</h2>
-  <h2 *ngIf="game?.location === 'Away'">Kanab @ {{ game?.team?.name }}</h2>
-  <h2 *ngIf="game?.location === 'Neutral'">Kanab vs. {{ game?.team?.name }}</h2>
+  <h2 *ngIf="game?.location === 'Home'">
+    {{ game?.team?.name }} @ Kanab
+    <span style="color: green" *ngIf="game.outcome === 'Win'">
+      - {{ game.outcome }} ({{ game.ourScore }} -
+      {{ game.opponentScore }})</span
+    >
+    <span *ngIf="game.outcome === 'Loss'" style="color: red">
+      - {{ game.outcome }} ({{ game.score }})</span
+    >
+  </h2>
+  <h2 *ngIf="game?.location === 'Away'">
+    Kanab @ {{ game?.team?.name }}
+    <span *ngIf="game.outcome === 'Win'" style="color: green">
+      - {{ game.outcome }} ({{ game.score }})</span
+    >
+    <span *ngIf="game.outcome === 'Loss'" style="color: red">
+      - {{ game.outcome }} ({{ game.score }})</span
+    >
+  </h2>
+  <h2 *ngIf="game?.location === 'Neutral'">
+    Kanab vs. {{ game?.team?.name }}
+    <span *ngIf="game.outcome === 'Win'" style="color: green">
+      - {{ game.outcome }} ({{ game.score }})</span
+    >
+    <span *ngIf="game.outcome === 'Loss'" style="color: red">
+      - {{ game.outcome }} ({{ game.score }})</span
+    >
+  </h2>
 
   <h6 style="color: darkgrey">{{ game?.date.toDate() | date }}</h6>
 </div>
@@ -168,6 +193,57 @@
         class="mat-elevation-z8"
       ></mat-paginator>
     </div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Game Outcome</mat-card-title>
+      </mat-card-header>
+      <form
+        class="example-form"
+        style="padding: 15px"
+        [formGroup]="outcomeForm"
+      >
+        <div fxLayout="row wrap">
+          <!-- column -->
+          <div fxFlex="32" style="margin: 5px">
+            <mat-form-field class="example-full-width">
+              <mat-label>Outcome</mat-label>
+              <mat-select formControlName="outcome">
+                <mat-option value="Win"> Win </mat-option>
+                <mat-option value="Loss"> Loss </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- column -->
+          <!-- column -->
+          <div fxFlex="32" style="margin: 5px">
+            <mat-form-field class="example-full-width">
+              <mat-label>{{ currentProfile?.name }} Score</mat-label>
+              <input matInput formControlName="ourScore" type="number" />
+            </mat-form-field>
+          </div>
+          <!-- column -->
+          <!-- column -->
+          <div fxFlex="32" style="margin: 5px">
+            <mat-form-field class="example-full-width">
+              <mat-label>{{ game?.team?.name }} Score</mat-label>
+              <input matInput formControlName="opponentScore" type="number" />
+            </mat-form-field>
+          </div>
+          <!-- column -->
+        </div>
+      </form>
+      <div style="text-align: center; padding: 15px">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="saveOutcome()"
+          [disabled]="outcomeForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </mat-card>
   </div>
   <!-- column -->
   <!-- column -->

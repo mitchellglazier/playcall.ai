@@ -7,6 +7,7 @@ import { GamePlay } from "app/models/gamePlay";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { ProfileService } from "app/services/profile.service";
 
 @Component({
   selector: "app-game",
@@ -29,6 +30,7 @@ export class GameComponent implements OnInit {
   game: any;
 
   gameForm!: FormGroup;
+  outcomeForm!: FormGroup;
   gamePlayForm!: FormGroup;
 
   selectPlays: Array<any> = [];
@@ -103,10 +105,14 @@ export class GameComponent implements OnInit {
   screenYards!: number;
   screenAvg!: number;
 
+  currentProfile!: any;
+  profileUserKey = "JWaseaRYNTfFX31oH00L";
+
   constructor(
     private route: ActivatedRoute,
     private gamesService: GamesService,
-    private playsService: PlaysService
+    private playsService: PlaysService,
+    private profileService: ProfileService
   ) {
     this.gameId = this.route.snapshot.paramMap.get("id");
     this.gamePlaysArray = new MatTableDataSource();
@@ -114,8 +120,37 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.gamePlayForm = new FormGroup({
+      date: new FormControl(null),
+      play: new FormControl(null, Validators.required),
+      result: new FormControl(null, Validators.required),
+    });
+    this.outcomeForm = new FormGroup({
+      outcome: new FormControl(null, Validators.required),
+      opponentScore: new FormControl(null, Validators.required),
+      ourScore: new FormControl(null, Validators.required),
+    });
+    this.gameForm = new FormGroup({
+      team: new FormControl(null),
+      date: new FormControl(null),
+      ourScore: new FormControl(null),
+      opponentScore: new FormControl(null),
+      location: new FormControl(null),
+      outcome: new FormControl(null),
+      gamePlays: new FormControl(),
+    });
+    this.profileService.getProfile(this.profileUserKey).subscribe((profile) => {
+      this.currentProfile = profile.payload.data();
+    });
     this.gamesService.getGame(this.gameId).subscribe((game) => {
       this.game = game.payload.data();
+      if (this.game.outcome) {
+        this.outcomeForm.patchValue({
+          outcome: this.game.outcome,
+          opponentScore: this.game.opponentScore,
+          ourScore: this.game.ourScore,
+        });
+      }
       this.gamePlaysArray.data = this.game.gamePlays;
       if (this.gamePlaysArray.data) {
         this.totalYards = this.gamePlaysArray.data
@@ -191,19 +226,6 @@ export class GameComponent implements OnInit {
         });
       }
     });
-    this.gamePlayForm = new FormGroup({
-      date: new FormControl(null),
-      play: new FormControl(null, Validators.required),
-      result: new FormControl(null, Validators.required),
-    });
-    this.gameForm = new FormGroup({
-      team: new FormControl(null),
-      date: new FormControl(null),
-      score: new FormControl(null),
-      location: new FormControl(null),
-      outcome: new FormControl(null),
-      gamePlays: new FormControl(),
-    });
     this.gamePlaysArray.paginator = this.tableTwoPaginator;
     this.playsArray.paginator = this.tableOnePaginator;
     this.playsArray.sort = this.tableOneSort;
@@ -234,7 +256,8 @@ export class GameComponent implements OnInit {
     this.gameForm.patchValue({
       team: this.game.team,
       date: this.game.date,
-      score: this.game.score,
+      ourScore: this.game.ourScore,
+      opponentScore: this.game.opponentScore,
       location: this.game.location,
       outcome: this.game.outcome,
       gamePlays: this.gamePlaysArray.data,
@@ -258,6 +281,19 @@ export class GameComponent implements OnInit {
         }
       });
     });
+  }
+
+  saveOutcome() {
+    this.gameForm.patchValue({
+      team: this.game.team,
+      date: this.game.date,
+      ourScore: this.outcomeForm.value.ourScore,
+      opponentScore: this.outcomeForm.value.opponentScore,
+      location: this.game.location,
+      outcome: this.outcomeForm.value.outcome,
+      gamePlays: this.game.gamePlays,
+    });
+    this.gamesService.updateGame(this.gameId, this.gameForm.value);
   }
 
   applyFilterOne(filterValue: string) {

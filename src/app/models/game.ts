@@ -5,7 +5,8 @@ export interface Game {
   id?: string;
   team: Team;
   date?: Date;
-  score?: string;
+  opponentScore?: string;
+  ourScore?: string;
   location?: string;
   gamePlays?: GamePlay[];
   outcome?: string;

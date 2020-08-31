@@ -42,7 +42,7 @@
       <!-- Delete Column -->
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
           <span
             class="material-icons"
             style="color: red; cursor: pointer"
@@ -71,7 +71,7 @@
       <form class="example-form" style="padding: 15px" [formGroup]="playForm">
         <mat-form-field class="example-full-width">
           <mat-label>Formation</mat-label>
-          <mat-select formControlName="runPass">
+          <mat-select formControlName="formation">
             <mat-option value=""></mat-option>
             <mat-option
               *ngFor="let formation of formationsArray"

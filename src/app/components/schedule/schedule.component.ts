@@ -9,7 +9,14 @@ import { TeamsService } from "app/services/teams.service";
   styleUrls: ["./schedule.component.css"],
 })
 export class ScheduleComponent implements OnInit {
-  displayedColumns: string[] = ["team", "date", "location", "score", "delete"];
+  displayedColumns: string[] = [
+    "team",
+    "date",
+    "location",
+    "outcome",
+    "score",
+    "delete",
+  ];
   dataSource = [];
   gameForm!: FormGroup;
   games!: Array<any>;
@@ -24,7 +31,8 @@ export class ScheduleComponent implements OnInit {
     this.gameForm = new FormGroup({
       team: new FormControl(null),
       date: new FormControl(null),
-      score: new FormControl(null),
+      ourScore: new FormControl(null),
+      opponentScore: new FormControl(null),
       location: new FormControl(null),
       gamePlays: new FormControl([]),
       outcome: new FormControl(null),

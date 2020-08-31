@@ -24,11 +24,20 @@
         </mat-cell>
       </ng-container>
 
+      <!-- outcome Column -->
+      <ng-container matColumnDef="outcome">
+        <mat-header-cell *matHeaderCellDef> Outcome </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.payload.doc.data().outcome || "-" }}
+        </mat-cell>
+      </ng-container>
+
       <!-- Score Column -->
       <ng-container matColumnDef="score">
         <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().score }}
+          {{ element.payload.doc.data().ourScore }} -
+          {{ element.payload.doc.data().opponentScore }}
         </mat-cell>
       </ng-container>
 
@@ -43,7 +52,7 @@
       <!-- Delete Column -->
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
           <span
             class="material-icons"
             style="color: red; cursor: pointer"

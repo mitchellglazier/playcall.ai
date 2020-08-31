@@ -44,6 +44,17 @@ export class PlaybookComponent implements OnInit {
     });
     this.playsService.getPlays().subscribe((result) => {
       this.plays = result;
+      this.plays.sort((a, b) => {
+        const x = a.payload.doc.data().fullPlay.toLocaleString();
+        const y = b.payload.doc.data().fullPlay.toLocaleString();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
     });
     this.settingsService
       .getSetting(this.settingUserKey)

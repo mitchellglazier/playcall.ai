@@ -12,7 +12,8 @@ export class GamesService {
     return this.db.collection("games").add({
       team: game.team,
       date: game.date,
-      score: game.score,
+      ourScore: game.ourScore,
+      opponentScore: game.opponentScore,
       location: game.location,
       gamePlays: game.gamePlays,
       outcome: game.outcome,
