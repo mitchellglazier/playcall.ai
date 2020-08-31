@@ -5,6 +5,7 @@ export interface Play {
   playCat: string;
   runPass: string;
   fullPlay: string;
+  primaryPos: string;
   gameCount: number; //front end only
   gameAvg: number; //front end only
   seasonAvg: number; //front end only

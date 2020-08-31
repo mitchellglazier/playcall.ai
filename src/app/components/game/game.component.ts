@@ -117,73 +117,79 @@ export class GameComponent implements OnInit {
     this.gamesService.getGame(this.gameId).subscribe((game) => {
       this.game = game.payload.data();
       this.gamePlaysArray.data = this.game.gamePlays;
-      this.totalYards = this.gamePlaysArray.data
-        .map((p) => p.result * 1)
-        .reduce((acc, value) => acc + value, 0);
-      this.avgYards = (
-        this.totalYards / this.gamePlaysArray.data.length
-      ).toFixed(2);
-      this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
-        if (gamePlay.play.runPass === "Run") {
-          this.runPlays.push(gamePlay);
-        } else {
-          this.passPlays.push(gamePlay);
-        }
-        if (gamePlay.play.playCat === "Sweep") {
-          this.sweepPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Trap") {
-          this.trapPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Boot") {
-          this.bootPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Pop Pass") {
-          this.popPassPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Wedge") {
-          this.wedgePlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Cross Block") {
-          this.crossBlockPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Counter") {
-          this.counterPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Belly") {
-          this.bellyPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Down") {
-          this.downPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Keep Pass") {
-          this.keepPassPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Reverse") {
-          this.reversePlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Power") {
-          this.powerPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Pass") {
-          this.pass90Plays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Special") {
-          this.specialPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Screen") {
-          this.screenPlays.push(gamePlay);
-        }
-        this.playTypeStats();
-      });
+      if (this.gamePlaysArray.data) {
+        this.totalYards = this.gamePlaysArray.data
+          .map((p) => p.result * 1)
+          .reduce((acc, value) => acc + value, 0);
+        this.avgYards = (
+          this.totalYards / this.gamePlaysArray.data.length
+        ).toFixed(2);
+        this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
+          if (gamePlay.play.runPass === "Run") {
+            this.runPlays.push(gamePlay);
+          } else {
+            this.passPlays.push(gamePlay);
+          }
+          if (gamePlay.play.playCat === "Sweep") {
+            this.sweepPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Trap") {
+            this.trapPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Boot") {
+            this.bootPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Pop Pass") {
+            this.popPassPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Wedge") {
+            this.wedgePlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Cross Block") {
+            this.crossBlockPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Counter") {
+            this.counterPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Belly") {
+            this.bellyPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Down") {
+            this.downPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Keep Pass") {
+            this.keepPassPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Reverse") {
+            this.reversePlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Power") {
+            this.powerPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Pass") {
+            this.pass90Plays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Special") {
+            this.specialPlays.push(gamePlay);
+          } else if (gamePlay.play.playCat === "Screen") {
+            this.screenPlays.push(gamePlay);
+          }
+          this.playTypeStats();
+        });
+      }
     });
     this.playsService.getPlays().subscribe((result) => {
       result.map((play) => {
         this.selectPlays.push(play.payload.doc.data());
       });
       this.playsArray.data = this.selectPlays;
-      this.playsArray.data.map((play) => {
-        const playName = play.fullPlay;
-        const gamePlays: Array<any> = [];
-        this.gamePlaysArray.data.map((gamePlay) => {
-          if (gamePlay.play.fullPlay === playName) {
-            gamePlays.push(gamePlay);
-          }
-          if (gamePlays.length) {
-            play.gameAvg =
-              gamePlays
-                .map((p) => p.result * 1)
-                .reduce((acc, value) => acc + value, 0) / gamePlays.length;
-            play.gameCount = gamePlays.length;
+      if (this.playsArray.data.length) {
+        this.playsArray.data.map((play) => {
+          const playName = play.fullPlay;
+          const gamePlays: Array<any> = [];
+          if (this.gamePlaysArray.data) {
+            this.gamePlaysArray.data.map((gamePlay) => {
+              if (gamePlay.play.fullPlay === playName) {
+                gamePlays.push(gamePlay);
+              }
+              if (gamePlays.length) {
+                play.gameAvg =
+                  gamePlays
+                    .map((p) => p.result * 1)
+                    .reduce((acc, value) => acc + value, 0) / gamePlays.length;
+                play.gameCount = gamePlays.length;
+              }
+            });
           }
         });
-      });
+      }
     });
     this.gamePlayForm = new FormGroup({
       date: new FormControl(null),

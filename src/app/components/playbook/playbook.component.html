@@ -71,7 +71,15 @@
       <form class="example-form" style="padding: 15px" [formGroup]="playForm">
         <mat-form-field class="example-full-width">
           <mat-label>Formation</mat-label>
-          <input matInput formControlName="formation" type="string" />
+          <mat-select formControlName="runPass">
+            <mat-option value=""></mat-option>
+            <mat-option
+              *ngFor="let formation of formationsArray"
+              [value]="formation.name"
+            >
+              {{ formation.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
@@ -82,7 +90,7 @@
         <mat-form-field class="example-full-width">
           <mat-label>Play Category</mat-label>
           <mat-select formControlName="playCat">
-            <mat-option *ngFor="let cat of playCats" [value]="cat.value">
+            <mat-option *ngFor="let cat of catArray" [value]="cat.name">
               {{ cat.name }}
             </mat-option>
           </mat-select>
@@ -93,6 +101,15 @@
           <mat-select formControlName="runPass">
             <mat-option value="Run"> Run </mat-option>
             <mat-option value="Pass"> Pass </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Primary Option</mat-label>
+          <mat-select formControlName="primaryPos">
+            <mat-option *ngFor="let pos of posArray" [value]="pos.name">
+              {{ pos.name }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </form>

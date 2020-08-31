@@ -31,6 +31,17 @@ export class ScheduleComponent implements OnInit {
     });
     this.gamesService.getGames().subscribe((result) => {
       this.games = result;
+      this.games.sort((a, b) => {
+        const x = a.payload.doc.data().date.toLocaleString();
+        const y = b.payload.doc.data().date.toLocaleString();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
     });
     this.teamsService.getTeams().subscribe((result) => {
       result.map((team) => {

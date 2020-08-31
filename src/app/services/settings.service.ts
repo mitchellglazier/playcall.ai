@@ -12,6 +12,7 @@ export class SettingsService {
     return this.db.collection("settings").add({
       playCats: setting.playCats,
       positions: setting.positions,
+      formations: setting.formations,
     });
   }
 

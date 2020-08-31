@@ -20,7 +20,7 @@
             <div style="text-align: center; font-size: 25px">
               <p>
                 <i
-                  ><b>{{ gamePlaysArray.data.length }}</b></i
+                  ><b>{{ gamePlaysArray?.data?.length }}</b></i
                 >
               </p>
             </div>
@@ -71,7 +71,7 @@
             <div style="text-align: center; font-size: 25px">
               <p>
                 <i
-                  ><b>{{ runPlays.length }}</b></i
+                  ><b>{{ runPlays?.length }}</b></i
                 >
               </p>
               <!-- <p>
@@ -90,7 +90,7 @@
             <div style="text-align: center; font-size: 25px">
               <p>
                 <i
-                  ><b>{{ passPlays.length }}</b></i
+                  ><b>{{ passPlays?.length }}</b></i
                 >
               </p>
               <!-- <p>
@@ -123,7 +123,7 @@
             Play
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.fullPlay }}
+            {{ element?.fullPlay }}
           </mat-cell>
         </ng-container>
 
@@ -133,7 +133,7 @@
             Game Count
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.gameCount }}
+            {{ element?.gameCount }}
           </mat-cell>
         </ng-container>
 
@@ -142,7 +142,9 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Game Average
           </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{ element.gameAvg }} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.gameAvg }}
+          </mat-cell>
         </ng-container>
 
         <!-- seasonAvg Column -->
@@ -151,7 +153,7 @@
             Season Average
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.seasonAvg }}
+            {{ element?.seasonAvg }}
           </mat-cell>
         </ng-container>
 
@@ -183,7 +185,7 @@
           <mat-label>Play</mat-label>
           <mat-select formControlName="play">
             <mat-option *ngFor="let play of selectPlays" [value]="play">
-              {{ play.fullPlay }}
+              {{ play?.fullPlay }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -220,8 +222,8 @@
               }})
             </p>
             <p>
-              Sweep Plays: {{ sweepPlays.length }} ({{
-                sweepPlays.length / gamePlaysArray.data.length | percent
+              Sweep Plays: {{ sweepPlays?.length }} ({{
+                sweepPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Sweep Average: {{ sweepAvg }}</p>
@@ -234,8 +236,8 @@
               }})
             </p>
             <p>
-              Trap Plays: {{ trapPlays.length }} ({{
-                trapPlays.length / gamePlaysArray.data.length | percent
+              Trap Plays: {{ trapPlays?.length }} ({{
+                trapPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Trap Average: {{ trapAvg }}</p>
@@ -248,8 +250,8 @@
               }})
             </p>
             <p>
-              Boot Plays: {{ bootPlays.length }} ({{
-                bootPlays.length / gamePlaysArray.data.length | percent
+              Boot Plays: {{ bootPlays?.length }} ({{
+                bootPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Boot Average: {{ bootAvg }}</p>
@@ -262,8 +264,8 @@
               }})
             </p>
             <p>
-              Pop Pass Plays: {{ popPassPlays.length }} ({{
-                popPassPlays.length / gamePlaysArray.data.length | percent
+              Pop Pass Plays: {{ popPassPlays?.length }} ({{
+                popPassPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Pop Pass Average: {{ popPassAvg }}</p>
@@ -276,8 +278,8 @@
               }})
             </p>
             <p>
-              Wedge Plays: {{ wedgePlays.length }} ({{
-                wedgePlays.length / gamePlaysArray.data.length | percent
+              Wedge Plays: {{ wedgePlays?.length }} ({{
+                wedgePlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Wedge Average: {{ wedgeAvg }}</p>
@@ -290,8 +292,8 @@
               }})
             </p>
             <p>
-              Cross Block Plays: {{ crossBlockPlays.length }} ({{
-                crossBlockPlays.length / gamePlaysArray.data.length | percent
+              Cross Block Plays: {{ crossBlockPlays?.length }} ({{
+                crossBlockPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Cross Block Average: {{ crossBlockAvg }}</p>
@@ -304,8 +306,8 @@
               }})
             </p>
             <p>
-              Counter Plays: {{ counterPlays.length }} ({{
-                counterPlays.length / gamePlaysArray.data.length | percent
+              Counter Plays: {{ counterPlays?.length }} ({{
+                counterPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Counter Average: {{ counterAvg }}</p>
@@ -318,8 +320,8 @@
               }})
             </p>
             <p>
-              Belly Plays: {{ bellyPlays.length }} ({{
-                bellyPlays.length / gamePlaysArray.data.length | percent
+              Belly Plays: {{ bellyPlays?.length }} ({{
+                bellyPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Belly Average: {{ bellyAvg }}</p>
@@ -332,8 +334,8 @@
               }})
             </p>
             <p>
-              Down Plays: {{ downPlays.length }} ({{
-                downPlays.length / gamePlaysArray.data.length | percent
+              Down Plays: {{ downPlays?.length }} ({{
+                downPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Down Average: {{ downAvg }}</p>
@@ -346,8 +348,8 @@
               }})
             </p>
             <p>
-              Keep Pass Plays: {{ keepPassPlays.length }} ({{
-                keepPassPlays.length / gamePlaysArray.data.length | percent
+              Keep Pass Plays: {{ keepPassPlays?.length }} ({{
+                keepPassPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Keep Pass Average: {{ keepPassAvg }}</p>
@@ -360,8 +362,8 @@
               }})
             </p>
             <p>
-              Reverse Plays: {{ reversePlays.length }} ({{
-                reversePlays.length / gamePlaysArray.data.length | percent
+              Reverse Plays: {{ reversePlays?.length }} ({{
+                reversePlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Reverse Average: {{ reverseAvg }}</p>
@@ -374,8 +376,8 @@
               }})
             </p>
             <p>
-              Power Plays: {{ powerPlays.length }} ({{
-                powerPlays.length / gamePlaysArray.data.length | percent
+              Power Plays: {{ powerPlays?.length }} ({{
+                powerPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Power Average: {{ powerAvg }}</p>
@@ -388,8 +390,8 @@
               }})
             </p>
             <p>
-              Pass Plays: {{ pass90Plays.length }} ({{
-                pass90Plays.length / gamePlaysArray.data.length | percent
+              Pass Plays: {{ pass90Plays?.length }} ({{
+                pass90Plays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Pass Average: {{ pass90Avg }}</p>
@@ -402,8 +404,8 @@
               }})
             </p>
             <p>
-              Special Plays: {{ specialPlays.length }} ({{
-                specialPlays.length / gamePlaysArray.data.length | percent
+              Special Plays: {{ specialPlays?.length }} ({{
+                specialPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Special Average: {{ specialAvg }}</p>
@@ -416,8 +418,8 @@
               }})
             </p>
             <p>
-              Screen Plays: {{ screenPlays.length }} ({{
-                screenPlays.length / gamePlaysArray.data.length | percent
+              Screen Plays: {{ screenPlays?.length }} ({{
+                screenPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
             <p>Screen Average: {{ screenAvg }}</p>
@@ -439,8 +441,8 @@
             }})
           </p>
           <p>
-            Run Plays: {{ runPlays.length }} ({{
-              runPlays.length / gamePlaysArray.data.length | percent
+            Run Plays: {{ runPlays?.length }} ({{
+              runPlays.length / gamePlaysArray?.data?.length | percent
             }})
           </p>
           <p>Run Average: {{ runAvg }}</p>
@@ -453,8 +455,8 @@
             }})
           </p>
           <p>
-            Pass Plays: {{ passPlays.length }} ({{
-              passPlays.length / gamePlaysArray.data.length | percent
+            Pass Plays: {{ passPlays?.length }} ({{
+              passPlays.length / gamePlaysArray?.data?.length | percent
             }})
           </p>
           <p>Pass Average: {{ passAvg }}</p>
@@ -468,7 +470,7 @@
         <ng-container matColumnDef="play">
           <mat-header-cell *matHeaderCellDef> Play </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.play.fullPlay }}
+            {{ element?.play?.fullPlay }}
           </mat-cell>
         </ng-container>
 
@@ -476,7 +478,7 @@
         <ng-container matColumnDef="result">
           <mat-header-cell *matHeaderCellDef> Result </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.result }}
+            {{ element?.result }}
           </mat-cell>
         </ng-container>
 

@@ -111,4 +111,63 @@
     >
   </div>
   <!-- column -->
+  <!-- column -->
+  <div fxFlex="25">
+    <mat-card
+      ><mat-card-header
+        ><mat-card-title>Offensive Formations</mat-card-title></mat-card-header
+      ><mat-card-content>
+        <form
+          class="example-form"
+          style="padding: 15px"
+          [formGroup]="formationsForm"
+        >
+          <div fxLayout="row wrap">
+            <!-- column -->
+            <div fxFlex="80" style="margin-right: 10px">
+              <mat-form-field class="example-full-width">
+                <mat-label>Formation Name*</mat-label>
+                <input matInput formControlName="name" type="string" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="10">
+              <div style="text-align: center; padding: 15px">
+                <button type="button" mat-icon-button color="primary">
+                  <span class="material-icons" (click)="saveFormation()"
+                    >done_all</span
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- column -->
+          </div>
+        </form>
+        <ul>
+          <li *ngFor="let formation of currentSetting?.formations">
+            <div fxLayout="row wrap">
+              <!-- column -->
+              <div fxFlex="85">{{ formation?.name }}</div>
+              <!-- column -->
+
+              <!-- column -->
+              <div fxFlex="15">
+                <span
+                  class="material-icons"
+                  style="color: red; cursor: pointer"
+                  (click)="deleteFormation(formation)"
+                  [disabled]="formationsForm.invalid"
+                >
+                  delete_forever
+                </span>
+              </div>
+              <!-- column -->
+            </div>
+          </li>
+        </ul>
+      </mat-card-content></mat-card
+    >
+  </div>
+  <!-- column -->
 </div>
