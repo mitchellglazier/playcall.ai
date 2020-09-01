@@ -15,13 +15,20 @@
   <!-- ============================================================== -->
   <div class="profile-text">
     <a [matMenuTriggerFor]="sdprofile" class="">
-      Coach Peck <i class="ti-angle-down font-12 m-l-5"></i
+      <span *ngIf="currentProfile?.currentCoach"
+        >Coach {{ currentProfile?.currentCoach?.name }}</span
+      >
+      <i class="ti-angle-down font-12 m-l-5"></i
     ></a>
   </div>
   <mat-menu #sdprofile="matMenu" class="mymegamenu">
-    <button mat-menu-item><mat-icon>settings</mat-icon> Settings</button>
-    <button mat-menu-item><mat-icon>account_box</mat-icon> Profile</button>
-    <button mat-menu-item><mat-icon>exit_to_app</mat-icon> Sign Out</button>
+    <button
+      (click)="setCoach(coach)"
+      mat-menu-item
+      *ngFor="let coach of coachesArray"
+    >
+      <mat-icon>child_care</mat-icon>{{ coach.name }}
+    </button>
   </mat-menu>
 </div>
 <mat-nav-list appAccordion>

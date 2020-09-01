@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
       mascot: new FormControl(null),
       location: new FormControl(null),
       primaryColor: new FormControl(null),
+      currentCoach: new FormControl(null),
       coaches: new FormControl([]),
     });
     this.coachesForm = new FormGroup({
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
           location: this.currentProfile.location,
           primaryColor: this.currentProfile.primaryColor,
           coaches: this.currentProfile.coaches,
+          currentCoach: this.currentProfile.currentCoach,
         });
       }
     });

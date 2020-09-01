@@ -7,4 +7,5 @@ export interface Team {
   location?: string;
   primaryColor?: string;
   coaches?: Coach[];
+  currentCoach?: any;
 }

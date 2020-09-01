@@ -16,6 +16,7 @@ export class ProfileService {
       location: profile.location,
       primaryColor: profile.primaryColor,
       coaches: profile.coaches,
+      currentCoach: profile.currentCoach,
     });
   }
 
