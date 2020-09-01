@@ -4,45 +4,256 @@
 <h4 style="color: darkgray; text-align: center">
   {{ currentProfile?.location }}
 </h4>
-<!-- ============================================================== -->
-<!-- Simple four boxes Row -->
-<!-- ============================================================== -->
-<div fxLayout="row wrap">
-  <!-- column -->
-  <div
-    fxFlex.gt-lg="66"
-    fxFlex.gt-md="66"
-    fxFlex.gt-xs="100"
-    fxFlex="100"
-  ></div>
-  <!-- column -->
-  <!-- column -->
-  <div
-    fxFlex.gt-lg="33"
-    fxFlex.gt-md="33"
-    fxFlex.gt-xs="100"
-    fxFlex="100"
-  ></div>
-  <!-- column -->
-</div>
 
-<!-- ============================================================== -->
-<!-- Image Card row-->
-<!-- ============================================================== -->
 <div fxLayout="row wrap">
-  <!-- Card column -->
-  <div
-    fxFlex.gt-lg="25"
-    fxFlex.gt-md="40"
-    fxFlex.gt-xs="100"
-    fxFlex="100"
-  ></div>
-  <!-- Card column -->
-  <!-- Card column -->
-  <div
-    fxFlex.gt-lg="75"
-    fxFlex.gt-md="60"
-    fxFlex.gt-xs="100"
-    fxFlex="100"
-  ></div>
+  <!-- column -->
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <div fxLayout="row wrap">
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Total Plays</mat-card-title>
+            <mat-card-subtitle>2020 Season</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ seasonPlays?.length }}</b></i
+                >
+              </p>
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Total Yards</mat-card-title>
+            <mat-card-subtitle>2020 Season</mat-card-subtitle> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ seasonTotalYards }}</b></i
+                >
+              </p>
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Avg. Yards</mat-card-title>
+            <mat-card-subtitle>2020 Season</mat-card-subtitle> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ seasonAvgYards }}</b></i
+                >
+              </p>
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Run Plays</mat-card-title>
+            <mat-card-subtitle>2020 Season</mat-card-subtitle> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ seasonRunPlays?.length }}</b></i
+                >
+              </p>
+              <!-- <p>
+                <i>{{ totalRushYards }}</i>
+              </p> -->
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card
+          ><mat-card-header>
+            <mat-card-title>Pass Plays</mat-card-title>
+            <mat-card-subtitle>2020 Season</mat-card-subtitle> </mat-card-header
+          ><mat-card-content>
+            <div style="text-align: center; font-size: 25px">
+              <p>
+                <i
+                  ><b>{{ seasonPassPlays?.length }}</b></i
+                >
+              </p>
+              <!-- <p>
+                <i>{{ totalPassYards }}</i>
+              </p> -->
+            </div>
+          </mat-card-content></mat-card
+        >
+      </div>
+      <!-- column -->
+    </div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Play Type Stats</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="flex wrap">
+          <div fxFlex="33">
+            <p><b>Sweep</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Trap</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Boot</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Pop Pass</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Wedge</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Cross Block</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Counter</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Belly</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Down</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Keep Pass</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Reverse</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Power</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Pass</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Special</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Screen</b></p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <!-- column -->
+  <!-- column -->
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card-header>
+          <mat-card-title
+            >Roster <br />
+            ({{ players?.length }})
+            <span
+              class="material-icons"
+              style="color: blue; cursor: pointer"
+              [routerLink]="['/roster']"
+            >
+              call_made
+            </span></mat-card-title
+          >
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+      <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card-header>
+          <mat-card-title
+            >Playbook <br />
+            ({{ plays?.length }})
+            <span
+              class="material-icons"
+              style="color: blue; cursor: pointer"
+              [routerLink]="['/playbook']"
+            >
+              call_made
+            </span></mat-card-title
+          >
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+      <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card-header>
+          <mat-card-title
+            >Schedule <br />
+            ({{ games?.length }})
+            <span
+              class="material-icons"
+              style="color: blue; cursor: pointer"
+              [routerLink]="['/schedule']"
+            >
+              call_made
+            </span></mat-card-title
+          >
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Primary Option Stats</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="flex wrap">
+          <div fxFlex="33">
+            <p><b>QB</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Left HB</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>Right HB</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>FB</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>TE</b></p>
+          </div>
+          <div fxFlex="33">
+            <p><b>WR</b></p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card
+      ><mat-card-header>
+        <mat-card-title>Run Pass Stats</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxFlex="50">
+          <p><b>Rushing</b></p>
+        </div>
+        <div fxFlex="50">
+          <p><b>Passing</b></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <!-- column -->
 </div>

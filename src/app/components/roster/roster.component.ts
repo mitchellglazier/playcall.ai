@@ -12,7 +12,7 @@ export class RosterComponent implements OnInit {
   displayedColumns: string[] = ["name", "graduationYear", "delete"];
   dataSource = [];
   rosterForm!: FormGroup;
-  players!: Array<any>;
+  players: Array<any> = [];
 
   constructor(private playersService: PlayersService) {}
 
