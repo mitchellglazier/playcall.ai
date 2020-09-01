@@ -7,8 +7,16 @@
 >
   <!-- User profile image -->
   <div class="profile-img">
-    <img src="assets/images/users/peck.jpeg" alt="Peck" />
+    <img
+      *ngIf="currentProfile?.currentCoach.name === 'Peck'; else other"
+      src="assets/images/users/peck.jpeg"
+      alt="Peck"
+    />
+    <ng-template #other
+      ><img src="assets/images/users/footballCoach.jpg" alt="Coach"
+    /></ng-template>
   </div>
+
   <!-- User profile text-->
   <!-- ============================================================== -->
   <!-- Profile - style you can find in header.scss -->
