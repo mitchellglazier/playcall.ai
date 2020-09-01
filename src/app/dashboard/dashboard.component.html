@@ -289,7 +289,7 @@
   <!-- column -->
   <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
-      <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="25" fxFlex.gt-md="25" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card-header>
           <mat-card-title
             >Roster <br />
@@ -304,7 +304,7 @@
           >
         </mat-card-header>
       </div>
-      <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="35" fxFlex.gt-md="35" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card-header>
           <mat-card-title
             >Playbook <br />
@@ -319,7 +319,7 @@
           >
         </mat-card-header>
       </div>
-      <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card-header>
           <mat-card-title
             >Schedule <br />
@@ -345,84 +345,72 @@
           <div fxFlex="50">
             <p><b>QB</b></p>
             <p>
-              QB Yards: {{ qbYards }} ({{
-                qbYards / seasonTotalYards | percent
-              }})
+              QB Yards: {{ qbYards }} <br />
+              ({{ qbYards / seasonTotalYards | percent }})
             </p>
             <p>
-              QB Plays: {{ qbPlays?.length }} ({{
-                qbPlays.length / seasonPlays.length | percent
-              }})
+              QB Plays: {{ qbPlays?.length }} <br />
+              ({{ qbPlays.length / seasonPlays.length | percent }})
             </p>
             <p>QB Avg: {{ qbAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Left HB</b></p>
             <p>
-              Left HB Yards: {{ lhbYards }} ({{
-                lhbYards / seasonTotalYards | percent
-              }})
+              LHB Yards: {{ lhbYards }} <br />
+              ({{ lhbYards / seasonTotalYards | percent }})
             </p>
             <p>
-              Left HB Plays: {{ lhbPlays?.length }} ({{
-                lhbPlays.length / seasonPlays.length | percent
-              }})
+              LHB Plays: {{ lhbPlays?.length }} <br />
+              ({{ lhbPlays.length / seasonPlays.length | percent }})
             </p>
-            <p>Left HB Avg: {{ lhbAvg }}</p>
+            <p>LHB Avg: {{ lhbAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Right HB</b></p>
             <p>
-              Right HB Yards: {{ rhbYards }} ({{
-                rhbYards / seasonTotalYards | percent
-              }})
+              RHB Yards: {{ rhbYards }} <br />
+              ({{ rhbYards / seasonTotalYards | percent }})
             </p>
             <p>
-              Right HB Plays: {{ rhbPlays?.length }} ({{
-                rhbPlays.length / seasonPlays.length | percent
-              }})
+              RHB Plays: {{ rhbPlays?.length }} <br />
+              ({{ rhbPlays.length / seasonPlays.length | percent }})
             </p>
-            <p>Right HB Avg: {{ rhbAvg }}</p>
+            <p>RHB Avg: {{ rhbAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>FB</b></p>
             <p>
-              FB Yards: {{ fbYards }} ({{
-                fbYards / seasonTotalYards | percent
-              }})
+              FB Yards: {{ fbYards }} <br />
+              ({{ fbYards / seasonTotalYards | percent }})
             </p>
             <p>
-              FB Plays: {{ fbPlays?.length }} ({{
-                fbPlays.length / seasonPlays.length | percent
-              }})
+              FB Plays: {{ fbPlays?.length }} <br />
+              ({{ fbPlays.length / seasonPlays.length | percent }})
             </p>
             <p>FB Avg: {{ fbAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>TE</b></p>
             <p>
-              TE Yards: {{ teYards }} ({{
-                teYards / seasonTotalYards | percent
-              }})
+              TE Yards: {{ teYards }} <br />
+              ({{ teYards / seasonTotalYards | percent }})
             </p>
             <p>
-              TE Plays: {{ tePlays?.length }} ({{
-                tePlays.length / seasonPlays.length | percent
-              }})
+              TE Plays: {{ tePlays?.length }} <br />
+              ({{ tePlays.length / seasonPlays.length | percent }})
             </p>
             <p>TE Avg: {{ teAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>WR</b></p>
             <p>
-              WR Yards: {{ wrYards }} ({{
-                wrYards / seasonTotalYards | percent
-              }})
+              WR Yards: {{ wrYards }} <br />
+              ({{ wrYards / seasonTotalYards | percent }})
             </p>
             <p>
-              WR Plays: {{ wrPlays?.length }} ({{
-                wrPlays.length / seasonPlays.length | percent
-              }})
+              WR Plays: {{ wrPlays?.length }} <br />
+              ({{ wrPlays.length / seasonPlays.length | percent }})
             </p>
             <p>WR Avg: {{ wrAvg }}</p>
           </div>
@@ -438,30 +426,26 @@
         <div fxFlex="50">
           <p><b>Rushing</b></p>
           <p>
-            Rushing Yards: {{ totalRushYards }} ({{
-              totalRushYards / seasonTotalYards | percent
-            }})
+            Rush Yards: {{ totalRushYards }} <br />
+            ({{ totalRushYards / seasonTotalYards | percent }})
           </p>
           <p>
-            Run Plays: {{ seasonRunPlays?.length }} ({{
-              seasonRunPlays.length / seasonPlays.length | percent
-            }})
+            Run Plays: {{ seasonRunPlays?.length }} <br />
+            ({{ seasonRunPlays.length / seasonPlays.length | percent }})
           </p>
-          <p>Run Average: {{ runAvg }}</p>
+          <p>Run Avg: {{ runAvg }}</p>
         </div>
         <div fxFlex="50">
           <p><b>Passing</b></p>
           <p>
-            Passing Yards: {{ totalPassYards }} ({{
-              totalPassYards / seasonTotalYards | percent
-            }})
+            Pass Yards: {{ totalPassYards }} <br />
+            ({{ totalPassYards / seasonTotalYards | percent }})
           </p>
           <p>
-            Pass Plays: {{ seasonPassPlays?.length }} ({{
-              seasonPassPlays.length / seasonPlays.length | percent
-            }})
+            Pass Plays: {{ seasonPassPlays?.length }} <br />
+            ({{ seasonPassPlays.length / seasonPlays.length | percent }})
           </p>
-          <p>Pass Average: {{ passAvg }}</p>
+          <p>Pass Avg: {{ passAvg }}</p>
         </div>
       </mat-card-content>
     </mat-card>

@@ -170,7 +170,7 @@
       >
         <div fxLayout="row wrap">
           <!-- column -->
-          <div fxFlex="32" style="margin: 5px">
+          <div fxFlex="30" style="margin: 5px">
             <mat-form-field class="example-full-width">
               <mat-label>Outcome</mat-label>
               <mat-select formControlName="outcome">
@@ -181,7 +181,7 @@
           </div>
           <!-- column -->
           <!-- column -->
-          <div fxFlex="32" style="margin: 5px">
+          <div fxFlex="30" style="margin: 5px">
             <mat-form-field class="example-full-width">
               <mat-label>{{ currentProfile?.name }} Score</mat-label>
               <input matInput formControlName="ourScore" type="number" />
@@ -189,7 +189,7 @@
           </div>
           <!-- column -->
           <!-- column -->
-          <div fxFlex="32" style="margin: 5px">
+          <div fxFlex="30" style="margin: 5px">
             <mat-form-field class="example-full-width">
               <mat-label>{{ game?.team?.name }} Score</mat-label>
               <input matInput formControlName="opponentScore" type="number" />
@@ -259,212 +259,198 @@
           <div fxFlex="50">
             <p><b>Sweep</b></p>
             <p>
-              Sweep Yards: {{ sweepYards }} ({{
-                sweepYards / totalYards | percent
-              }})
+              Sweep Yards: {{ sweepYards }} <br />
+              ({{ sweepYards / totalYards | percent }})
             </p>
             <p>
-              Sweep Plays: {{ sweepPlays?.length }} ({{
-                sweepPlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Sweep Plays: {{ sweepPlays?.length }} <br />
+              ({{ sweepPlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Sweep Average: {{ sweepAvg }}</p>
+            <p>Sweep Avg: {{ sweepAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Trap</b></p>
             <p>
-              Trap Yards: {{ trapYards }} ({{
-                trapYards / totalYards | percent
-              }})
+              Trap Yards: {{ trapYards }} <br />
+              ({{ trapYards / totalYards | percent }})
             </p>
             <p>
-              Trap Plays: {{ trapPlays?.length }} ({{
-                trapPlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Trap Plays: {{ trapPlays?.length }} <br />
+              ({{ trapPlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Trap Average: {{ trapAvg }}</p>
+            <p>Trap Avg: {{ trapAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Boot</b></p>
             <p>
-              Boot Yards: {{ bootYards }} ({{
-                bootYards / totalYards | percent
-              }})
+              Boot Yards: {{ bootYards }} <br />
+              ({{ bootYards / totalYards | percent }})
             </p>
             <p>
-              Boot Plays: {{ bootPlays?.length }} ({{
-                bootPlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Boot Plays: {{ bootPlays?.length }} <br />
+              ({{ bootPlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Boot Average: {{ bootAvg }}</p>
+            <p>Boot Avg: {{ bootAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Pop Pass</b></p>
             <p>
-              Pop Pass Yards: {{ popPassYards }} ({{
-                popPassYards / totalYards | percent
-              }})
+              Pop Pass Yards: {{ popPassYards }} <br />
+              ({{ popPassYards / totalYards | percent }})
             </p>
             <p>
-              Pop Pass Plays: {{ popPassPlays?.length }} ({{
+              Pop Pass Plays: {{ popPassPlays?.length }} <br />
+              ({{
                 popPassPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Pop Pass Average: {{ popPassAvg }}</p>
+            <p>Pop Pass Avg: {{ popPassAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Wedge</b></p>
             <p>
-              Wedge Yards: {{ wedgeYards }} ({{
-                wedgeYards / totalYards | percent
-              }})
+              Wedge Yards: {{ wedgeYards }} <br />
+              ({{ wedgeYards / totalYards | percent }})
             </p>
             <p>
-              Wedge Plays: {{ wedgePlays?.length }} ({{
-                wedgePlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Wedge Plays: {{ wedgePlays?.length }} <br />
+              ({{ wedgePlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Wedge Average: {{ wedgeAvg }}</p>
+            <p>Wedge Avg: {{ wedgeAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Cross Block</b></p>
             <p>
-              Cross Block Yards: {{ crossBlockYards }} ({{
-                crossBlockYards / totalYards | percent
-              }})
+              Cross Block Yards: {{ crossBlockYards }} <br />
+              ({{ crossBlockYards / totalYards | percent }})
             </p>
             <p>
-              Cross Block Plays: {{ crossBlockPlays?.length }} ({{
+              Cross Block Plays: {{ crossBlockPlays?.length }} <br />
+              ({{
                 crossBlockPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Cross Block Average: {{ crossBlockAvg }}</p>
+            <p>Cross Block Avg: {{ crossBlockAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Counter</b></p>
             <p>
-              Counter Yards: {{ counterYards }} ({{
-                counterYards / totalYards | percent
-              }})
+              Counter Yards: {{ counterYards }} <br />
+              ({{ counterYards / totalYards | percent }})
             </p>
             <p>
-              Counter Plays: {{ counterPlays?.length }} ({{
+              Counter Plays: {{ counterPlays?.length }} <br />
+              ({{
                 counterPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Counter Average: {{ counterAvg }}</p>
+            <p>Counter Avg: {{ counterAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Belly</b></p>
             <p>
-              Belly Yards: {{ bellyYards }} ({{
-                bellyYards / totalYards | percent
-              }})
+              Belly Yards: {{ bellyYards }} <br />
+              ({{ bellyYards / totalYards | percent }})
             </p>
             <p>
-              Belly Plays: {{ bellyPlays?.length }} ({{
-                bellyPlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Belly Plays: {{ bellyPlays?.length }} <br />
+              ({{ bellyPlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Belly Average: {{ bellyAvg }}</p>
+            <p>Belly Avg: {{ bellyAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Down</b></p>
             <p>
-              Down Yards: {{ downYards }} ({{
-                downYards / totalYards | percent
-              }})
+              Down Yards: {{ downYards }} <br />
+              ({{ downYards / totalYards | percent }})
             </p>
             <p>
-              Down Plays: {{ downPlays?.length }} ({{
-                downPlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Down Plays: {{ downPlays?.length }} <br />
+              ({{ downPlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Down Average: {{ downAvg }}</p>
+            <p>Down Avg: {{ downAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Keep Pass</b></p>
             <p>
-              Keep Pass Yards: {{ keepPassYards }} ({{
-                keepPassYards / totalYards | percent
-              }})
+              Keep Pass Yards: {{ keepPassYards }} <br />
+              ({{ keepPassYards / totalYards | percent }})
             </p>
             <p>
-              Keep Pass Plays: {{ keepPassPlays?.length }} ({{
+              Keep Pass Plays: {{ keepPassPlays?.length }} <br />
+              ({{
                 keepPassPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Keep Pass Average: {{ keepPassAvg }}</p>
+            <p>Keep Pass Avg: {{ keepPassAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Reverse</b></p>
             <p>
-              Reverse Yards: {{ reverseYards }} ({{
-                reverseYards / totalYards | percent
-              }})
+              Reverse Yards: {{ reverseYards }} <br />
+              ({{ reverseYards / totalYards | percent }})
             </p>
             <p>
-              Reverse Plays: {{ reversePlays?.length }} ({{
+              Reverse Plays: {{ reversePlays?.length }} <br />
+              ({{
                 reversePlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Reverse Average: {{ reverseAvg }}</p>
+            <p>Reverse Avg: {{ reverseAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Power</b></p>
             <p>
-              Power Yards: {{ powerYards }} ({{
-                powerYards / totalYards | percent
-              }})
+              Power Yards: {{ powerYards }} <br />
+              ({{ powerYards / totalYards | percent }})
             </p>
             <p>
-              Power Plays: {{ powerPlays?.length }} ({{
-                powerPlays.length / gamePlaysArray?.data?.length | percent
-              }})
+              Power Plays: {{ powerPlays?.length }} <br />
+              ({{ powerPlays.length / gamePlaysArray?.data?.length | percent }})
             </p>
-            <p>Power Average: {{ powerAvg }}</p>
+            <p>Power Avg: {{ powerAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Pass</b></p>
             <p>
-              Pass Yards: {{ pass90Yards }} ({{
-                pass90Yards / totalYards | percent
-              }})
+              Pass Yards: {{ pass90Yards }} <br />
+              ({{ pass90Yards / totalYards | percent }})
             </p>
             <p>
-              Pass Plays: {{ pass90Plays?.length }} ({{
+              Pass Plays: {{ pass90Plays?.length }} <br />
+              ({{
                 pass90Plays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Pass Average: {{ pass90Avg }}</p>
+            <p>Pass Avg: {{ pass90Avg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Special</b></p>
             <p>
-              Special Yards: {{ specialYards }} ({{
-                specialYards / totalYards | percent
-              }})
+              Special Yards: {{ specialYards }} <br />
+              ({{ specialYards / totalYards | percent }})
             </p>
             <p>
-              Special Plays: {{ specialPlays?.length }} ({{
+              Special Plays: {{ specialPlays?.length }} <br />
+              ({{
                 specialPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Special Average: {{ specialAvg }}</p>
+            <p>Special Avg: {{ specialAvg }}</p>
           </div>
           <div fxFlex="50">
             <p><b>Screen</b></p>
             <p>
-              Screen Yards: {{ screenYards }} ({{
-                screenYards / totalYards | percent
-              }})
+              Screen Yards: {{ screenYards }} <br />
+              ({{ screenYards / totalYards | percent }})
             </p>
             <p>
-              Screen Plays: {{ screenPlays?.length }} ({{
+              Screen Plays: {{ screenPlays?.length }} <br />
+              ({{
                 screenPlays.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>Screen Average: {{ screenAvg }}</p>
+            <p>Screen Avg: {{ screenAvg }}</p>
           </div>
         </div>
       </mat-card-content>
@@ -478,30 +464,26 @@
         <div fxFlex="50">
           <p><b>Rushing</b></p>
           <p>
-            Rushing Yards: {{ totalRushYards }} ({{
-              totalRushYards / totalYards | percent
-            }})
+            Rushing Yards: {{ totalRushYards }} <br />
+            ({{ totalRushYards / totalYards | percent }})
           </p>
           <p>
-            Run Plays: {{ runPlays?.length }} ({{
-              runPlays.length / gamePlaysArray?.data?.length | percent
-            }})
+            Run Plays: {{ runPlays?.length }} <br />
+            ({{ runPlays.length / gamePlaysArray?.data?.length | percent }})
           </p>
-          <p>Run Average: {{ runAvg }}</p>
+          <p>Run Avg: {{ runAvg }}</p>
         </div>
         <div fxFlex="50">
           <p><b>Passing</b></p>
           <p>
-            Passing Yards: {{ totalPassYards }} ({{
-              totalPassYards / totalYards | percent
-            }})
+            Passing Yards: {{ totalPassYards }} <br />
+            ({{ totalPassYards / totalYards | percent }})
           </p>
           <p>
-            Pass Plays: {{ passPlays?.length }} ({{
-              passPlays.length / gamePlaysArray?.data?.length | percent
-            }})
+            Pass Plays: {{ passPlays?.length }} <br />
+            ({{ passPlays.length / gamePlaysArray?.data?.length | percent }})
           </p>
-          <p>Pass Average: {{ passAvg }}</p>
+          <p>Pass Avg: {{ passAvg }}</p>
         </div>
       </mat-card-content>
     </mat-card>
