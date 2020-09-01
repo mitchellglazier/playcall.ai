@@ -5,26 +5,31 @@
       - {{ game.outcome }} ({{ game.ourScore }} -
       {{ game.opponentScore }})</span
     >
-    <span *ngIf="game.outcome === 'Loss'" style="color: red">
-      - {{ game.outcome }} ({{ game.score }})</span
+    <span style="color: red" *ngIf="game.outcome === 'Loss'">
+      - {{ game.outcome }} ({{ game.ourScore }} -
+      {{ game.opponentScore }})</span
     >
   </h2>
   <h2 *ngIf="game?.location === 'Away'">
     Kanab @ {{ game?.team?.name }}
-    <span *ngIf="game.outcome === 'Win'" style="color: green">
-      - {{ game.outcome }} ({{ game.score }})</span
+    <span style="color: green" *ngIf="game.outcome === 'Win'">
+      - {{ game.outcome }} ({{ game.ourScore }} -
+      {{ game.opponentScore }})</span
     >
-    <span *ngIf="game.outcome === 'Loss'" style="color: red">
-      - {{ game.outcome }} ({{ game.score }})</span
+    <span style="color: red" *ngIf="game.outcome === 'Loss'">
+      - {{ game.outcome }} ({{ game.ourScore }} -
+      {{ game.opponentScore }})</span
     >
   </h2>
   <h2 *ngIf="game?.location === 'Neutral'">
     Kanab vs. {{ game?.team?.name }}
-    <span *ngIf="game.outcome === 'Win'" style="color: green">
-      - {{ game.outcome }} ({{ game.score }})</span
+    <span style="color: green" *ngIf="game.outcome === 'Win'">
+      - {{ game.outcome }} ({{ game.ourScore }} -
+      {{ game.opponentScore }})</span
     >
-    <span *ngIf="game.outcome === 'Loss'" style="color: red">
-      - {{ game.outcome }} ({{ game.score }})</span
+    <span style="color: red" *ngIf="game.outcome === 'Loss'">
+      - {{ game.outcome }} ({{ game.ourScore }} -
+      {{ game.opponentScore }})</span
     >
   </h2>
 
@@ -36,7 +41,7 @@
   <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
     <div fxLayout="row wrap">
       <!-- column -->
-      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
           ><mat-card-header>
             <mat-card-title>Total Plays</mat-card-title>
@@ -54,7 +59,7 @@
       </div>
       <!-- column -->
       <!-- column -->
-      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
           ><mat-card-header>
             <mat-card-title>Total Yards</mat-card-title> </mat-card-header
@@ -71,7 +76,7 @@
       </div>
       <!-- column -->
       <!-- column -->
-      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
           ><mat-card-header>
             <mat-card-title>Avg. Yards</mat-card-title> </mat-card-header
@@ -88,7 +93,7 @@
       </div>
       <!-- column -->
       <!-- column -->
-      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
           ><mat-card-header>
             <mat-card-title>Run Plays</mat-card-title> </mat-card-header
@@ -107,7 +112,7 @@
         >
       </div>
       <!-- column -->
-      <div fxFlex.gt-lg="20" fxFlex.gt-md="20" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-lg="20" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
           ><mat-card-header>
             <mat-card-title>Pass Plays</mat-card-title> </mat-card-header

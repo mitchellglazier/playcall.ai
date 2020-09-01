@@ -203,6 +203,17 @@ export class GameComponent implements OnInit {
     this.playsService.getPlays().subscribe((result) => {
       result.map((play) => {
         this.selectPlays.push(play.payload.doc.data());
+        this.selectPlays.sort((a, b) => {
+          const x = a.fullPlay.toLocaleString();
+          const y = b.fullPlay.toLocaleString();
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
+          return 0;
+        });
       });
       this.playsArray.data = this.selectPlays;
       if (this.playsArray.data.length) {

@@ -1,7 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { PlaysService } from "app/services/plays.service";
 import { SettingsService } from "app/services/settings.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { Play } from "app/models/play";
 
 @Component({
   selector: "app-playbook",
@@ -9,6 +13,11 @@ import { SettingsService } from "app/services/settings.service";
   styleUrls: ["./playbook.component.css"],
 })
 export class PlaybookComponent implements OnInit {
+  plays!: MatTableDataSource<any>;
+  @ViewChild("TableOnePaginator", { static: true })
+  tableOnePaginator!: MatPaginator;
+  @ViewChild("TableOneSort", { static: true }) tableOneSort!: MatSort;
+
   displayedColumns: string[] = [
     "formation",
     "name",
@@ -19,8 +28,7 @@ export class PlaybookComponent implements OnInit {
   dataSource = [];
 
   playForm!: FormGroup;
-  plays!: Array<any>;
-
+  selectPlays: Array<any> = [];
   currentSetting!: any;
 
   posArray: Array<any> = [];
@@ -32,7 +40,9 @@ export class PlaybookComponent implements OnInit {
   constructor(
     private playsService: PlaysService,
     private settingsService: SettingsService
-  ) {}
+  ) {
+    this.plays = new MatTableDataSource();
+  }
 
   ngOnInit(): void {
     this.playForm = new FormGroup({
@@ -43,10 +53,24 @@ export class PlaybookComponent implements OnInit {
       runPass: new FormControl(null),
     });
     this.playsService.getPlays().subscribe((result) => {
-      this.plays = result;
-      this.plays.sort((a, b) => {
-        const x = a.payload.doc.data().fullPlay.toLocaleString();
-        const y = b.payload.doc.data().fullPlay.toLocaleString();
+      result.map((play) => {
+        const playId = play.payload.doc.id;
+        const p: any = play.payload.doc.data();
+        const playInfo = {
+          id: playId,
+          name: p.name,
+          formation: p.formation,
+          playCat: p.playCat,
+          runPass: p.runPass,
+          fullPlay: p.fullPlay,
+          primaryPos: p.primaryPos,
+        };
+        this.selectPlays.push(playInfo);
+      });
+      this.plays.data = this.selectPlays;
+      this.plays.data.sort((a, b) => {
+        const x = a.fullPlay.toLocaleString();
+        const y = b.fullPlay.toLocaleString();
         if (x < y) {
           return -1;
         }
@@ -64,6 +88,8 @@ export class PlaybookComponent implements OnInit {
         this.posArray = this.currentSetting.positions;
         this.formationsArray = this.currentSetting.formations;
       });
+    this.plays.paginator = this.tableOnePaginator;
+    this.plays.sort = this.tableOneSort;
   }
 
   save() {
@@ -72,6 +98,10 @@ export class PlaybookComponent implements OnInit {
   }
 
   delete(element: any) {
-    this.playsService.deletePlay(element.payload.doc.id);
+    this.playsService.deletePlay(element.id);
+  }
+
+  applyFilterOne(filterValue: string) {
+    this.plays.filter = filterValue.trim().toLowerCase();
   }
 }
