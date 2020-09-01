@@ -42,68 +42,68 @@ export class GameComponent implements OnInit {
   totalYards!: number;
   avgYards!: string;
 
-  runAvg!: number;
-  passAvg!: number;
+  runAvg!: string;
+  passAvg!: string;
 
   sweepPlays: GamePlay[] = [];
   sweepYards!: number;
-  sweepAvg!: number;
+  sweepAvg!: string;
 
   trapPlays: GamePlay[] = [];
   trapYards!: number;
-  trapAvg!: number;
+  trapAvg!: string;
 
   bootPlays: GamePlay[] = [];
   bootYards!: number;
-  bootAvg!: number;
+  bootAvg!: string;
 
   popPassPlays: GamePlay[] = [];
   popPassYards!: number;
-  popPassAvg!: number;
+  popPassAvg!: string;
 
   wedgePlays: GamePlay[] = [];
   wedgeYards!: number;
-  wedgeAvg!: number;
+  wedgeAvg!: string;
 
   crossBlockPlays: GamePlay[] = [];
   crossBlockYards!: number;
-  crossBlockAvg!: number;
+  crossBlockAvg!: string;
 
   counterPlays: GamePlay[] = [];
   counterYards!: number;
-  counterAvg!: number;
+  counterAvg!: string;
 
   bellyPlays: GamePlay[] = [];
   bellyYards!: number;
-  bellyAvg!: number;
+  bellyAvg!: string;
 
   downPlays: GamePlay[] = [];
   downYards!: number;
-  downAvg!: number;
+  downAvg!: string;
 
   keepPassPlays: GamePlay[] = [];
   keepPassYards!: number;
-  keepPassAvg!: number;
+  keepPassAvg!: string;
 
   reversePlays: GamePlay[] = [];
   reverseYards!: number;
-  reverseAvg!: number;
+  reverseAvg!: string;
 
   powerPlays: GamePlay[] = [];
   powerYards!: number;
-  powerAvg!: number;
+  powerAvg!: string;
 
   pass90Plays: GamePlay[] = [];
   pass90Yards!: number;
-  pass90Avg!: number;
+  pass90Avg!: string;
 
   specialPlays: GamePlay[] = [];
   specialYards!: number;
-  specialAvg!: number;
+  specialAvg!: string;
 
   screenPlays: GamePlay[] = [];
   screenYards!: number;
-  screenAvg!: number;
+  screenAvg!: string;
 
   currentProfile!: any;
   profileUserKey = "JWaseaRYNTfFX31oH00L";
@@ -363,22 +363,26 @@ export class GameComponent implements OnInit {
     this.screenYards = this.screenPlays
       .map((p) => p.result * 1)
       .reduce((acc, value) => acc + value, 0);
-    this.runAvg = this.totalRushYards / this.runPlays.length;
-    this.passAvg = this.totalPassYards / this.passPlays.length;
-    this.sweepAvg = this.sweepYards / this.sweepPlays.length;
-    this.trapAvg = this.trapYards / this.trapPlays.length;
-    this.bootAvg = this.bootYards / this.bootPlays.length;
-    this.popPassAvg = this.popPassYards / this.popPassPlays.length;
-    this.wedgeAvg = this.wedgeYards / this.wedgePlays.length;
-    this.crossBlockAvg = this.crossBlockYards / this.crossBlockPlays.length;
-    this.counterAvg = this.counterYards / this.counterPlays.length;
-    this.bellyAvg = this.bellyYards / this.bellyPlays.length;
-    this.downAvg = this.downYards / this.downPlays.length;
-    this.keepPassAvg = this.keepPassYards / this.keepPassPlays.length;
-    this.reverseAvg = this.reverseYards / this.reversePlays.length;
-    this.powerAvg = this.powerYards / this.powerPlays.length;
-    this.pass90Avg = this.pass90Yards / this.pass90Plays.length;
-    this.specialAvg = this.specialYards / this.specialPlays.length;
-    this.screenAvg = this.screenYards / this.screenPlays.length;
+    this.runAvg = (this.totalRushYards / this.runPlays.length).toFixed(2);
+    this.passAvg = (this.totalPassYards / this.passPlays.length).toFixed(2);
+    this.sweepAvg = (this.sweepYards / this.sweepPlays.length).toFixed(2);
+    this.trapAvg = (this.trapYards / this.trapPlays.length).toFixed(2);
+    this.bootAvg = (this.bootYards / this.bootPlays.length).toFixed(2);
+    this.popPassAvg = (this.popPassYards / this.popPassPlays.length).toFixed(2);
+    this.wedgeAvg = (this.wedgeYards / this.wedgePlays.length).toFixed(2);
+    this.crossBlockAvg = (
+      this.crossBlockYards / this.crossBlockPlays.length
+    ).toFixed(2);
+    this.counterAvg = (this.counterYards / this.counterPlays.length).toFixed(2);
+    this.bellyAvg = (this.bellyYards / this.bellyPlays.length).toFixed(2);
+    this.downAvg = (this.downYards / this.downPlays.length).toFixed(2);
+    this.keepPassAvg = (this.keepPassYards / this.keepPassPlays.length).toFixed(
+      2
+    );
+    this.reverseAvg = (this.reverseYards / this.reversePlays.length).toFixed(2);
+    this.powerAvg = (this.powerYards / this.powerPlays.length).toFixed(2);
+    this.pass90Avg = (this.pass90Yards / this.pass90Plays.length).toFixed(2);
+    this.specialAvg = (this.specialYards / this.specialPlays.length).toFixed(2);
+    this.screenAvg = (this.screenYards / this.screenPlays.length).toFixed(2);
   }
 }
