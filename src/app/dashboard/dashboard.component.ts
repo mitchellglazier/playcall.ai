@@ -25,70 +25,91 @@ export class DashboardComponent implements OnInit {
   seasonRunPlays: GamePlay[] = [];
   seasonPassPlays: GamePlay[] = [];
 
-  runAvg!: number;
+  runAvg!: string;
   totalRushYards!: number;
-  passAvg!: number;
+  passAvg!: string;
   totalPassYards!: number;
 
   sweepPlays: GamePlay[] = [];
   sweepYards!: number;
-  sweepAvg!: number;
+  sweepAvg!: string;
 
   trapPlays: GamePlay[] = [];
   trapYards!: number;
-  trapAvg!: number;
+  trapAvg!: string;
 
   bootPlays: GamePlay[] = [];
   bootYards!: number;
-  bootAvg!: number;
+  bootAvg!: string;
 
   popPassPlays: GamePlay[] = [];
   popPassYards!: number;
-  popPassAvg!: number;
+  popPassAvg!: string;
 
   wedgePlays: GamePlay[] = [];
   wedgeYards!: number;
-  wedgeAvg!: number;
+  wedgeAvg!: string;
 
   crossBlockPlays: GamePlay[] = [];
   crossBlockYards!: number;
-  crossBlockAvg!: number;
+  crossBlockAvg!: string;
 
   counterPlays: GamePlay[] = [];
   counterYards!: number;
-  counterAvg!: number;
+  counterAvg!: string;
 
   bellyPlays: GamePlay[] = [];
   bellyYards!: number;
-  bellyAvg!: number;
+  bellyAvg!: string;
 
   downPlays: GamePlay[] = [];
   downYards!: number;
-  downAvg!: number;
+  downAvg!: string;
 
   keepPassPlays: GamePlay[] = [];
   keepPassYards!: number;
-  keepPassAvg!: number;
+  keepPassAvg!: string;
 
   reversePlays: GamePlay[] = [];
   reverseYards!: number;
-  reverseAvg!: number;
+  reverseAvg!: string;
 
   powerPlays: GamePlay[] = [];
   powerYards!: number;
-  powerAvg!: number;
+  powerAvg!: string;
 
   pass90Plays: GamePlay[] = [];
   pass90Yards!: number;
-  pass90Avg!: number;
+  pass90Avg!: string;
 
   specialPlays: GamePlay[] = [];
   specialYards!: number;
-  specialAvg!: number;
+  specialAvg!: string;
 
   screenPlays: GamePlay[] = [];
   screenYards!: number;
-  screenAvg!: number;
+  screenAvg!: string;
+
+  qbPlays: GamePlay[] = [];
+  lhbPlays: GamePlay[] = [];
+  rhbPlays: GamePlay[] = [];
+  fbPlays: GamePlay[] = [];
+  tePlays: GamePlay[] = [];
+  wrPlays: GamePlay[] = [];
+
+  qbYards!: number;
+  lhbYards!: number;
+  rhbYards!: number;
+  fbYards!: number;
+  teYards!: number;
+  wrYards!: number;
+
+  qbAvg!: string;
+  lhbAvg!: string;
+  rhbAvg!: string;
+  fbAvg!: string;
+  teAvg!: string;
+  wrAvg!: string;
 
   constructor(
     private playsService: PlaysService,
@@ -157,9 +178,50 @@ export class DashboardComponent implements OnInit {
         } else if (gamePlay.play.playCat === "Screen") {
           this.screenPlays.push(gamePlay);
         }
+        if (gamePlay.play.primaryPos === "QB") {
+          this.qbPlays.push(gamePlay);
+        } else if (gamePlay.play.primaryPos === "Left HB") {
+          this.lhbPlays.push(gamePlay);
+        } else if (gamePlay.play.primaryPos === "Right HB") {
+          this.rhbPlays.push(gamePlay);
+        } else if (gamePlay.play.primaryPos === "FB") {
+          this.fbPlays.push(gamePlay);
+        } else if (gamePlay.play.primaryPos === "TE") {
+          this.tePlays.push(gamePlay);
+        } else if (gamePlay.play.primaryPos === "WR") {
+          this.wrPlays.push(gamePlay);
+        }
         this.playTypeStats();
+        this.optionsStats();
       });
     });
+  }
+
+  optionsStats() {
+    this.qbYards = this.qbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.lhbYards = this.lhbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.rhbYards = this.rhbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.fbYards = this.fbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.teYards = this.tePlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.wrYards = this.wrPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.qbAvg = (this.qbYards / this.qbPlays.length).toFixed(2);
+    this.lhbAvg = (this.lhbYards / this.lhbPlays.length).toFixed(2);
+    this.rhbAvg = (this.rhbYards / this.rhbPlays.length).toFixed(2);
+    this.fbAvg = (this.fbYards / this.fbPlays.length).toFixed(2);
+    this.teAvg = (this.teYards / this.tePlays.length).toFixed(2);
+    this.wrAvg = (this.wrYards / this.wrPlays.length).toFixed(2);
   }
 
   playTypeStats() {
@@ -214,22 +276,28 @@ export class DashboardComponent implements OnInit {
     this.screenYards = this.screenPlays
       .map((p) => p.result * 1)
       .reduce((acc, value) => acc + value, 0);
-    this.runAvg = this.totalRushYards / this.seasonRunPlays.length;
-    this.passAvg = this.totalPassYards / this.seasonPassPlays.length;
-    this.sweepAvg = this.sweepYards / this.sweepPlays.length;
-    this.trapAvg = this.trapYards / this.trapPlays.length;
-    this.bootAvg = this.bootYards / this.bootPlays.length;
-    this.popPassAvg = this.popPassYards / this.popPassPlays.length;
-    this.wedgeAvg = this.wedgeYards / this.wedgePlays.length;
-    this.crossBlockAvg = this.crossBlockYards / this.crossBlockPlays.length;
-    this.counterAvg = this.counterYards / this.counterPlays.length;
-    this.bellyAvg = this.bellyYards / this.bellyPlays.length;
-    this.downAvg = this.downYards / this.downPlays.length;
-    this.keepPassAvg = this.keepPassYards / this.keepPassPlays.length;
-    this.reverseAvg = this.reverseYards / this.reversePlays.length;
-    this.powerAvg = this.powerYards / this.powerPlays.length;
-    this.pass90Avg = this.pass90Yards / this.pass90Plays.length;
-    this.specialAvg = this.specialYards / this.specialPlays.length;
-    this.screenAvg = this.screenYards / this.screenPlays.length;
+    this.runAvg = (this.totalRushYards / this.seasonRunPlays.length).toFixed(2);
+    this.passAvg = (this.totalPassYards / this.seasonPassPlays.length).toFixed(
+      2
+    );
+    this.sweepAvg = (this.sweepYards / this.sweepPlays.length).toFixed(2);
+    this.trapAvg = (this.trapYards / this.trapPlays.length).toFixed(2);
+    this.bootAvg = (this.bootYards / this.bootPlays.length).toFixed(2);
+    this.popPassAvg = (this.popPassYards / this.popPassPlays.length).toFixed(2);
+    this.wedgeAvg = (this.wedgeYards / this.wedgePlays.length).toFixed(2);
+    this.crossBlockAvg = (
+      this.crossBlockYards / this.crossBlockPlays.length
+    ).toFixed(2);
+    this.counterAvg = (this.counterYards / this.counterPlays.length).toFixed(2);
+    this.bellyAvg = (this.bellyYards / this.bellyPlays.length).toFixed(2);
+    this.downAvg = (this.downYards / this.downPlays.length).toFixed(2);
+    this.keepPassAvg = (this.keepPassYards / this.keepPassPlays.length).toFixed(
+      2
+    );
+    this.reverseAvg = (this.reverseYards / this.reversePlays.length).toFixed(2);
+    this.powerAvg = (this.powerYards / this.powerPlays.length).toFixed(2);
+    this.pass90Avg = (this.pass90Yards / this.pass90Plays.length).toFixed(2);
+    this.specialAvg = (this.specialYards / this.specialPlays.length).toFixed(2);
+    this.screenAvg = (this.screenYards / this.screenPlays.length).toFixed(2);
   }
 }

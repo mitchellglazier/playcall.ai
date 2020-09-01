@@ -109,6 +109,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>Play Type Stats</mat-card-title>
+        <mat-card-subtitle>2020 Season</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="flex wrap">
@@ -382,26 +383,93 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>Primary Option Stats</mat-card-title>
+        <mat-card-subtitle>2020 Season</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="flex wrap">
-          <div fxFlex="33">
+          <div fxFlex="50">
             <p><b>QB</b></p>
+            <p>
+              QB Yards: {{ qbYards }} ({{
+                qbYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>
+              QB Plays: {{ qbPlays?.length }} ({{
+                qbPlays.length / seasonPlays.length | percent
+              }})
+            </p>
+            <p>QB Avg: {{ qbAvg }}</p>
           </div>
-          <div fxFlex="33">
+          <div fxFlex="50">
             <p><b>Left HB</b></p>
+            <p>
+              Left HB Yards: {{ lhbYards }} ({{
+                lhbYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>
+              Left HB Plays: {{ lhbPlays?.length }} ({{
+                lhbPlays.length / seasonPlays.length | percent
+              }})
+            </p>
+            <p>Left HB Avg: {{ lhbAvg }}</p>
           </div>
-          <div fxFlex="33">
+          <div fxFlex="50">
             <p><b>Right HB</b></p>
+            <p>
+              Right HB Yards: {{ rhbYards }} ({{
+                rhbYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>
+              Right HB Plays: {{ rhbPlays?.length }} ({{
+                rhbPlays.length / seasonPlays.length | percent
+              }})
+            </p>
+            <p>Right HB Avg: {{ rhbAvg }}</p>
           </div>
-          <div fxFlex="33">
+          <div fxFlex="50">
             <p><b>FB</b></p>
+            <p>
+              FB Yards: {{ fbYards }} ({{
+                fbYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>
+              FB Plays: {{ fbPlays?.length }} ({{
+                fbPlays.length / seasonPlays.length | percent
+              }})
+            </p>
+            <p>FB Avg: {{ fbAvg }}</p>
           </div>
-          <div fxFlex="33">
+          <div fxFlex="50">
             <p><b>TE</b></p>
+            <p>
+              TE Yards: {{ teYards }} ({{
+                teYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>
+              TE Plays: {{ tePlays?.length }} ({{
+                tePlays.length / seasonPlays.length | percent
+              }})
+            </p>
+            <p>TE Avg: {{ teAvg }}</p>
           </div>
-          <div fxFlex="33">
+          <div fxFlex="50">
             <p><b>WR</b></p>
+            <p>
+              WR Yards: {{ wrYards }} ({{
+                wrYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>
+              WR Plays: {{ wrPlays?.length }} ({{
+                wrPlays.length / seasonPlays.length | percent
+              }})
+            </p>
+            <p>WR Avg: {{ wrAvg }}</p>
           </div>
         </div>
       </mat-card-content>
@@ -409,13 +477,36 @@
     <mat-card
       ><mat-card-header>
         <mat-card-title>Run Pass Stats</mat-card-title>
+        <mat-card-subtitle>2020 Season</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div fxFlex="50">
           <p><b>Rushing</b></p>
+          <p>
+            Rushing Yards: {{ totalRushYards }} ({{
+              totalRushYards / seasonTotalYards | percent
+            }})
+          </p>
+          <p>
+            Run Plays: {{ seasonRunPlays?.length }} ({{
+              seasonRunPlays.length / seasonPlays.length | percent
+            }})
+          </p>
+          <p>Run Average: {{ runAvg }}</p>
         </div>
         <div fxFlex="50">
           <p><b>Passing</b></p>
+          <p>
+            Passing Yards: {{ totalPassYards }} ({{
+              totalPassYards / seasonTotalYards | percent
+            }})
+          </p>
+          <p>
+            Pass Plays: {{ seasonPassPlays?.length }} ({{
+              seasonPassPlays.length / seasonPlays.length | percent
+            }})
+          </p>
+          <p>Pass Average: {{ passAvg }}</p>
         </div>
       </mat-card-content>
     </mat-card>
