@@ -260,6 +260,21 @@ export class GameComponent implements OnInit {
   saveGamePlay() {
     this.runPlays = [];
     this.passPlays = [];
+    this.sweepPlays = [];
+    this.trapPlays = [];
+    this.bootPlays = [];
+    this.popPassPlays = [];
+    this.wedgePlays = [];
+    this.crossBlockPlays = [];
+    this.counterPlays = [];
+    this.bellyPlays = [];
+    this.downPlays = [];
+    this.keepPassPlays = [];
+    this.reversePlays = [];
+    this.powerPlays = [];
+    this.pass90Plays = [];
+    this.specialPlays = [];
+    this.screenPlays = [];
     this.gamePlayForm.patchValue({
       date: new Date(),
     });
