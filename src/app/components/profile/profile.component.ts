@@ -1,14 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ProfileService } from "app/services/profile.service";
 import { Team } from "app/models/team";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.css"],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
+  $profileSub!: Subscription;
   profileForm!: FormGroup;
   coachesForm!: FormGroup;
   coachesArray: Array<any> = [];
@@ -31,20 +33,26 @@ export class ProfileComponent implements OnInit {
       name: new FormControl(null, Validators.required),
       position: new FormControl(null),
     });
-    this.profileService.getProfile(this.profileUserKey).subscribe((profile) => {
-      this.currentProfile = profile.payload.data();
-      this.coachesArray = this.currentProfile.coaches;
-      if (!!profile && !!this.currentProfile) {
-        this.profileForm.patchValue({
-          name: this.currentProfile.name,
-          mascot: this.currentProfile.mascot,
-          location: this.currentProfile.location,
-          primaryColor: this.currentProfile.primaryColor,
-          coaches: this.currentProfile.coaches,
-          currentCoach: this.currentProfile.currentCoach,
-        });
-      }
-    });
+    this.$profileSub = this.profileService
+      .getProfile(this.profileUserKey)
+      .subscribe((profile) => {
+        this.currentProfile = profile.payload.data();
+        this.coachesArray = this.currentProfile.coaches;
+        if (!!profile && !!this.currentProfile) {
+          this.profileForm.patchValue({
+            name: this.currentProfile.name,
+            mascot: this.currentProfile.mascot,
+            location: this.currentProfile.location,
+            primaryColor: this.currentProfile.primaryColor,
+            coaches: this.currentProfile.coaches,
+            currentCoach: this.currentProfile.currentCoach,
+          });
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.$profileSub.unsubscribe();
   }
 
   save() {

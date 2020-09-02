@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, Input, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { GamesService } from "app/services/games.service";
 import { PlaysService } from "app/services/plays.service";
@@ -8,14 +8,14 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ProfileService } from "app/services/profile.service";
-import { Subject, Observable } from "rxjs";
+import { Subject, Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.html",
   styleUrls: ["./game.component.css"],
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   gamePlaysArray!: MatTableDataSource<any>;
   displayedColumns1: string[] = ["play", "result", "delete"];
   @ViewChild("TableTwoPaginator", { static: true })
@@ -26,6 +26,10 @@ export class GameComponent implements OnInit {
   @ViewChild("TableOnePaginator", { static: true })
   tableOnePaginator!: MatPaginator;
   @ViewChild("TableOneSort", { static: true }) tableOneSort!: MatSort;
+
+  $currentProfileSub!: Subscription;
+  $gameSub!: Subscription;
+  $playsSub!: Subscription;
 
   gameId: any;
   game: any;
@@ -165,10 +169,12 @@ export class GameComponent implements OnInit {
       outcome: new FormControl(null),
       gamePlays: new FormControl(),
     });
-    this.profileService.getProfile(this.profileUserKey).subscribe((profile) => {
-      this.currentProfile = profile.payload.data();
-    });
-    this.gamesService.getGame(this.gameId).subscribe((game) => {
+    this.$currentProfileSub = this.profileService
+      .getProfile(this.profileUserKey)
+      .subscribe((profile) => {
+        this.currentProfile = profile.payload.data();
+      });
+    this.$gameSub = this.gamesService.getGame(this.gameId).subscribe((game) => {
       this.game = game.payload.data();
       if (this.game.outcome) {
         this.outcomeForm.patchValue({
@@ -240,7 +246,7 @@ export class GameComponent implements OnInit {
         });
       }
     });
-    this.playsService.getPlays().subscribe((result) => {
+    this.$playsSub = this.playsService.getPlays().subscribe((result) => {
       result.map((play) => {
         this.selectPlays.push(play.payload.doc.data());
         this.selectPlays.sort((a, b) => {
@@ -280,6 +286,12 @@ export class GameComponent implements OnInit {
     this.gamePlaysArray.paginator = this.tableTwoPaginator;
     this.playsArray.paginator = this.tableOnePaginator;
     this.playsArray.sort = this.tableOneSort;
+  }
+
+  ngOnDestroy() {
+    this.$currentProfileSub.unsubscribe();
+    this.$gameSub.unsubscribe();
+    this.$playsSub.unsubscribe();
   }
 
   delete(element: any) {

@@ -3,6 +3,7 @@ import { MediaMatcher } from "@angular/cdk/layout";
 import { MenuItems } from "../../../shared/menu-items/menu-items";
 import { ProfileService } from "app/services/profile.service";
 import { FormGroup, FormControl } from "@angular/forms";
+import { Subscribable, Subscription } from "rxjs";
 @Component({
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
@@ -16,6 +17,8 @@ export class AppSidebarComponent implements OnInit, OnDestroy {
   profileUserKey = "JWaseaRYNTfFX31oH00L";
 
   coachesArray: Array<any> = [];
+
+  $profileSub!: Subscription;
 
   private _mobileQueryListener: () => void;
 
@@ -39,24 +42,27 @@ export class AppSidebarComponent implements OnInit, OnDestroy {
       currentCoach: new FormControl(null),
       coaches: new FormControl([]),
     });
-    this.profileService.getProfile(this.profileUserKey).subscribe((profile) => {
-      this.currentProfile = profile.payload.data();
-      this.coachesArray = this.currentProfile.coaches;
-      if (!!profile && !!this.currentProfile) {
-        this.profileForm.patchValue({
-          name: this.currentProfile.name,
-          mascot: this.currentProfile.mascot,
-          location: this.currentProfile.location,
-          primaryColor: this.currentProfile.primaryColor,
-          coaches: this.currentProfile.coaches,
-          currentCoach: this.currentProfile.currentCoach,
-        });
-      }
-    });
+    this.$profileSub = this.profileService
+      .getProfile(this.profileUserKey)
+      .subscribe((profile) => {
+        this.currentProfile = profile.payload.data();
+        this.coachesArray = this.currentProfile.coaches;
+        if (!!profile && !!this.currentProfile) {
+          this.profileForm.patchValue({
+            name: this.currentProfile.name,
+            mascot: this.currentProfile.mascot,
+            location: this.currentProfile.location,
+            primaryColor: this.currentProfile.primaryColor,
+            coaches: this.currentProfile.coaches,
+            currentCoach: this.currentProfile.currentCoach,
+          });
+        }
+      });
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.$profileSub.unsubscribe();
   }
 
   setCoach(coach: any) {

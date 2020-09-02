@@ -1,13 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { TeamsService } from "app/services/teams.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-teams",
   templateUrl: "./teams.component.html",
   styleUrls: ["./teams.component.css"],
 })
-export class TeamsComponent implements OnInit {
+export class TeamsComponent implements OnInit, OnDestroy {
+  $teamsSub!: Subscription;
   displayedColumns: string[] = ["name", "mascot", "location", "primaryColor"];
   dataSource = [];
   teamForm!: FormGroup;
@@ -22,7 +24,7 @@ export class TeamsComponent implements OnInit {
       location: new FormControl(null),
       primaryColor: new FormControl(null),
     });
-    this.teamsService.getTeams().subscribe((result) => {
+    this.$teamsSub = this.teamsService.getTeams().subscribe((result) => {
       this.teams = result;
       this.teams.sort((a, b) => {
         const x = a.payload.doc.data().name.toLocaleString();
@@ -36,6 +38,10 @@ export class TeamsComponent implements OnInit {
         return 0;
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.$teamsSub.unsubscribe();
   }
 
   save() {

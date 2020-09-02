@@ -1,13 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { PlayersService } from "app/services/players.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-player",
   templateUrl: "./player.component.html",
   styleUrls: ["./player.component.css"],
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
+  $playerSub!: Subscription;
   playerId: any;
   player: any;
 
@@ -19,8 +21,14 @@ export class PlayerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.playersService.getPlayer(this.playerId).subscribe((player) => {
-      this.player = player.payload.data();
-    });
+    this.$playerSub = this.playersService
+      .getPlayer(this.playerId)
+      .subscribe((player) => {
+        this.player = player.payload.data();
+      });
+  }
+
+  ngOnDestroy() {
+    this.$playerSub.unsubscribe();
   }
 }

@@ -1,13 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { SettingsService } from "app/services/settings.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-settings",
   templateUrl: "./settings.component.html",
   styleUrls: ["./settings.component.css"],
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
+  $settingSub!: Subscription;
   catForm!: FormGroup;
   posForm!: FormGroup;
   settingForm!: FormGroup;
@@ -36,7 +38,7 @@ export class SettingsComponent implements OnInit {
       positions: new FormControl([]),
       formations: new FormControl([]),
     });
-    this.settingsService
+    this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting) => {
         this.currentSetting = setting.payload.data();
@@ -51,6 +53,10 @@ export class SettingsComponent implements OnInit {
           });
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.$settingSub.unsubscribe();
   }
 
   saveCat() {

@@ -1,14 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { GamesService } from "app/services/games.service";
 import { TeamsService } from "app/services/teams.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-schedule",
   templateUrl: "./schedule.component.html",
   styleUrls: ["./schedule.component.css"],
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit, OnDestroy {
+  $gamesSub!: Subscription;
+  $teamsSub!: Subscription;
   displayedColumns: string[] = [
     "team",
     "date",
@@ -37,7 +40,7 @@ export class ScheduleComponent implements OnInit {
       gamePlays: new FormControl([]),
       outcome: new FormControl(null),
     });
-    this.gamesService.getGames().subscribe((result) => {
+    this.$gamesSub = this.gamesService.getGames().subscribe((result) => {
       this.games = result;
       this.games.sort((a, b) => {
         const x = a.payload.doc.data().date.toLocaleString();
@@ -51,15 +54,19 @@ export class ScheduleComponent implements OnInit {
         return 0;
       });
     });
-    this.teamsService.getTeams().subscribe((result) => {
+    this.$teamsSub = this.teamsService.getTeams().subscribe((result) => {
       result.map((team) => {
         this.teams.push(team.payload.doc.data());
       });
     });
   }
 
+  ngOnDestroy() {
+    this.$gamesSub.unsubscribe();
+    this.$teamsSub.unsubscribe();
+  }
+
   save() {
-    // console.log(this.gameForm.value);
     this.gamesService.createGame(this.gameForm.value);
     this.gameForm.reset();
   }

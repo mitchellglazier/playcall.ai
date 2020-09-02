@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { PlaysService } from "app/services/plays.service";
 import { SettingsService } from "app/services/settings.service";
@@ -6,13 +6,14 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { Play } from "app/models/play";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-playbook",
   templateUrl: "./playbook.component.html",
   styleUrls: ["./playbook.component.css"],
 })
-export class PlaybookComponent implements OnInit {
+export class PlaybookComponent implements OnInit, OnDestroy {
   plays!: MatTableDataSource<any>;
   @ViewChild("TableOnePaginator", { static: true })
   tableOnePaginator!: MatPaginator;
@@ -26,6 +27,9 @@ export class PlaybookComponent implements OnInit {
     "delete",
   ];
   dataSource = [];
+
+  $playsSub!: Subscription;
+  $settingSub!: Subscription;
 
   playForm!: FormGroup;
   selectPlays: Array<any> = [];
@@ -52,7 +56,7 @@ export class PlaybookComponent implements OnInit {
       primaryPos: new FormControl(null),
       runPass: new FormControl(null),
     });
-    this.playsService.getPlays().subscribe((result) => {
+    this.$playsSub = this.playsService.getPlays().subscribe((result) => {
       result.map((play) => {
         const playId = play.payload.doc.id;
         const p: any = play.payload.doc.data();
@@ -80,7 +84,7 @@ export class PlaybookComponent implements OnInit {
         return 0;
       });
     });
-    this.settingsService
+    this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting) => {
         this.currentSetting = setting.payload.data();
@@ -90,6 +94,11 @@ export class PlaybookComponent implements OnInit {
       });
     this.plays.paginator = this.tableOnePaginator;
     this.plays.sort = this.tableOneSort;
+  }
+
+  ngOnDestroy() {
+    this.$playsSub.unsubscribe();
+    this.$settingSub.unsubscribe();
   }
 
   save() {

@@ -1,14 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
 import { PlayersService } from "app/services/players.service";
 import { Player } from "app/models/player";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-roster",
   templateUrl: "./roster.component.html",
   styleUrls: ["./roster.component.css"],
 })
-export class RosterComponent implements OnInit {
+export class RosterComponent implements OnInit, OnDestroy {
+  $playersSub!: Subscription;
   displayedColumns: string[] = ["name", "graduationYear", "delete"];
   dataSource = [];
   rosterForm!: FormGroup;
@@ -21,9 +23,13 @@ export class RosterComponent implements OnInit {
       name: new FormControl(null),
       graduationYear: new FormControl(null),
     });
-    this.playersService.getPlayers().subscribe((result) => {
+    this.$playersSub = this.playersService.getPlayers().subscribe((result) => {
       this.players = result;
     });
+  }
+
+  ngOnDestroy() {
+    this.$playersSub.unsubscribe();
   }
 
   save() {

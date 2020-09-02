@@ -1,17 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ProfileService } from "app/services/profile.service";
 import { PlayersService } from "app/services/players.service";
 import { PlaysService } from "app/services/plays.service";
 import { GamesService } from "app/services/games.service";
 import { Game } from "app/models/game";
 import { GamePlay } from "app/models/gamePlay";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   currentProfile!: any;
   profileUserKey = "JWaseaRYNTfFX31oH00L";
 
@@ -111,6 +112,11 @@ export class DashboardComponent implements OnInit {
   teAvg!: string;
   wrAvg!: string;
 
+  $profileSub!: Subscription;
+  $playersSub!: Subscription;
+  $playsSub!: Subscription;
+  $gamesSub!: Subscription;
+
   constructor(
     private playsService: PlaysService,
     private profileService: ProfileService,
@@ -119,16 +125,18 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profileService.getProfile(this.profileUserKey).subscribe((profile) => {
-      this.currentProfile = profile.payload.data();
-    });
-    this.playersService.getPlayers().subscribe((result) => {
+    this.$profileSub = this.profileService
+      .getProfile(this.profileUserKey)
+      .subscribe((profile) => {
+        this.currentProfile = profile.payload.data();
+      });
+    this.$playersSub = this.playersService.getPlayers().subscribe((result) => {
       this.players = result;
     });
-    this.playsService.getPlays().subscribe((result) => {
+    this.$playsSub = this.playsService.getPlays().subscribe((result) => {
       this.plays = result;
     });
-    this.gamesService.getGames().subscribe((result) => {
+    this.$gamesSub = this.gamesService.getGames().subscribe((result) => {
       this.games = result;
       result.map((game: any) => {
         game.payload.doc.data().gamePlays.map((gamePlay: GamePlay) => {
@@ -195,6 +203,13 @@ export class DashboardComponent implements OnInit {
         this.optionsStats();
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.$gamesSub.unsubscribe();
+    this.$playersSub.unsubscribe();
+    this.$playsSub.unsubscribe();
+    this.$profileSub.unsubscribe();
   }
 
   optionsStats() {
