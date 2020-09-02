@@ -266,12 +266,22 @@
         [formGroup]="gamePlayForm"
       >
         <mat-form-field class="example-full-width">
-          <mat-label>Play</mat-label>
-          <mat-select formControlName="play">
-            <mat-option *ngFor="let play of selectPlays" [value]="play">
-              {{ play?.fullPlay }}
+          <input
+            matInput
+            type="string"
+            [placeholder]="placeholder"
+            (keyup)="onKeyUp($event.target.value)"
+            autocomplete="off"
+            formControlName="play"
+          />
+          <div>
+            <mat-option
+              *ngFor="let result of results"
+              (click)="selectPlay(result.payload.doc.data())"
+            >
+              <div>{{ result.payload.doc.data().fullPlay }}</div>
             </mat-option>
-          </mat-select>
+          </div>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">

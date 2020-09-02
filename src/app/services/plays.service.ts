@@ -30,6 +30,16 @@ export class PlaysService {
     }
   }
 
+  searchPlay(searchValue: any) {
+    return this.db
+      .collection("plays", (ref) =>
+        ref
+          .where("fullPlay", ">=", searchValue)
+          .where("fullPlay", "<=", searchValue + "\uf8ff")
+      )
+      .snapshotChanges();
+  }
+
   getPlay(userKey: any) {
     return this.db.collection("plays").doc(userKey).snapshotChanges();
   }

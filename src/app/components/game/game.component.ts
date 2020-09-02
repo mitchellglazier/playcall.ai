@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, Input } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { GamesService } from "app/services/games.service";
 import { PlaysService } from "app/services/plays.service";
@@ -8,6 +8,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ProfileService } from "app/services/profile.service";
+import { Subject, Observable } from "rxjs";
 
 @Component({
   selector: "app-game",
@@ -128,6 +129,10 @@ export class GameComponent implements OnInit {
 
   currentProfile!: any;
   profileUserKey = "JWaseaRYNTfFX31oH00L";
+  results: any;
+
+  selectedPlay: any;
+  @Input() placeholder = "Play";
 
   constructor(
     private route: ActivatedRoute,
@@ -318,6 +323,7 @@ export class GameComponent implements OnInit {
     this.screenPlays = [];
     this.gamePlayForm.patchValue({
       date: new Date(),
+      play: this.selectedPlay,
     });
     this.gamePlaysArray.data.push(this.gamePlayForm.value);
     this.gameForm.patchValue({
@@ -365,6 +371,14 @@ export class GameComponent implements OnInit {
 
   applyFilterOne(filterValue: string) {
     this.playsArray.filter = filterValue.trim().toLowerCase();
+  }
+
+  selectPlay(play: any) {
+    this.selectedPlay = play;
+    this.gamePlayForm.patchValue({
+      play: this.selectedPlay.fullPlay,
+    });
+    this.results = [];
   }
 
   optionsStats() {
@@ -467,5 +481,13 @@ export class GameComponent implements OnInit {
     this.pass90Avg = (this.pass90Yards / this.pass90Plays.length).toFixed(2);
     this.specialAvg = (this.specialYards / this.specialPlays.length).toFixed(2);
     this.screenAvg = (this.screenYards / this.screenPlays.length).toFixed(2);
+  }
+
+  onKeyUp($event: any) {
+    if ($event.length >= 3) {
+      this.playsService.searchPlay($event).subscribe((plays) => {
+        this.results = plays;
+      });
+    }
   }
 }
