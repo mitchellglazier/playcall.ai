@@ -1,1 +1,74 @@
-<h2 style="margin-left: 15px">{{ play?.fullPlay }}</h2>
+<div style="margin-left: 15px;">
+  <h2 style="margin-left: 15px">{{ play?.fullPlay }}</h2>
+</div>
+
+<div fxLayout="row wrap">
+  <div
+    fxFlex.gt-lg="66"
+    fxFlex.gt-md="66"
+    fxFlex.gt-xs="100"
+    fxFlex="100"
+  ></div>
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Edit Play</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" style="padding: 15px" [formGroup]="playForm">
+        <mat-form-field class="example-full-width">
+          <mat-label>Formation</mat-label>
+          <mat-select formControlName="formation">
+            <mat-option value=""></mat-option>
+            <mat-option
+              *ngFor="let formation of formationsArray"
+              [value]="formation.name"
+            >
+              {{ formation.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="string" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Play Category</mat-label>
+          <mat-select formControlName="playCat">
+            <mat-option *ngFor="let cat of catArray" [value]="cat.name">
+              {{ cat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Run / Pass</mat-label>
+          <mat-select formControlName="runPass">
+            <mat-option value="Run"> Run </mat-option>
+            <mat-option value="Pass"> Pass </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Primary Option</mat-label>
+          <mat-select formControlName="primaryPos">
+            <mat-option *ngFor="let pos of posArray" [value]="pos.name">
+              {{ pos.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <div style="text-align: center; padding: 15px">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="save()"
+        >
+          Save
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</div>
