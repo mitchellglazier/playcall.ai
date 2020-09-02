@@ -105,6 +105,27 @@ export class GameComponent implements OnInit {
   screenYards!: number;
   screenAvg!: string;
 
+  qbPlays: GamePlay[] = [];
+  lhbPlays: GamePlay[] = [];
+  rhbPlays: GamePlay[] = [];
+  fbPlays: GamePlay[] = [];
+  tePlays: GamePlay[] = [];
+  wrPlays: GamePlay[] = [];
+
+  qbYards!: number;
+  lhbYards!: number;
+  rhbYards!: number;
+  fbYards!: number;
+  teYards!: number;
+  wrYards!: number;
+
+  qbAvg!: string;
+  lhbAvg!: string;
+  rhbAvg!: string;
+  fbAvg!: string;
+  teAvg!: string;
+  wrAvg!: string;
+
   currentProfile!: any;
   profileUserKey = "JWaseaRYNTfFX31oH00L";
 
@@ -196,7 +217,21 @@ export class GameComponent implements OnInit {
           } else if (gamePlay.play.playCat === "Screen") {
             this.screenPlays.push(gamePlay);
           }
+          if (gamePlay.play.primaryPos === "QB") {
+            this.qbPlays.push(gamePlay);
+          } else if (gamePlay.play.primaryPos === "Left HB") {
+            this.lhbPlays.push(gamePlay);
+          } else if (gamePlay.play.primaryPos === "Right HB") {
+            this.rhbPlays.push(gamePlay);
+          } else if (gamePlay.play.primaryPos === "FB") {
+            this.fbPlays.push(gamePlay);
+          } else if (gamePlay.play.primaryPos === "TE") {
+            this.tePlays.push(gamePlay);
+          } else if (gamePlay.play.primaryPos === "WR") {
+            this.wrPlays.push(gamePlay);
+          }
           this.playTypeStats();
+          this.optionsStats();
         });
       }
     });
@@ -258,6 +293,12 @@ export class GameComponent implements OnInit {
   }
 
   saveGamePlay() {
+    this.qbPlays = [];
+    this.lhbPlays = [];
+    this.rhbPlays = [];
+    this.fbPlays = [];
+    this.tePlays = [];
+    this.wrPlays = [];
     this.runPlays = [];
     this.passPlays = [];
     this.sweepPlays = [];
@@ -324,6 +365,33 @@ export class GameComponent implements OnInit {
 
   applyFilterOne(filterValue: string) {
     this.playsArray.filter = filterValue.trim().toLowerCase();
+  }
+
+  optionsStats() {
+    this.qbYards = this.qbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.lhbYards = this.lhbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.rhbYards = this.rhbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.fbYards = this.fbPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.teYards = this.tePlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.wrYards = this.wrPlays
+      .map((p) => p.result * 1)
+      .reduce((acc, value) => acc + value, 0);
+    this.qbAvg = (this.qbYards / this.qbPlays.length).toFixed(2);
+    this.lhbAvg = (this.lhbYards / this.lhbPlays.length).toFixed(2);
+    this.rhbAvg = (this.rhbYards / this.rhbPlays.length).toFixed(2);
+    this.fbAvg = (this.fbYards / this.fbPlays.length).toFixed(2);
+    this.teAvg = (this.teYards / this.tePlays.length).toFixed(2);
+    this.wrAvg = (this.wrYards / this.wrPlays.length).toFixed(2);
   }
 
   playTypeStats() {

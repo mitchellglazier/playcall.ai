@@ -154,8 +154,8 @@
 
       <mat-paginator
         #TableOnePaginator="matPaginator"
-        [pageSize]="20"
-        [pageSizeOptions]="[10, 20, 50, 100]"
+        [pageSize]="25"
+        [pageSizeOptions]="[10, 25, 50, 100]"
         class="mat-elevation-z8"
       ></mat-paginator>
     </div>
@@ -210,6 +210,48 @@
         </button>
       </div>
     </mat-card>
+    <div style="margin: 15px">
+      <mat-table [dataSource]="gamePlaysArray" class="mat-elevation-z8">
+        <!-- play Column -->
+        <ng-container matColumnDef="play">
+          <mat-header-cell *matHeaderCellDef> Play </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.play?.fullPlay }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- result Column -->
+        <ng-container matColumnDef="result">
+          <mat-header-cell *matHeaderCellDef> Result </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.result }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span
+              class="material-icons"
+              style="color: red; cursor: pointer"
+              (click)="delete(element)"
+            >
+              delete_forever
+            </span>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns1"></mat-row>
+      </mat-table>
+      <mat-paginator
+        #TableTwoPaginator="matPaginator"
+        [pageSize]="25"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+        class="mat-elevation-z8"
+      ></mat-paginator>
+    </div>
   </div>
   <!-- column -->
   <!-- column -->
@@ -487,49 +529,88 @@
         </div>
       </mat-card-content>
     </mat-card>
-
-    <div style="margin: 15px">
-      <mat-table [dataSource]="gamePlaysArray" class="mat-elevation-z8">
-        <!-- play Column -->
-        <ng-container matColumnDef="play">
-          <mat-header-cell *matHeaderCellDef> Play </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element?.play?.fullPlay }}
-          </mat-cell>
-        </ng-container>
-
-        <!-- result Column -->
-        <ng-container matColumnDef="result">
-          <mat-header-cell *matHeaderCellDef> Result </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element?.result }}
-          </mat-cell>
-        </ng-container>
-
-        <!-- Delete Column -->
-        <ng-container matColumnDef="delete">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <span
-              class="material-icons"
-              style="color: red; cursor: pointer"
-              (click)="delete(element)"
-            >
-              delete_forever
-            </span>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns1"></mat-row>
-      </mat-table>
-      <mat-paginator
-        #TableTwoPaginator="matPaginator"
-        [pageSize]="10"
-        [pageSizeOptions]="[10, 20, 50, 100]"
-        class="mat-elevation-z8"
-      ></mat-paginator>
-    </div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Primary Option Stats</mat-card-title>
+        <mat-card-subtitle>2020 Season</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="flex wrap">
+          <div fxFlex="50">
+            <p><b>QB</b></p>
+            <p>
+              QB Yards: {{ qbYards }} <br />
+              ({{ qbYards / totalYards | percent }})
+            </p>
+            <p>
+              QB Plays: {{ qbPlays?.length }} <br />
+              ({{ qbPlays?.length / gamePlaysArray.data.length | percent }})
+            </p>
+            <p>QB Avg: {{ qbAvg }}</p>
+          </div>
+          <div fxFlex="50">
+            <p><b>Left HB</b></p>
+            <p>
+              LHB Yards: {{ lhbYards }} <br />
+              ({{ lhbYards / totalYards | percent }})
+            </p>
+            <p>
+              LHB Plays: {{ lhbPlays?.length }} <br />
+              ({{ lhbPlays?.length / gamePlaysArray.data.length | percent }})
+            </p>
+            <p>LHB Avg: {{ lhbAvg }}</p>
+          </div>
+          <div fxFlex="50">
+            <p><b>Right HB</b></p>
+            <p>
+              RHB Yards: {{ rhbYards }} <br />
+              ({{ rhbYards / totalYards | percent }})
+            </p>
+            <p>
+              RHB Plays: {{ rhbPlays?.length }} <br />
+              ({{ rhbPlays?.length / gamePlaysArray.data.length | percent }})
+            </p>
+            <p>RHB Avg: {{ rhbAvg }}</p>
+          </div>
+          <div fxFlex="50">
+            <p><b>FB</b></p>
+            <p>
+              FB Yards: {{ fbYards }} <br />
+              ({{ fbYards / totalYards | percent }})
+            </p>
+            <p>
+              FB Plays: {{ fbPlays?.length }} <br />
+              ({{ fbPlays?.length / gamePlaysArray.data.length | percent }})
+            </p>
+            <p>FB Avg: {{ fbAvg }}</p>
+          </div>
+          <div fxFlex="50">
+            <p><b>TE</b></p>
+            <p>
+              TE Yards: {{ teYards }} <br />
+              ({{ teYards / totalYards | percent }})
+            </p>
+            <p>
+              TE Plays: {{ tePlays?.length }} <br />
+              ({{ tePlays?.length / gamePlaysArray.data.length | percent }})
+            </p>
+            <p>TE Avg: {{ teAvg }}</p>
+          </div>
+          <div fxFlex="50">
+            <p><b>WR</b></p>
+            <p>
+              WR Yards: {{ wrYards }} <br />
+              ({{ wrYards / totalYards | percent }})
+            </p>
+            <p>
+              WR Plays: {{ wrPlays?.length }} <br />
+              ({{ wrPlays?.length / gamePlaysArray.data.length | percent }})
+            </p>
+            <p>WR Avg: {{ wrAvg }}</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
   <!-- column -->
 </div>
