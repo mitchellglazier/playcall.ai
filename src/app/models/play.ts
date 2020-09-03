@@ -8,5 +8,6 @@ export interface Play {
   primaryPos: string;
   gameCount: number; //front end only
   gameAvg: number; //front end only
-  seasonAvg: number; //front end only
+  seasonAvg: string; //front end only
+  seasonCount: number; //front end only
 }
