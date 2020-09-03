@@ -1,11 +1,20 @@
 import { Routes } from "@angular/router";
 
 import { FullComponent } from "./layouts/full/full.component";
+import { LoginComponent } from "./login/login.component";
+
+import { AuthGuard } from "./services/auth.guard";
 
 export const AppRoutes: Routes = [
   {
+    path: "login",
+    loadChildren: () =>
+      import("./login/login.module").then((m) => m.LoginModule),
+  },
+  {
     path: "",
     component: FullComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "",

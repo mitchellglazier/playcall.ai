@@ -20,8 +20,8 @@ import { PlayComponent } from "./play/play.component";
 import { TeamComponent } from "./team/team.component";
 import { GameComponent } from "./game/game.component";
 import { PlayerComponent } from "./player/player.component";
-import { ProfileComponent } from './profile/profile.component';
-import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from "./profile/profile.component";
+import { SettingsComponent } from "./settings/settings.component";
 
 @NgModule({
   imports: [

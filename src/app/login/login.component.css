@@ -1,0 +1,5 @@
+.background {
+  height: 100%;
+  background-color: rgb(28, 125, 225);
+  overflow-x: hidden;
+}

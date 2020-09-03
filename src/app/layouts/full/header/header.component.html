@@ -1,5 +1,5 @@
 <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-  <img src="assets/images/users/peck.jpeg" alt="Peck" class="profile-pic" />
+  <img src="assets/images/settings.png" alt="Settings" class="profile-pic" />
 </button>
 <mat-menu #profile="matMenu" class="mymegamenu">
   <button mat-menu-item [routerLink]="['/settings']">
@@ -8,5 +8,7 @@
   <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>account_box</mat-icon> Profile
   </button>
-  <button mat-menu-item><mat-icon>exit_to_app</mat-icon> Sign Out</button>
+  <button (click)="signOut()" mat-menu-item>
+    <mat-icon>exit_to_app</mat-icon> Sign Out
+  </button>
 </mat-menu>

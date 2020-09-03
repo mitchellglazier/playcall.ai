@@ -1,0 +1,69 @@
+<div class="background">
+  <br />
+  <h1 style="text-align: center; color: white">Welcome to PlayCall.AI</h1>
+  <h4 style="text-align: center; color: white">
+    <i>"Intelligence in the Sky"</i>
+  </h4>
+
+  <br />
+
+  <div fxLayout="row wrap">
+    <div
+      fxFlex.gt-lg="33"
+      fxFlex.gt-md="33"
+      fxFlex.gt-xs="100"
+      fxFlex="100"
+    ></div>
+    <mat-card
+      class="mat-elevation-z0"
+      fxFlex.gt-lg="33"
+      fxFlex.gt-md="33"
+      fxFlex.gt-xs="100"
+      fxFlex="100"
+    >
+      <mat-card-header style="justify-content: center">
+        <mat-card-title>Login to PlayCall.AI</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+
+      <div class="login">
+        <form
+          style="padding: 15px"
+          [formGroup]="loginForm"
+          class="login-container"
+          (ngSubmit)="signIn()"
+        >
+          <mat-form-field>
+            <input
+              matInput
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+          </mat-form-field>
+
+          <div style="text-align: center">
+            <button mat-stroked-button color="primary" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+    <div
+      fxFlex.gt-lg="33"
+      fxFlex.gt-md="33"
+      fxFlex.gt-xs="100"
+      fxFlex="100"
+    ></div>
+  </div>
+</div>
