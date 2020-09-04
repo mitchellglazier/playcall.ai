@@ -65,7 +65,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
   selectedPlay: any;
   @Input() placeholder = "Play";
-  // seasonPlays: GamePlay[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -128,7 +127,6 @@ export class GameComponent implements OnInit, OnDestroy {
             this.passPlays.push(gamePlay);
           }
           this.playTypeStats();
-          this.optionsStats();
         });
       }
     });
@@ -186,7 +184,6 @@ export class GameComponent implements OnInit, OnDestroy {
         this.playsArray.data.map((play) => {
           const playName = play.fullPlay;
           const gamePlays: Array<any> = [];
-          // const seasonPlays: Array<any> = [];
           if (this.gamePlaysArray.data) {
             this.gamePlaysArray.data.map((gamePlay) => {
               if (gamePlay.play.fullPlay === playName) {
@@ -202,29 +199,6 @@ export class GameComponent implements OnInit, OnDestroy {
               }
             });
           }
-          // this.$gamesSub = this.gamesService.getGames().subscribe((r) => {
-          //   r.map((game: any) => {
-          //     game.payload.doc.data().gamePlays.map((gp: GamePlay) => {
-          //       this.seasonPlays.push(gp);
-          //     });
-          //     if (this.seasonPlays) {
-          //       this.seasonPlays.map((sgp: GamePlay) => {
-          //         if (sgp.play.fullPlay === playName) {
-          //           seasonPlays.push(sgp);
-          //         }
-
-          //         if (seasonPlays.length) {
-          //           play.seasonAvg = (
-          //             seasonPlays
-          //               .map((p) => p.result * 1)
-          //               .reduce((acc, value) => acc + value, 0) /
-          //             seasonPlays.length
-          //           ).toFixed(2);
-          //         }
-          //       });
-          //     }
-          //   });
-          // });
         });
       }
     });
@@ -271,8 +245,6 @@ export class GameComponent implements OnInit, OnDestroy {
       outcome: this.game.outcome,
       gamePlays: this.gamePlaysArray.data,
     });
-    this.gamesService.updateGame(this.gameId, this.gameForm.value);
-    this.gamePlayForm.reset();
     this.playsArray.data = this.selectPlays;
     this.playsArray.data.map((play) => {
       const playName = play.fullPlay;
@@ -290,6 +262,8 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       });
     });
+    this.gamesService.updateGame(this.gameId, this.gameForm.value);
+    this.gamePlayForm.reset();
   }
 
   saveOutcome() {
@@ -317,33 +291,6 @@ export class GameComponent implements OnInit, OnDestroy {
     this.results = [];
   }
 
-  optionsStats() {
-    // this.qbYards = this.qbPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.lhbYards = this.lhbPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.rhbYards = this.rhbPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.fbYards = this.fbPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.teYards = this.tePlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.wrYards = this.wrPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.qbAvg = (this.qbYards / this.qbPlays.length).toFixed(2);
-    // this.lhbAvg = (this.lhbYards / this.lhbPlays.length).toFixed(2);
-    // this.rhbAvg = (this.rhbYards / this.rhbPlays.length).toFixed(2);
-    // this.fbAvg = (this.fbYards / this.fbPlays.length).toFixed(2);
-    // this.teAvg = (this.teYards / this.tePlays.length).toFixed(2);
-    // this.wrAvg = (this.wrYards / this.wrPlays.length).toFixed(2);
-  }
-
   playTypeStats() {
     this.totalRushYards = this.runPlays
       .map((p) => p.result * 1)
@@ -351,72 +298,8 @@ export class GameComponent implements OnInit, OnDestroy {
     this.totalPassYards = this.passPlays
       .map((p) => p.result * 1)
       .reduce((acc, value) => acc + value, 0);
-    // this.sweepYards = this.sweepPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.trapYards = this.trapPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.bootYards = this.bootPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.popPassYards = this.popPassPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.wedgeYards = this.wedgePlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.crossBlockYards = this.crossBlockPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.counterYards = this.counterPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.bellyYards = this.bellyPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.downYards = this.downPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.keepPassYards = this.keepPassPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.reverseYards = this.reversePlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.powerYards = this.powerPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.pass90Yards = this.pass90Plays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.specialYards = this.specialPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
-    // this.screenYards = this.screenPlays
-    //   .map((p) => p.result * 1)
-    //   .reduce((acc, value) => acc + value, 0);
     this.runAvg = (this.totalRushYards / this.runPlays.length).toFixed(2);
     this.passAvg = (this.totalPassYards / this.passPlays.length).toFixed(2);
-    // this.sweepAvg = (this.sweepYards / this.sweepPlays.length).toFixed(2);
-    // this.trapAvg = (this.trapYards / this.trapPlays.length).toFixed(2);
-    // this.bootAvg = (this.bootYards / this.bootPlays.length).toFixed(2);
-    // this.popPassAvg = (this.popPassYards / this.popPassPlays.length).toFixed(2);
-    // this.wedgeAvg = (this.wedgeYards / this.wedgePlays.length).toFixed(2);
-    // this.crossBlockAvg = (
-    //   this.crossBlockYards / this.crossBlockPlays.length
-    // ).toFixed(2);
-    // this.counterAvg = (this.counterYards / this.counterPlays.length).toFixed(2);
-    // this.bellyAvg = (this.bellyYards / this.bellyPlays.length).toFixed(2);
-    // this.downAvg = (this.downYards / this.downPlays.length).toFixed(2);
-    // this.keepPassAvg = (this.keepPassYards / this.keepPassPlays.length).toFixed(
-    //   2
-    // );
-    // this.reverseAvg = (this.reverseYards / this.reversePlays.length).toFixed(2);
-    // this.powerAvg = (this.powerYards / this.powerPlays.length).toFixed(2);
-    // this.pass90Avg = (this.pass90Yards / this.pass90Plays.length).toFixed(2);
-    // this.specialAvg = (this.specialYards / this.specialPlays.length).toFixed(2);
-    // this.screenAvg = (this.screenYards / this.screenPlays.length).toFixed(2);
   }
 
   onKeyUp($event: any) {
