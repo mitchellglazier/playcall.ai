@@ -4,6 +4,8 @@ import { PlaysService } from "app/services/plays.service";
 import { SettingsService } from "app/services/settings.service";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { GamesService } from "app/services/games.service";
+import { GamePlay } from "app/models/gamePlay";
 
 @Component({
   selector: "app-play",
@@ -15,6 +17,9 @@ export class PlayComponent implements OnInit, OnDestroy {
   $playSub!: Subscription;
   playId: any;
   play: any;
+  plays: GamePlay[] = [];
+  playYards!: number;
+  playAvg!: string;
 
   playForm!: FormGroup;
 
@@ -29,7 +34,8 @@ export class PlayComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private playsService: PlaysService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private gamesService: GamesService
   ) {
     this.playId = this.route.snapshot.paramMap.get("id");
   }
@@ -60,6 +66,19 @@ export class PlayComponent implements OnInit, OnDestroy {
           playCat: this.play.playCat,
           primaryPos: this.play.primaryPos,
           runPass: this.play.runPass,
+        });
+        this.gamesService.getGames().subscribe((results) => {
+          results.map((game: any) => {
+            game.payload.doc.data().gamePlays.map((gamePlay: GamePlay) => {
+              if (gamePlay.play.fullPlay === this.play.fullPlay) {
+                this.plays.push(gamePlay);
+              }
+            });
+          });
+          this.playYards = this.plays
+            .map((p) => p.result * 1)
+            .reduce((acc, value) => acc + value, 0);
+          this.playAvg = (this.playYards / this.plays.length).toFixed(2);
         });
       }
     });
