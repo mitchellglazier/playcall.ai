@@ -1,50 +1,73 @@
-<h2 style="margin-left: 15px">Roster ({{ players?.length }})</h2>
+<h2 style="margin-left: 15px">Roster ({{ players?.data?.length }})</h2>
 
 <div fxLayout="row wrap">
   <!-- column -->
   <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
-    <mat-table
-      [dataSource]="players"
-      class="mat-elevation-z8"
-      style="margin: 15px"
-    >
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().name }}
-        </mat-cell>
-      </ng-container>
+    <div style="margin: 15px">
+      <mat-form-field>
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Search Player"
+        />
+      </mat-form-field>
+      <mat-table
+        [dataSource]="players"
+        matSort
+        #TableOneSort="matSort"
+        class="mat-elevation-z8"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.name }}
+          </mat-cell>
+        </ng-container>
 
-      <!-- Year Column -->
-      <ng-container matColumnDef="graduationYear">
-        <mat-header-cell *matHeaderCellDef> Graduation Year </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().graduationYear }}
-        </mat-cell>
-      </ng-container>
+        <!-- Year Column -->
+        <ng-container matColumnDef="graduationYear">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Graduation Year
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.graduationYear }}
+          </mat-cell>
+        </ng-container>
 
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
-          <span
-            class="material-icons"
-            style="color: red; cursor: pointer"
-            (click)="delete(element)"
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            (click)="$event.stopPropagation()"
           >
-            delete_forever
-          </span>
-        </mat-cell>
-      </ng-container>
+            <span
+              class="material-icons"
+              style="color: red; cursor: pointer"
+              (click)="delete(element)"
+            >
+              delete_forever
+            </span>
+          </mat-cell>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        style="cursor: pointer"
-        [routerLink]="['/player/', row.payload.doc.id]"
-      ></mat-row>
-    </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          style="cursor: pointer"
+          [routerLink]="['/player/', row.id]"
+        ></mat-row>
+      </mat-table>
+      <mat-paginator
+        #TableOnePaginator="matPaginator"
+        [pageSize]="10"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+        class="mat-elevation-z8"
+      ></mat-paginator>
+    </div>
   </div>
   <!-- column -->
   <!-- column -->
@@ -74,6 +97,19 @@
           Save
         </button>
       </div>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Classes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p *ngFor="let class of graduationArray">
+          <span
+            ><b>{{ class.year }}</b></span
+          >
+          - {{ class?.players?.length }} Players
+        </p>
+      </mat-card-content>
     </mat-card>
   </div>
   <!-- column -->
