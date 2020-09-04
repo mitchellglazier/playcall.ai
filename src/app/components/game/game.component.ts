@@ -22,7 +22,7 @@ export class GameComponent implements OnInit, OnDestroy {
   tableTwoPaginator!: MatPaginator;
 
   playsArray!: MatTableDataSource<any>;
-  displayedColumns2: string[] = ["play", "gameCount", "gameAvg", "seasonAvg"];
+  displayedColumns2: string[] = ["play", "gameCount", "gameAvg"];
   @ViewChild("TableOnePaginator", { static: true })
   tableOnePaginator!: MatPaginator;
   @ViewChild("TableOneSort", { static: true }) tableOneSort!: MatSort;
@@ -138,7 +138,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   selectedPlay: any;
   @Input() placeholder = "Play";
-  seasonPlays: GamePlay[] = [];
+  // seasonPlays: GamePlay[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -257,7 +257,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.playsArray.data.map((play) => {
           const playName = play.fullPlay;
           const gamePlays: Array<any> = [];
-          const seasonPlays: Array<any> = [];
+          // const seasonPlays: Array<any> = [];
           if (this.gamePlaysArray.data) {
             this.gamePlaysArray.data.map((gamePlay) => {
               if (gamePlay.play.fullPlay === playName) {
@@ -273,29 +273,29 @@ export class GameComponent implements OnInit, OnDestroy {
               }
             });
           }
-          this.$gamesSub = this.gamesService.getGames().subscribe((r) => {
-            r.map((game: any) => {
-              game.payload.doc.data().gamePlays.map((gp: GamePlay) => {
-                this.seasonPlays.push(gp);
-              });
-              if (this.seasonPlays) {
-                this.seasonPlays.map((sgp: GamePlay) => {
-                  if (sgp.play.fullPlay === playName) {
-                    seasonPlays.push(sgp);
-                  }
+          // this.$gamesSub = this.gamesService.getGames().subscribe((r) => {
+          //   r.map((game: any) => {
+          //     game.payload.doc.data().gamePlays.map((gp: GamePlay) => {
+          //       this.seasonPlays.push(gp);
+          //     });
+          //     if (this.seasonPlays) {
+          //       this.seasonPlays.map((sgp: GamePlay) => {
+          //         if (sgp.play.fullPlay === playName) {
+          //           seasonPlays.push(sgp);
+          //         }
 
-                  if (seasonPlays.length) {
-                    play.seasonAvg = (
-                      seasonPlays
-                        .map((p) => p.result * 1)
-                        .reduce((acc, value) => acc + value, 0) /
-                      seasonPlays.length
-                    ).toFixed(2);
-                  }
-                });
-              }
-            });
-          });
+          //         if (seasonPlays.length) {
+          //           play.seasonAvg = (
+          //             seasonPlays
+          //               .map((p) => p.result * 1)
+          //               .reduce((acc, value) => acc + value, 0) /
+          //             seasonPlays.length
+          //           ).toFixed(2);
+          //         }
+          //       });
+          //     }
+          //   });
+          // });
         });
       }
     });
