@@ -48,6 +48,7 @@ export class PlayComponent implements OnInit, OnDestroy {
       primaryPos: new FormControl(null),
       runPass: new FormControl(null),
       fullPlay: new FormControl(null),
+      Direction: new FormControl(null),
     });
     this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
@@ -66,6 +67,7 @@ export class PlayComponent implements OnInit, OnDestroy {
           playCat: this.play.playCat,
           primaryPos: this.play.primaryPos,
           runPass: this.play.runPass,
+          Direction: this.play.Direction,
         });
         this.gamesService.getGames().subscribe((results) => {
           results.map((game: any) => {

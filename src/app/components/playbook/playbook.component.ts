@@ -24,6 +24,8 @@ export class PlaybookComponent implements OnInit, OnDestroy {
     "name",
     "playCat",
     "runPass",
+    "primaryPos",
+    "direction",
     "delete",
   ];
   dataSource = [];
@@ -55,6 +57,7 @@ export class PlaybookComponent implements OnInit, OnDestroy {
       playCat: new FormControl(null),
       primaryPos: new FormControl(null),
       runPass: new FormControl(null),
+      Direction: new FormControl(null),
     });
     this.$playsSub = this.playsService.getPlays().subscribe((result) => {
       result.map((play) => {
@@ -68,6 +71,7 @@ export class PlaybookComponent implements OnInit, OnDestroy {
           runPass: p.runPass,
           fullPlay: p.fullPlay,
           primaryPos: p.primaryPos,
+          Direction: p.Direction,
         };
         this.selectPlays.push(playInfo);
       });

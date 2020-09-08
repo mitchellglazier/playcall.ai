@@ -16,6 +16,7 @@ export class PlaysService {
         playCat: play.playCat,
         runPass: play.runPass,
         primaryPos: play.primaryPos,
+        Direction: play.Direction,
         fullPlay: play.formation + " " + play.name,
       });
     } else {

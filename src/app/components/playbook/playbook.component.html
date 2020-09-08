@@ -56,6 +56,26 @@
           </mat-cell>
         </ng-container>
 
+        <!-- Primary Position Column -->
+        <ng-container matColumnDef="primaryPos">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Primary Position
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.primaryPos }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Direction Column -->
+        <ng-container matColumnDef="direction">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Direction
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.Direction }}
+          </mat-cell>
+        </ng-container>
+
         <!-- Delete Column -->
         <ng-container matColumnDef="delete">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -138,6 +158,15 @@
             <mat-option *ngFor="let pos of posArray" [value]="pos.name">
               {{ pos.name }}
             </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Direction</mat-label>
+          <mat-select formControlName="Direction">
+            <mat-option value="Left"> Left </mat-option>
+            <mat-option value="Right"> Right </mat-option>
+            <mat-option value="Neutral"> Neutral </mat-option>
           </mat-select>
         </mat-form-field>
       </form>
