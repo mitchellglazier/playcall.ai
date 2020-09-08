@@ -38,7 +38,7 @@
 
 <div fxLayout="row wrap">
   <!-- column -->
-  <div fxFlex.gt-lg="60" fxFlex.gt-md="60" fxFlex.gt-xs="100" fxFlex="100">
+  <div fxFlex.gt-lg="66" fxFlex.gt-md="60" fxFlex.gt-xs="100" fxFlex="100">
     <div fxLayout="row wrap">
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
@@ -255,7 +255,7 @@
   </div>
   <!-- column -->
   <!-- column -->
-  <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
+  <div fxFlex.gt-lg="33" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Create New Game Play</mat-card-title>
@@ -302,38 +302,29 @@
       </div>
     </mat-card>
 
-    <mat-card>
+    <mat-card *ngFor="let playCat of playTypesArray">
       <mat-card-header>
-        <mat-card-title>Play Type Stats</mat-card-title>
+        <mat-card-title
+          ><b>{{ playCat.name }} </b> - {{ playCat?.plays?.length }} Plays ({{
+            playCat?.plays?.length / gamePlaysArray?.data?.length | percent
+          }})</mat-card-title
+        >
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="flex wrap">
-          <div fxFlex="50" *ngFor="let playCat of playTypesArray">
+          <div fxFlex="60">
             <p>
-              <b>{{ playCat.name }}</b>
-            </p>
-            <p>
-              {{ playCat.name }} Yards: <b>{{ playCat.totalYards }}</b> <br />
-              ({{ playCat.totalYards / totalYards | percent }})
-            </p>
-            <p>
-              {{ playCat.name }} Plays: <b>{{ playCat?.plays?.length }}</b>
-              <br />
-              ({{
-                playCat?.plays?.length / gamePlaysArray?.data?.length | percent
+              Total Yards: {{ playCat.totalYards }} ({{
+                playCat.totalYards / totalYards | percent
               }})
             </p>
-            <p>
-              {{ playCat.name }} Avg: <b>{{ playCat.avgYards }}</b>
-            </p>
-            <p>
-              {{ playCat.name }} Right Avg:
-              <b>{{ playCat.rightAvgYards || "--" }}</b>
-            </p>
-            <p>
-              {{ playCat.name }} Left Avg:
-              <b>{{ playCat.leftAvgYards || "--" }}</b>
-            </p>
+            <p>Right Yards: {{ playCat.rightYards || "0" }} Yards</p>
+            <p>Left Yards: {{ playCat.leftYards || "0" }} Yards</p>
+          </div>
+          <div fxFlex="40">
+            <p>{{ playCat.avgYards }} Avg</p>
+            <p>Right Avg: {{ playCat.rightAvgYards || "0.00" }}</p>
+            <p>Left Avg: {{ playCat.leftAvgYards || "0.00" }}</p>
           </div>
         </div>
       </mat-card-content>
