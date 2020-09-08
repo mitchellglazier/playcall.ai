@@ -10,6 +10,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ProfileService } from "app/services/profile.service";
 import { Subject, Observable, Subscription } from "rxjs";
 import { SettingsService } from "app/services/settings.service";
+import { Play } from "app/models/play";
 
 @Component({
   selector: "app-game",
@@ -145,6 +146,32 @@ export class GameComponent implements OnInit, OnDestroy {
           this.playTypesArray.push({ name: playCat, plays: catPlays });
           if (this.playTypesArray.length) {
             this.playTypesArray.map((pc) => {
+              const rightPlays: Array<any> = [];
+              const leftPlays: Array<any> = [];
+              pc.plays.map((play: GamePlay) => {
+                if (play.play.Direction === "Right") {
+                  rightPlays.push(play);
+                  console.log(rightPlays);
+                } else if (play.play.Direction === "Left") {
+                  leftPlays.push(play);
+                }
+                if (rightPlays.length) {
+                  pc.rightYards = rightPlays
+                    .map((p: any) => p.result * 1)
+                    .reduce((acc: any, value: any) => acc + value, 0);
+                  pc.rightAvgYards = (
+                    pc.rightYards / rightPlays.length
+                  ).toFixed(2);
+                }
+                if (leftPlays.length) {
+                  pc.leftYards = leftPlays
+                    .map((p: any) => p.result * 1)
+                    .reduce((acc: any, value: any) => acc + value, 0);
+                  pc.leftAvgYards = (pc.leftYards / leftPlays.length).toFixed(
+                    2
+                  );
+                }
+              });
               pc.totalYards = pc.plays
                 .map((p: any) => p.result * 1)
                 .reduce((acc: any, value: any) => acc + value, 0);

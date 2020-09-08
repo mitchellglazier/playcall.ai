@@ -38,7 +38,7 @@
 
 <div fxLayout="row wrap">
   <!-- column -->
-  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+  <div fxFlex.gt-lg="60" fxFlex.gt-md="60" fxFlex.gt-xs="100" fxFlex="100">
     <div fxLayout="row wrap">
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
@@ -255,7 +255,7 @@
   </div>
   <!-- column -->
   <!-- column -->
-  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+  <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Create New Game Play</mat-card-title>
@@ -313,17 +313,27 @@
               <b>{{ playCat.name }}</b>
             </p>
             <p>
-              {{ playCat.name }} Yards: {{ playCat.totalYards }} <br />
+              {{ playCat.name }} Yards: <b>{{ playCat.totalYards }}</b> <br />
               ({{ playCat.totalYards / totalYards | percent }})
             </p>
             <p>
-              {{ playCat.name }} Plays: {{ playCat?.plays?.length }}
+              {{ playCat.name }} Plays: <b>{{ playCat?.plays?.length }}</b>
               <br />
               ({{
                 playCat?.plays?.length / gamePlaysArray?.data?.length | percent
               }})
             </p>
-            <p>{{ playCat.name }} Avg: {{ playCat.avgYards }}</p>
+            <p>
+              {{ playCat.name }} Avg: <b>{{ playCat.avgYards }}</b>
+            </p>
+            <p>
+              {{ playCat.name }} Right Avg:
+              <b>{{ playCat.rightAvgYards || "--" }}</b>
+            </p>
+            <p>
+              {{ playCat.name }} Left Avg:
+              <b>{{ playCat.leftAvgYards || "--" }}</b>
+            </p>
           </div>
         </div>
       </mat-card-content>
