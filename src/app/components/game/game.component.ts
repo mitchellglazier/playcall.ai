@@ -11,6 +11,7 @@ import { ProfileService } from "app/services/profile.service";
 import { Subject, Observable, Subscription } from "rxjs";
 import { SettingsService } from "app/services/settings.service";
 import { Play } from "app/models/play";
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from "@angular/cdk/overlay/typings/overlay-directives";
 
 @Component({
   selector: "app-game",
@@ -148,14 +149,28 @@ export class GameComponent implements OnInit, OnDestroy {
             this.playTypesArray.map((pc) => {
               const rightPlays: Array<any> = [];
               const leftPlays: Array<any> = [];
+              pc.plays.sort((b: any, a: any) => {
+                const x = a.result;
+                const y = b.result;
+                if (x < y) {
+                  return -1;
+                }
+                if (x > y) {
+                  return 1;
+                }
+                return 0;
+              });
+              if (pc.plays.length) {
+                pc.biggestPlay = pc.plays[0];
+              }
               pc.plays.map((play: GamePlay) => {
                 if (play.play.Direction === "Right") {
                   rightPlays.push(play);
-                  console.log(rightPlays);
                 } else if (play.play.Direction === "Left") {
                   leftPlays.push(play);
                 }
                 if (rightPlays.length) {
+                  pc.rightPlays = rightPlays.length;
                   pc.rightYards = rightPlays
                     .map((p: any) => p.result * 1)
                     .reduce((acc: any, value: any) => acc + value, 0);
@@ -164,6 +179,7 @@ export class GameComponent implements OnInit, OnDestroy {
                   ).toFixed(2);
                 }
                 if (leftPlays.length) {
+                  pc.leftPlays = leftPlays.length;
                   pc.leftYards = leftPlays
                     .map((p: any) => p.result * 1)
                     .reduce((acc: any, value: any) => acc + value, 0);
@@ -178,6 +194,17 @@ export class GameComponent implements OnInit, OnDestroy {
               pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
             });
           }
+          this.playTypesArray.sort((b, a) => {
+            const x = a.totalYards;
+            const y = b.totalYards;
+            if (x < y) {
+              return -1;
+            }
+            if (x > y) {
+              return 1;
+            }
+            return 0;
+          });
         });
         this.positionTypeHeaders = setting.payload.data().positions;
         this.positionTypeHeaders.map((positionType: any) => {
@@ -200,6 +227,17 @@ export class GameComponent implements OnInit, OnDestroy {
               pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
             });
           }
+          this.positionTypesArray.sort((b, a) => {
+            const x = a.totalYards;
+            const y = b.totalYards;
+            if (x < y) {
+              return -1;
+            }
+            if (x > y) {
+              return 1;
+            }
+            return 0;
+          });
         });
       });
     this.$playsSub = this.playsService.getPlays().subscribe((result) => {

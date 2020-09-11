@@ -302,70 +302,94 @@
       </div>
     </mat-card>
 
-    <mat-card *ngFor="let playCat of playTypesArray">
-      <mat-card-header>
+    <div *ngFor="let playCat of playTypesArray">
+      <mat-card *ngIf="playCat?.plays?.length">
+        <mat-card-header>
+          <mat-card-title
+            ><b>{{ playCat.name }} </b> - {{ playCat?.plays?.length }} Plays ({{
+              playCat?.plays?.length / gamePlaysArray?.data?.length | percent
+            }})</mat-card-title
+          >
+          <mat-card-subtitle
+            >Biggest Play:
+            {{ playCat?.biggestPlay?.play?.fullPlay || "--" }} ({{
+              playCat?.biggestPlay?.result
+            }}
+            Yards)</mat-card-subtitle
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="flex wrap">
+            <div fxFlex="60">
+              <p>
+                Total Yards: {{ playCat.totalYards }} ({{
+                  playCat.totalYards / totalYards | percent
+                }})
+              </p>
+              <p *ngIf="playCat.rightPlays > 0">
+                Right Yards: {{ playCat.rightYards || "0" }} Yards ({{
+                  playCat.rightPlays
+                }}
+                Plays)
+              </p>
+              <p *ngIf="playCat.leftPlays > 0">
+                Left Yards: {{ playCat.leftYards || "0" }} Yards ({{
+                  playCat.leftPlays
+                }}
+                Plays)
+              </p>
+            </div>
+            <div fxFlex="40">
+              <p *ngIf="playCat.avgYards">Total Avg: {{ playCat.avgYards }}</p>
+              <p *ngIf="playCat.rightPlays > 0">
+                Right Avg: {{ playCat.rightAvgYards || "0.00" }}
+              </p>
+              <p *ngIf="playCat.leftPlays > 0">
+                Left Avg: {{ playCat.leftAvgYards || "0.00" }}
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card
+      ><mat-card-header>
         <mat-card-title
-          ><b>{{ playCat.name }} </b> - {{ playCat?.plays?.length }} Plays ({{
-            playCat?.plays?.length / gamePlaysArray?.data?.length | percent
+          ><b>Rushing</b> - {{ runPlays?.length }} Plays ({{
+            runPlays.length / gamePlaysArray?.data?.length | percent
           }})</mat-card-title
         >
       </mat-card-header>
       <mat-card-content>
-        <div fxLayout="flex wrap">
-          <div fxFlex="60">
-            <p>
-              Total Yards: {{ playCat.totalYards }} ({{
-                playCat.totalYards / totalYards | percent
-              }})
-            </p>
-            <p *ngIf="playCat.rightYards">
-              Right Yards: {{ playCat.rightYards || "0" }} Yards
-            </p>
-            <p *ngIf="playCat.leftYards">
-              Left Yards: {{ playCat.leftYards || "0" }} Yards
-            </p>
-          </div>
-          <div fxFlex="40">
-            <p *ngIf="playCat.avgYards">Total Avg: {{ playCat.avgYards }}</p>
-            <p *ngIf="playCat.rightAvgYards">
-              Right Avg: {{ playCat.rightAvgYards || "0.00" }}
-            </p>
-            <p *ngIf="playCat.leftAvgYards">
-              Left Avg: {{ playCat.leftAvgYards || "0.00" }}
-            </p>
-          </div>
+        <div fxFlex="60">
+          <p>
+            Total Yards: {{ totalRushYards }} ({{
+              totalRushYards / totalYards | percent
+            }})
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p>Total Avg: {{ runAvg }}</p>
         </div>
       </mat-card-content>
-    </mat-card>
-
-    <mat-card
-      ><mat-card-header>
-        <mat-card-title>Run Pass Stats</mat-card-title>
+      <mat-card-header>
+        <mat-card-title
+          ><b>Passing</b> - {{ passPlays?.length }} Plays ({{
+            passPlays.length / gamePlaysArray?.data?.length | percent
+          }})</mat-card-title
+        >
       </mat-card-header>
       <mat-card-content>
-        <div fxFlex="50">
-          <p><b>Rushing</b></p>
+        <div fxFlex="60">
           <p>
-            Rushing Yards: {{ totalRushYards }} <br />
-            ({{ totalRushYards / totalYards | percent }})
+            Total Yards: {{ totalPassYards }} ({{
+              totalPassYards / totalYards | percent
+            }})
           </p>
-          <p>
-            Run Plays: {{ runPlays?.length }} <br />
-            ({{ runPlays.length / gamePlaysArray?.data?.length | percent }})
-          </p>
-          <p>Run Avg: {{ runAvg }}</p>
         </div>
-        <div fxFlex="50">
-          <p><b>Passing</b></p>
-          <p>
-            Passing Yards: {{ totalPassYards }} <br />
-            ({{ totalPassYards / totalYards | percent }})
-          </p>
-          <p>
-            Pass Plays: {{ passPlays?.length }} <br />
-            ({{ passPlays.length / gamePlaysArray?.data?.length | percent }})
-          </p>
-          <p>Pass Avg: {{ passAvg }}</p>
+        <div fxFlex="40">
+          <p>Total Avg: {{ passAvg }}</p>
         </div>
       </mat-card-content>
     </mat-card>
@@ -377,21 +401,23 @@
       <mat-card-content>
         <div fxLayout="flex wrap">
           <div fxFlex="50" *ngFor="let position of positionTypesArray">
-            <p>
-              <b>{{ position.name }}</b>
-            </p>
-            <p>
-              {{ position.name }} Yards: {{ position.totalYards }} <br />
-              ({{ position.totalYards / totalYards | percent }})
-            </p>
-            <p>
-              {{ position.name }} Plays: {{ position?.plays?.length }} <br />
-              ({{
-                position?.plays?.length / gamePlaysArray?.data?.length
-                  | percent
-              }})
-            </p>
-            <p>{{ position.name }} Avg: {{ position.avgYards }}</p>
+            <div *ngIf="position?.plays?.length">
+              <p>
+                <b>{{ position.name }}</b>
+              </p>
+              <p>
+                {{ position.name }} Yards: {{ position.totalYards }} <br />
+                ({{ position.totalYards / totalYards | percent }})
+              </p>
+              <p>
+                {{ position.name }} Plays: {{ position?.plays?.length }} <br />
+                ({{
+                  position?.plays?.length / gamePlaysArray?.data?.length
+                    | percent
+                }})
+              </p>
+              <p>{{ position.name }} Avg: {{ position.avgYards }}</p>
+            </div>
           </div>
         </div>
       </mat-card-content>
