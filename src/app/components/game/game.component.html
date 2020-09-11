@@ -356,48 +356,56 @@
     <mat-card
       ><mat-card-header>
         <mat-card-title
-          ><b>Rushing</b> - {{ runPlays?.length }} Plays ({{
-            runPlays.length / gamePlaysArray?.data?.length | percent
-          }})</mat-card-title
+          ><b>Rushing</b> - {{ runPlays?.length }} Plays
+          <span *ngIf="runPlays.length"
+            >({{
+              runPlays.length / gamePlaysArray?.data?.length | percent
+            }})</span
+          ></mat-card-title
         >
       </mat-card-header>
       <mat-card-content>
         <div fxFlex="60">
           <p>
-            Total Yards: {{ totalRushYards }} ({{
-              totalRushYards / totalYards | percent
-            }})
+            Total Yards: {{ totalRushYards || "0" }}
+            <span *ngIf="runPlays.length"
+              >({{ totalRushYards / totalYards | percent }})</span
+            >
           </p>
-          <p>Right Yards: {{ rightRunYards }}</p>
-          <p>Left Yards: {{ leftRunYards }}</p>
+          <p>Right Yards: {{ rightRunYards || "0" }}</p>
+          <p>Left Yards: {{ leftRunYards || "0" }}</p>
         </div>
         <div fxFlex="40">
-          <p>Total Avg: {{ runAvg }}</p>
-          <p>Right Avg: {{ rightRunAvg }}</p>
-          <p>Left Avg: {{ leftRunAvg }}</p>
+          <p>Total Avg: {{ runAvg || "0" }}</p>
+          <p>Right Avg: {{ rightRunAvg || "0" }}</p>
+          <p>Left Avg: {{ leftRunAvg || "0" }}</p>
         </div>
       </mat-card-content>
       <mat-card-header>
         <mat-card-title
-          ><b>Passing</b> - {{ passPlays?.length }} Plays ({{
-            passPlays.length / gamePlaysArray?.data?.length | percent
-          }})</mat-card-title
+          ><b>Passing</b> - {{ passPlays?.length }} Plays
+          <span *ngIf="passPlays?.length"
+            >({{
+              passPlays.length / gamePlaysArray?.data?.length | percent
+            }})</span
+          ></mat-card-title
         >
       </mat-card-header>
       <mat-card-content>
         <div fxFlex="60">
           <p>
-            Total Yards: {{ totalPassYards }} ({{
-              totalPassYards / totalYards | percent
-            }})
+            Total Yards: {{ totalPassYards || "0" }}
+            <span *ngIf="passPlays?.length"
+              >({{ totalPassYards / totalYards | percent }})</span
+            >
           </p>
-          <p>Right Yards: {{ rightPassYards }}</p>
-          <p>Left Yards: {{ leftPassYards }}</p>
+          <p>Right Yards: {{ rightPassYards || "0" }}</p>
+          <p>Left Yards: {{ leftPassYards || "0" }}</p>
         </div>
         <div fxFlex="40">
-          <p>Total Avg: {{ passAvg }}</p>
-          <p>Right Avg: {{ rightPassAvg }}</p>
-          <p>Left Avg: {{ leftPassAvg }}</p>
+          <p>Total Avg: {{ passAvg || "0" }}</p>
+          <p>Right Avg: {{ rightPassAvg || "0" }}</p>
+          <p>Left Avg: {{ leftPassAvg || "0" }}</p>
         </div>
       </mat-card-content>
     </mat-card>
