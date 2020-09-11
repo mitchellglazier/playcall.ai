@@ -318,13 +318,21 @@
                 playCat.totalYards / totalYards | percent
               }})
             </p>
-            <p>Right Yards: {{ playCat.rightYards || "0" }} Yards</p>
-            <p>Left Yards: {{ playCat.leftYards || "0" }} Yards</p>
+            <p *ngIf="playCat.rightYards">
+              Right Yards: {{ playCat.rightYards || "0" }} Yards
+            </p>
+            <p *ngIf="playCat.leftYards">
+              Left Yards: {{ playCat.leftYards || "0" }} Yards
+            </p>
           </div>
           <div fxFlex="40">
-            <p>{{ playCat.avgYards }} Avg</p>
-            <p>Right Avg: {{ playCat.rightAvgYards || "0.00" }}</p>
-            <p>Left Avg: {{ playCat.leftAvgYards || "0.00" }}</p>
+            <p *ngIf="playCat.avgYards">Total Avg: {{ playCat.avgYards }}</p>
+            <p *ngIf="playCat.rightAvgYards">
+              Right Avg: {{ playCat.rightAvgYards || "0.00" }}
+            </p>
+            <p *ngIf="playCat.leftAvgYards">
+              Left Avg: {{ playCat.leftAvgYards || "0.00" }}
+            </p>
           </div>
         </div>
       </mat-card-content>
