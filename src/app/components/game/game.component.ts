@@ -65,6 +65,18 @@ export class GameComponent implements OnInit, OnDestroy {
   settingUserKey = "UAK9rOvMQ854IgMQm8Do";
   results: any;
 
+  rightRunYards!: number;
+  rightRunAvg!: string;
+
+  leftRunYards!: number;
+  leftRunAvg!: string;
+
+  rightPassYards!: number;
+  rightPassAvg!: string;
+
+  leftPassYards!: number;
+  leftPassAvg!: string;
+
   selectedPlay: any;
   @Input() placeholder = "Play";
 
@@ -357,6 +369,42 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   playTypeStats() {
+    const rightRunPlays: Array<any> = [];
+    const leftRunPlays: Array<any> = [];
+    const rightPassPlays: Array<any> = [];
+    const leftPassPlays: Array<any> = [];
+    this.runPlays.map((rp) => {
+      if (rp.play.Direction === "Right") {
+        rightRunPlays.push(rp);
+      } else if (rp.play.Direction === "Left") {
+        leftRunPlays.push(rp);
+      }
+    });
+    this.rightRunYards = rightRunPlays
+      .map((p: any) => p.result * 1)
+      .reduce((acc: any, value: any) => acc + value, 0);
+    this.rightRunAvg = (this.rightRunYards / rightRunPlays.length).toFixed(2);
+    this.leftRunYards = leftRunPlays
+      .map((p: any) => p.result * 1)
+      .reduce((acc: any, value: any) => acc + value, 0);
+    this.leftRunAvg = (this.leftRunYards / rightRunPlays.length).toFixed(2);
+    this.passPlays.map((pp) => {
+      if (pp.play.Direction === "Right") {
+        rightPassPlays.push(pp);
+      } else if (pp.play.Direction === "Left") {
+        leftPassPlays.push(pp);
+      }
+    });
+    this.rightPassYards = rightPassPlays
+      .map((p: any) => p.result * 1)
+      .reduce((acc: any, value: any) => acc + value, 0);
+    this.rightPassAvg = (this.rightPassYards / rightPassPlays.length).toFixed(
+      2
+    );
+    this.leftPassYards = leftPassPlays
+      .map((p: any) => p.result * 1)
+      .reduce((acc: any, value: any) => acc + value, 0);
+    this.leftPassAvg = (this.leftPassYards / leftPassPlays.length).toFixed(2);
     this.totalRushYards = this.runPlays
       .map((p) => p.result * 1)
       .reduce((acc, value) => acc + value, 0);
