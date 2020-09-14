@@ -185,6 +185,38 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
           });
           this.positionTypeHeaders = setting.payload.data().positions;
+          this.positionTypeHeaders.map((positionType: any) => {
+            const position = positionType.name;
+            const positionPlays: any = [];
+            this.seasonPlays.map((gamePlay: GamePlay) => {
+              if (positionType.name === gamePlay.play.primaryPos) {
+                positionPlays.push(gamePlay);
+              }
+            });
+            this.positionTypesArray.push({
+              name: position,
+              plays: positionPlays,
+            });
+            if (this.positionTypesArray.length) {
+              this.positionTypesArray.map((pc) => {
+                pc.totalYards = pc.plays
+                  .map((p: any) => p.result * 1)
+                  .reduce((acc: any, value: any) => acc + value, 0);
+                pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
+              });
+            }
+            this.positionTypesArray.sort((b, a) => {
+              const x = a.totalYards;
+              const y = b.totalYards;
+              if (x < y) {
+                return -1;
+              }
+              if (x > y) {
+                return 1;
+              }
+              return 0;
+            });
+          });
         });
       this.seasonPlays.map((gamePlay: GamePlay) => {
         if (gamePlay.play.runPass === "Run") {
@@ -192,21 +224,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         } else {
           this.seasonPassPlays.push(gamePlay);
         }
-        if (gamePlay.play.primaryPos === "QB") {
-          this.qbPlays.push(gamePlay);
-        } else if (gamePlay.play.primaryPos === "Left HB") {
-          this.lhbPlays.push(gamePlay);
-        } else if (gamePlay.play.primaryPos === "Right HB") {
-          this.rhbPlays.push(gamePlay);
-        } else if (gamePlay.play.primaryPos === "FB") {
-          this.fbPlays.push(gamePlay);
-        } else if (gamePlay.play.primaryPos === "TE") {
-          this.tePlays.push(gamePlay);
-        } else if (gamePlay.play.primaryPos === "WR") {
-          this.wrPlays.push(gamePlay);
-        }
         this.playTypeStats();
-        this.optionsStats();
       });
     });
   }
@@ -217,33 +235,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.$playsSub.unsubscribe();
     this.$profileSub.unsubscribe();
     this.$settingsSub.unsubscribe();
-  }
-
-  optionsStats() {
-    this.qbYards = this.qbPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.lhbYards = this.lhbPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.rhbYards = this.rhbPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.fbYards = this.fbPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.teYards = this.tePlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.wrYards = this.wrPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.qbAvg = (this.qbYards / this.qbPlays.length).toFixed(2);
-    this.lhbAvg = (this.lhbYards / this.lhbPlays.length).toFixed(2);
-    this.rhbAvg = (this.rhbYards / this.rhbPlays.length).toFixed(2);
-    this.fbAvg = (this.fbYards / this.fbPlays.length).toFixed(2);
-    this.teAvg = (this.teYards / this.tePlays.length).toFixed(2);
-    this.wrAvg = (this.wrYards / this.wrPlays.length).toFixed(2);
   }
 
   playTypeStats() {

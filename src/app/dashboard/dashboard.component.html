@@ -7,7 +7,7 @@
 
 <div fxLayout="row wrap">
   <!-- column -->
-  <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+  <div fxFlex.gt-lg="60" fxFlex.gt-md="60" fxFlex.gt-xs="100" fxFlex="100">
     <div fxLayout="row wrap">
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
@@ -126,7 +126,7 @@
   </div>
   <!-- column -->
   <!-- column -->
-  <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
+  <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
       <div fxFlex.gt-lg="30" fxFlex.gt-md="25" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card-header>
@@ -181,77 +181,16 @@
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="flex wrap">
-          <div fxFlex="50">
-            <p><b>QB</b></p>
+          <div fxFlex="50" *ngFor="let position of positionTypesArray">
             <p>
-              QB Yards: {{ qbYards }} <br />
-              ({{ qbYards / seasonTotalYards | percent }})
+              <b>{{ position.name }}</b> - {{ position?.plays?.length }} Plays
+              ({{ position?.plays?.length / seasonPlays?.length | percent }})
             </p>
             <p>
-              QB Plays: {{ qbPlays?.length }} <br />
-              ({{ qbPlays.length / seasonPlays.length | percent }})
+              {{ position.name }} Yards: {{ position?.totalYards }} <br />
+              ({{ position.totalYards / seasonTotalYards | percent }})
             </p>
-            <p>QB Avg: {{ qbAvg }}</p>
-          </div>
-          <div fxFlex="50">
-            <p><b>Left HB</b></p>
-            <p>
-              LHB Yards: {{ lhbYards }} <br />
-              ({{ lhbYards / seasonTotalYards | percent }})
-            </p>
-            <p>
-              LHB Plays: {{ lhbPlays?.length }} <br />
-              ({{ lhbPlays.length / seasonPlays.length | percent }})
-            </p>
-            <p>LHB Avg: {{ lhbAvg }}</p>
-          </div>
-          <div fxFlex="50">
-            <p><b>Right HB</b></p>
-            <p>
-              RHB Yards: {{ rhbYards }} <br />
-              ({{ rhbYards / seasonTotalYards | percent }})
-            </p>
-            <p>
-              RHB Plays: {{ rhbPlays?.length }} <br />
-              ({{ rhbPlays.length / seasonPlays.length | percent }})
-            </p>
-            <p>RHB Avg: {{ rhbAvg }}</p>
-          </div>
-          <div fxFlex="50">
-            <p><b>FB</b></p>
-            <p>
-              FB Yards: {{ fbYards }} <br />
-              ({{ fbYards / seasonTotalYards | percent }})
-            </p>
-            <p>
-              FB Plays: {{ fbPlays?.length }} <br />
-              ({{ fbPlays.length / seasonPlays.length | percent }})
-            </p>
-            <p>FB Avg: {{ fbAvg }}</p>
-          </div>
-          <div fxFlex="50">
-            <p><b>TE</b></p>
-            <p>
-              TE Yards: {{ teYards }} <br />
-              ({{ teYards / seasonTotalYards | percent }})
-            </p>
-            <p>
-              TE Plays: {{ tePlays?.length }} <br />
-              ({{ tePlays.length / seasonPlays.length | percent }})
-            </p>
-            <p>TE Avg: {{ teAvg }}</p>
-          </div>
-          <div fxFlex="50">
-            <p><b>WR</b></p>
-            <p>
-              WR Yards: {{ wrYards }} <br />
-              ({{ wrYards / seasonTotalYards | percent }})
-            </p>
-            <p>
-              WR Plays: {{ wrPlays?.length }} <br />
-              ({{ wrPlays.length / seasonPlays.length | percent }})
-            </p>
-            <p>WR Avg: {{ wrAvg }}</p>
+            <p>{{ position.name }} Avg: {{ position.avgYards }}</p>
           </div>
         </div>
       </mat-card-content>
