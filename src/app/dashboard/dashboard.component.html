@@ -262,29 +262,61 @@
         <mat-card-subtitle>2020 Season</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <div fxFlex="50">
-          <p><b>Rushing</b></p>
-          <p>
-            Rush Yards: {{ totalRushYards }} <br />
-            ({{ totalRushYards / seasonTotalYards | percent }})
-          </p>
-          <p>
-            Run Plays: {{ seasonRunPlays?.length }} <br />
-            ({{ seasonRunPlays.length / seasonPlays.length | percent }})
-          </p>
-          <p>Run Avg: {{ runAvg }}</p>
+        <div fxLayout="flex wrap">
+          <div fxFlex="100">
+            <p>
+              <b>Rushing</b> - {{ seasonRunPlays?.length }} Plays
+              <span *ngIf="seasonRunPlays.length"
+                >({{
+                  seasonRunPlays?.length / seasonPlays?.length | percent
+                }})</span
+              >
+            </p>
+          </div>
         </div>
-        <div fxFlex="50">
-          <p><b>Passing</b></p>
-          <p>
-            Pass Yards: {{ totalPassYards }} <br />
-            ({{ totalPassYards / seasonTotalYards | percent }})
-          </p>
-          <p>
-            Pass Plays: {{ seasonPassPlays?.length }} <br />
-            ({{ seasonPassPlays.length / seasonPlays.length | percent }})
-          </p>
-          <p>Pass Avg: {{ passAvg }}</p>
+        <div fxLayout="flex wrap">
+          <div fxFlex="60">
+            <p>
+              Rush Yards: {{ totalRushYards || "0" }} ({{
+                totalRushYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>Right Rush Yards: {{ rightRunYards || "0" }}</p>
+            <p>Left Rush Yards: {{ leftRunYards || "0" }}</p>
+          </div>
+          <div fxFlex="40">
+            <p>Total Rush Avg: {{ runAvg }}</p>
+            <p>Right Rush Avg: {{ rightRunAvg }}</p>
+            <p>Left Rush Avg: {{ leftRunAvg }}</p>
+          </div>
+        </div>
+        <div fxLayout="flex wrap">
+          <div fxFlex="100">
+            <p>
+              <b>Passing</b> - {{ seasonPassPlays?.length }} Plays
+              <span *ngIf="seasonPassPlays.length"
+                >({{
+                  seasonPassPlays?.length / seasonPlays?.length | percent
+                }})</span
+              >
+            </p>
+          </div>
+        </div>
+        <div fxLayout="flex wrap">
+          <div fxFlex="60">
+            <p>
+              Pass Yards: {{ totalPassYards || "0" }} ({{
+                totalPassYards / seasonTotalYards | percent
+              }})
+            </p>
+            <p>Right Pass Yards: {{ rightPassYards || "0" }}</p>
+            <p>Left Pass Yards: {{ leftPassYards || "0" }}</p>
+          </div>
+          <div fxFlex="40">
+            <p>Total Pass Avg: {{ passAvg }}</p>
+            <p>Right Pass Avg: {{ rightPassAvg }}</p>
+            <p>Left Pass Avg: {{ leftPassAvg }}</p>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>

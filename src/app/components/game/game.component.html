@@ -353,7 +353,7 @@
       </mat-card>
     </div>
 
-    <mat-card
+    <mat-card *ngIf="gamePlaysArray?.data?.length"
       ><mat-card-header>
         <mat-card-title
           ><b>Rushing</b> - {{ runPlays?.length }} Plays
@@ -409,7 +409,7 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card>
+    <mat-card *ngIf="gamePlaysArray?.data?.length">
       <mat-card-header>
         <mat-card-title>Primary Option Stats</mat-card-title>
         <mat-card-subtitle>2020 Season</mat-card-subtitle>
