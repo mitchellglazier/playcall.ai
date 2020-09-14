@@ -288,6 +288,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.$currentProfileSub.unsubscribe();
     this.$gameSub.unsubscribe();
     this.$playsSub.unsubscribe();
+    this.settingsSub.unsubscribe();
   }
 
   delete(element: any) {

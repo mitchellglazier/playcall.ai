@@ -6,6 +6,7 @@ import { GamesService } from "app/services/games.service";
 import { Game } from "app/models/game";
 import { GamePlay } from "app/models/gamePlay";
 import { Subscription } from "rxjs";
+import { SettingsService } from "app/services/settings.service";
 
 @Component({
   selector: "app-dashboard",
@@ -15,6 +16,7 @@ import { Subscription } from "rxjs";
 export class DashboardComponent implements OnInit, OnDestroy {
   currentProfile!: any;
   profileUserKey = "JWaseaRYNTfFX31oH00L";
+  settingUserKey = "UAK9rOvMQ854IgMQm8Do";
 
   players: any[] = [];
   plays: any[] = [];
@@ -116,12 +118,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   $playersSub!: Subscription;
   $playsSub!: Subscription;
   $gamesSub!: Subscription;
+  $settingsSub!: Subscription;
+
+  playTypeHeaders: string[] = [];
+  positionTypeHeaders: string[] = [];
+  playTypesArray: Array<any> = [];
+  positionTypesArray: Array<any> = [];
 
   constructor(
     private playsService: PlaysService,
     private profileService: ProfileService,
     private playersService: PlayersService,
-    private gamesService: GamesService
+    private gamesService: GamesService,
+    private settingService: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -149,43 +158,119 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.seasonAvgYards = (
         this.seasonTotalYards / this.seasonPlays.length
       ).toFixed(2);
+      this.$settingsSub = this.settingService
+        .getSetting(this.settingUserKey)
+        .subscribe((setting: any) => {
+          this.playTypeHeaders = setting.payload.data().playCats;
+          this.playTypeHeaders.map((playType: any) => {
+            const playCat = playType.name;
+            const catPlays: any = [];
+            this.seasonPlays.map((gamePlay: GamePlay) => {
+              if (playType.name === gamePlay.play.playCat) {
+                catPlays.push(gamePlay);
+              }
+            });
+            this.playTypesArray.push({ name: playCat, plays: catPlays });
+            if (this.playTypesArray.length) {
+              this.playTypesArray.map((pc) => {
+                const rightPlays: Array<any> = [];
+                const leftPlays: Array<any> = [];
+                pc.plays.sort((b: any, a: any) => {
+                  const x = a.result;
+                  const y = b.result;
+                  if (x < y) {
+                    return -1;
+                  }
+                  if (x > y) {
+                    return 1;
+                  }
+                  return 0;
+                });
+                if (pc.plays.length) {
+                  pc.biggestPlay = pc.plays[0];
+                }
+                pc.plays.map((play: GamePlay) => {
+                  if (play.play.Direction === "Right") {
+                    rightPlays.push(play);
+                  } else if (play.play.Direction === "Left") {
+                    leftPlays.push(play);
+                  }
+                  if (rightPlays.length) {
+                    pc.rightPlays = rightPlays.length;
+                    pc.rightYards = rightPlays
+                      .map((p: any) => p.result * 1)
+                      .reduce((acc: any, value: any) => acc + value, 0);
+                    pc.rightAvgYards = (
+                      pc.rightYards / rightPlays.length
+                    ).toFixed(2);
+                  }
+                  if (leftPlays.length) {
+                    pc.leftPlays = leftPlays.length;
+                    pc.leftYards = leftPlays
+                      .map((p: any) => p.result * 1)
+                      .reduce((acc: any, value: any) => acc + value, 0);
+                    pc.leftAvgYards = (pc.leftYards / leftPlays.length).toFixed(
+                      2
+                    );
+                  }
+                });
+                pc.totalYards = pc.plays
+                  .map((p: any) => p.result * 1)
+                  .reduce((acc: any, value: any) => acc + value, 0);
+                pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
+              });
+            }
+            this.playTypesArray.sort((b, a) => {
+              const x = a.totalYards;
+              const y = b.totalYards;
+              if (x < y) {
+                return -1;
+              }
+              if (x > y) {
+                return 1;
+              }
+              return 0;
+            });
+          });
+          this.positionTypeHeaders = setting.payload.data().positions;
+        });
       this.seasonPlays.map((gamePlay: GamePlay) => {
         if (gamePlay.play.runPass === "Run") {
           this.seasonRunPlays.push(gamePlay);
         } else {
           this.seasonPassPlays.push(gamePlay);
         }
-        if (gamePlay.play.playCat === "Sweep") {
-          this.sweepPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Trap") {
-          this.trapPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Boot") {
-          this.bootPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Pop Pass") {
-          this.popPassPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Wedge") {
-          this.wedgePlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Cross Block") {
-          this.crossBlockPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Counter") {
-          this.counterPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Belly") {
-          this.bellyPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Down") {
-          this.downPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Keep Pass") {
-          this.keepPassPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Reverse") {
-          this.reversePlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Power") {
-          this.powerPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Pass") {
-          this.pass90Plays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Special") {
-          this.specialPlays.push(gamePlay);
-        } else if (gamePlay.play.playCat === "Screen") {
-          this.screenPlays.push(gamePlay);
-        }
+        // if (gamePlay.play.playCat === "Sweep") {
+        //   this.sweepPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Trap") {
+        //   this.trapPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Boot") {
+        //   this.bootPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Pop Pass") {
+        //   this.popPassPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Wedge") {
+        //   this.wedgePlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Cross Block") {
+        //   this.crossBlockPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Counter") {
+        //   this.counterPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Belly") {
+        //   this.bellyPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Down") {
+        //   this.downPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Keep Pass") {
+        //   this.keepPassPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Reverse") {
+        //   this.reversePlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Power") {
+        //   this.powerPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Pass") {
+        //   this.pass90Plays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Special") {
+        //   this.specialPlays.push(gamePlay);
+        // } else if (gamePlay.play.playCat === "Screen") {
+        //   this.screenPlays.push(gamePlay);
+        // }
         if (gamePlay.play.primaryPos === "QB") {
           this.qbPlays.push(gamePlay);
         } else if (gamePlay.play.primaryPos === "Left HB") {
@@ -210,6 +295,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.$playersSub.unsubscribe();
     this.$playsSub.unsubscribe();
     this.$profileSub.unsubscribe();
+    this.$settingsSub.unsubscribe();
   }
 
   optionsStats() {
@@ -246,73 +332,73 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.totalPassYards = this.seasonPassPlays
       .map((p) => p.result * 1)
       .reduce((acc, value) => acc + value, 0);
-    this.sweepYards = this.sweepPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.trapYards = this.trapPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.bootYards = this.bootPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.popPassYards = this.popPassPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.wedgeYards = this.wedgePlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.crossBlockYards = this.crossBlockPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.counterYards = this.counterPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.bellyYards = this.bellyPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.downYards = this.downPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.keepPassYards = this.keepPassPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.reverseYards = this.reversePlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.powerYards = this.powerPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.pass90Yards = this.pass90Plays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.specialYards = this.specialPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
-    this.screenYards = this.screenPlays
-      .map((p) => p.result * 1)
-      .reduce((acc, value) => acc + value, 0);
+    // this.sweepYards = this.sweepPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.trapYards = this.trapPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.bootYards = this.bootPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.popPassYards = this.popPassPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.wedgeYards = this.wedgePlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.crossBlockYards = this.crossBlockPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.counterYards = this.counterPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.bellyYards = this.bellyPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.downYards = this.downPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.keepPassYards = this.keepPassPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.reverseYards = this.reversePlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.powerYards = this.powerPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.pass90Yards = this.pass90Plays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.specialYards = this.specialPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
+    // this.screenYards = this.screenPlays
+    //   .map((p) => p.result * 1)
+    //   .reduce((acc, value) => acc + value, 0);
     this.runAvg = (this.totalRushYards / this.seasonRunPlays.length).toFixed(2);
     this.passAvg = (this.totalPassYards / this.seasonPassPlays.length).toFixed(
       2
     );
-    this.sweepAvg = (this.sweepYards / this.sweepPlays.length).toFixed(2);
-    this.trapAvg = (this.trapYards / this.trapPlays.length).toFixed(2);
-    this.bootAvg = (this.bootYards / this.bootPlays.length).toFixed(2);
-    this.popPassAvg = (this.popPassYards / this.popPassPlays.length).toFixed(2);
-    this.wedgeAvg = (this.wedgeYards / this.wedgePlays.length).toFixed(2);
-    this.crossBlockAvg = (
-      this.crossBlockYards / this.crossBlockPlays.length
-    ).toFixed(2);
-    this.counterAvg = (this.counterYards / this.counterPlays.length).toFixed(2);
-    this.bellyAvg = (this.bellyYards / this.bellyPlays.length).toFixed(2);
-    this.downAvg = (this.downYards / this.downPlays.length).toFixed(2);
-    this.keepPassAvg = (this.keepPassYards / this.keepPassPlays.length).toFixed(
-      2
-    );
-    this.reverseAvg = (this.reverseYards / this.reversePlays.length).toFixed(2);
-    this.powerAvg = (this.powerYards / this.powerPlays.length).toFixed(2);
-    this.pass90Avg = (this.pass90Yards / this.pass90Plays.length).toFixed(2);
-    this.specialAvg = (this.specialYards / this.specialPlays.length).toFixed(2);
-    this.screenAvg = (this.screenYards / this.screenPlays.length).toFixed(2);
+    // this.sweepAvg = (this.sweepYards / this.sweepPlays.length).toFixed(2);
+    // this.trapAvg = (this.trapYards / this.trapPlays.length).toFixed(2);
+    // this.bootAvg = (this.bootYards / this.bootPlays.length).toFixed(2);
+    // this.popPassAvg = (this.popPassYards / this.popPassPlays.length).toFixed(2);
+    // this.wedgeAvg = (this.wedgeYards / this.wedgePlays.length).toFixed(2);
+    // this.crossBlockAvg = (
+    //   this.crossBlockYards / this.crossBlockPlays.length
+    // ).toFixed(2);
+    // this.counterAvg = (this.counterYards / this.counterPlays.length).toFixed(2);
+    // this.bellyAvg = (this.bellyYards / this.bellyPlays.length).toFixed(2);
+    // this.downAvg = (this.downYards / this.downPlays.length).toFixed(2);
+    // this.keepPassAvg = (this.keepPassYards / this.keepPassPlays.length).toFixed(
+    //   2
+    // );
+    // this.reverseAvg = (this.reverseYards / this.reversePlays.length).toFixed(2);
+    // this.powerAvg = (this.powerYards / this.powerPlays.length).toFixed(2);
+    // this.pass90Avg = (this.pass90Yards / this.pass90Plays.length).toFixed(2);
+    // this.specialAvg = (this.specialYards / this.specialPlays.length).toFixed(2);
+    // this.screenAvg = (this.screenYards / this.screenPlays.length).toFixed(2);
   }
 }
