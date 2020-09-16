@@ -319,33 +319,33 @@
           >
         </mat-card-header>
         <mat-card-content>
-          <div fxLayout="flex wrap">
+          <div fxLayout="flex wrap" class="display-font">
             <div fxFlex="60">
               <p>
-                Total Yards: {{ playCat.totalYards }} ({{
+                Total Yards: {{ playCat.totalYards }} Yards ({{
                   playCat.totalYards / totalYards | percent
                 }})
               </p>
               <p *ngIf="playCat.rightPlays > 0">
-                Right Yards: {{ playCat.rightYards || "0" }} Yards ({{
+                Rt Yards: {{ playCat.rightYards || "0" }} Yards ({{
                   playCat.rightPlays
                 }}
                 Plays)
               </p>
               <p *ngIf="playCat.leftPlays > 0">
-                Left Yards: {{ playCat.leftYards || "0" }} Yards ({{
+                Lt Yards: {{ playCat.leftYards || "0" }} Yards ({{
                   playCat.leftPlays
                 }}
                 Plays)
               </p>
             </div>
             <div fxFlex="40">
-              <p *ngIf="playCat.avgYards">Total Avg: {{ playCat.avgYards }}</p>
+              <p *ngIf="playCat.avgYards">Avg: {{ playCat.avgYards }}</p>
               <p *ngIf="playCat.rightPlays > 0">
-                Right Avg: {{ playCat.rightAvgYards || "0.00" }}
+                Rt Avg: {{ playCat.rightAvgYards || "0.00" }}
               </p>
               <p *ngIf="playCat.leftPlays > 0">
-                Left Avg: {{ playCat.leftAvgYards || "0.00" }}
+                Lt Avg: {{ playCat.leftAvgYards || "0.00" }}
               </p>
             </div>
           </div>
@@ -365,20 +365,20 @@
         >
       </mat-card-header>
       <mat-card-content>
-        <div fxFlex="60">
+        <div fxFlex="60" class="display-font">
           <p>
             Total Yards: {{ totalRushYards || "0" }}
             <span *ngIf="runPlays.length"
               >({{ totalRushYards / totalYards | percent }})</span
             >
           </p>
-          <p>Right Yards: {{ rightRunYards || "0" }}</p>
-          <p>Left Yards: {{ leftRunYards || "0" }}</p>
+          <p>Rt Yards: {{ rightRunYards || "0" }}</p>
+          <p>Lt Yards: {{ leftRunYards || "0" }}</p>
         </div>
-        <div fxFlex="40">
-          <p>Total Avg: {{ runAvg || "0" }}</p>
-          <p>Right Avg: {{ rightRunAvg || "0" }}</p>
-          <p>Left Avg: {{ leftRunAvg || "0" }}</p>
+        <div fxFlex="40" class="display-font">
+          <p>Avg: {{ runAvg || "0" }}</p>
+          <p>Rt Avg: {{ rightRunAvg || "0" }}</p>
+          <p>Lt Avg: {{ leftRunAvg || "0" }}</p>
         </div>
       </mat-card-content>
       <mat-card-header>
@@ -392,20 +392,20 @@
         >
       </mat-card-header>
       <mat-card-content>
-        <div fxFlex="60">
+        <div fxFlex="60" class="display-font">
           <p>
             Total Yards: {{ totalPassYards || "0" }}
             <span *ngIf="passPlays?.length"
               >({{ totalPassYards / totalYards | percent }})</span
             >
           </p>
-          <p>Right Yards: {{ rightPassYards || "0" }}</p>
-          <p>Left Yards: {{ leftPassYards || "0" }}</p>
+          <p>Rt Yards: {{ rightPassYards || "0" }}</p>
+          <p>Lt Yards: {{ leftPassYards || "0" }}</p>
         </div>
-        <div fxFlex="40">
-          <p>Total Avg: {{ passAvg || "0" }}</p>
-          <p>Right Avg: {{ rightPassAvg || "0" }}</p>
-          <p>Left Avg: {{ leftPassAvg || "0" }}</p>
+        <div fxFlex="40" class="display-font">
+          <p>Avg: {{ passAvg || "0" }}</p>
+          <p>Rt Avg: {{ rightPassAvg || "0" }}</p>
+          <p>Lt Avg: {{ leftPassAvg || "0" }}</p>
         </div>
       </mat-card-content>
     </mat-card>
@@ -421,18 +421,20 @@
               <p>
                 <b>{{ position.name }}</b>
               </p>
-              <p>
-                {{ position.name }} Yards: {{ position.totalYards }} <br />
-                ({{ position.totalYards / totalYards | percent }})
+              <p class="display-font">
+                {{ position.name }} Yards: {{ position.totalYards }} ({{
+                  position.totalYards / totalYards | percent
+                }})
               </p>
-              <p>
-                {{ position.name }} Plays: {{ position?.plays?.length }} <br />
-                ({{
+              <p class="display-font">
+                {{ position.name }} Plays: {{ position?.plays?.length }} ({{
                   position?.plays?.length / gamePlaysArray?.data?.length
                     | percent
                 }})
               </p>
-              <p>{{ position.name }} Avg: {{ position.avgYards }}</p>
+              <p class="display-font">
+                {{ position.name }} Avg: {{ position.avgYards }}
+              </p>
             </div>
           </div>
         </div>
