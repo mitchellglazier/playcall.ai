@@ -12,6 +12,7 @@ import { Subject, Observable, Subscription } from "rxjs";
 import { SettingsService } from "app/services/settings.service";
 import { Play } from "app/models/play";
 import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from "@angular/cdk/overlay/typings/overlay-directives";
+import { TeamsService } from "app/services/teams.service";
 
 @Component({
   selector: "app-game",
@@ -54,6 +55,10 @@ export class GameComponent implements OnInit, OnDestroy {
   runAvg!: string;
   passAvg!: string;
 
+  $teamsSub!: Subscription;
+
+  teams: Array<any> = [];
+  fronts: string[] = [];
   playTypeHeaders: string[] = [];
   positionTypeHeaders: string[] = [];
   playTypesArray: Array<any> = [];
@@ -85,7 +90,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private gamesService: GamesService,
     private playsService: PlaysService,
     private profileService: ProfileService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private teamsService: TeamsService
   ) {
     this.gameId = this.route.snapshot.paramMap.get("id");
     this.gamePlaysArray = new MatTableDataSource();
@@ -111,6 +117,7 @@ export class GameComponent implements OnInit, OnDestroy {
       location: new FormControl(null),
       outcome: new FormControl(null),
       gamePlays: new FormControl(),
+      expectedFront: new FormControl(null),
     });
     this.$currentProfileSub = this.profileService
       .getProfile(this.profileUserKey)
@@ -119,6 +126,11 @@ export class GameComponent implements OnInit, OnDestroy {
       });
     this.$gameSub = this.gamesService.getGame(this.gameId).subscribe((game) => {
       this.game = game.payload.data();
+      if (this.game) {
+        this.gameForm.patchValue({
+          ...this.game,
+        });
+      }
       if (this.game.outcome) {
         this.outcomeForm.patchValue({
           outcome: this.game.outcome,
@@ -147,6 +159,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.settingsSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting: any) => {
+        this.fronts = setting.payload.data().fronts;
         this.playTypeHeaders = setting.payload.data().playCats;
         this.playTypeHeaders.map((playType: any) => {
           const playCat = playType.name;
@@ -342,6 +355,10 @@ export class GameComponent implements OnInit, OnDestroy {
     });
     this.gamesService.updateGame(this.gameId, this.gameForm.value);
     this.gamePlayForm.reset();
+  }
+
+  editGame() {
+    this.gamesService.updateGame(this.gameId, this.gameForm.value);
   }
 
   saveOutcome() {

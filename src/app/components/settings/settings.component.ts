@@ -14,9 +14,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   posForm!: FormGroup;
   settingForm!: FormGroup;
   formationsForm!: FormGroup;
+  frontForm!: FormGroup;
   catArray: Array<any> = [];
   posArray: Array<any> = [];
   formationsArray: Array<any> = [];
+  frontsArray: Array<any> = [];
 
   currentSetting!: any;
   settingUserKey = "UAK9rOvMQ854IgMQm8Do";
@@ -24,6 +26,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   constructor(private settingsService: SettingsService) {}
 
   ngOnInit(): void {
+    this.frontForm = new FormGroup({
+      name: new FormControl(null, Validators.required),
+    });
     this.catForm = new FormGroup({
       name: new FormControl(null, Validators.required),
     });
@@ -37,6 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       playCats: new FormControl([]),
       positions: new FormControl([]),
       formations: new FormControl([]),
+      fronts: new FormControl([]),
     });
     this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
@@ -45,11 +51,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.catArray = this.currentSetting.playCats;
         this.posArray = this.currentSetting.positions;
         this.formationsArray = this.currentSetting.formations;
+        this.frontsArray = this.currentSetting.fronts;
         if (!!setting && !!this.currentSetting) {
           this.settingForm.patchValue({
             playCats: this.currentSetting.playCats,
             positions: this.currentSetting.positions,
             formations: this.currentSetting.formations,
+            fronts: this.currentSetting.fronts,
           });
         }
       });
@@ -65,6 +73,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       playCats: this.catArray,
       positions: this.currentSetting.positions,
       formations: this.currentSetting.formations,
+      fronts: this.currentSetting.fronts,
     });
     this.settingsService.updateSetting(
       this.settingUserKey,
@@ -77,6 +86,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.posArray.push(this.posForm.value);
     this.settingForm.patchValue({
       playCats: this.currentSetting.playCats,
+      fronts: this.currentSetting.fronts,
       positions: this.posArray,
       formations: this.currentSetting.formations,
     });
@@ -92,6 +102,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.settingForm.patchValue({
       playCats: this.currentSetting.playCats,
       positions: this.currentSetting.positions,
+      fronts: this.currentSetting.fronts,
       formations: this.formationsArray,
     });
     this.settingsService.updateSetting(
@@ -99,6 +110,37 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.settingForm.value
     );
     this.formationsForm.reset();
+  }
+
+  saveFront() {
+    this.frontsArray.push(this.frontForm.value);
+    this.settingForm.patchValue({
+      playCats: this.currentSetting.playCats,
+      positions: this.currentSetting.positions,
+      formations: this.currentSetting.formations,
+      fronts: this.frontsArray,
+    });
+    this.settingsService.updateSetting(
+      this.settingUserKey,
+      this.settingForm.value
+    );
+    this.frontForm.reset();
+  }
+
+  deleteFront(front: any) {
+    this.frontsArray = this.frontsArray.filter(function (obj) {
+      return obj.name !== front.name;
+    });
+    this.settingForm.patchValue({
+      positions: this.currentSetting.positions,
+      playCats: this.currentSetting.playCats,
+      formations: this.currentSetting.formations,
+      fronts: this.frontsArray,
+    });
+    this.settingsService.updateSetting(
+      this.settingUserKey,
+      this.settingForm.value
+    );
   }
 
   deletePos(pos: any) {
@@ -109,6 +151,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       positions: this.posArray,
       playCats: this.currentSetting.playCats,
       formations: this.currentSetting.formations,
+      fronts: this.currentSetting.fronts,
     });
     this.settingsService.updateSetting(
       this.settingUserKey,
@@ -124,6 +167,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       positions: this.currentSetting.positions,
       playCats: this.catArray,
       formations: this.currentSetting.formations,
+      fronts: this.currentSetting.fronts,
     });
     this.settingsService.updateSetting(
       this.settingUserKey,
@@ -138,6 +182,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.settingForm.patchValue({
       positions: this.currentSetting.positions,
       playCats: this.currentSetting.playCats,
+      fronts: this.currentSetting.fronts,
       formations: this.formationsArray,
     });
     this.settingsService.updateSetting(

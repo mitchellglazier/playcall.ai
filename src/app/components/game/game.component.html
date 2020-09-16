@@ -32,8 +32,12 @@
       {{ game.opponentScore }})</span
     >
   </h2>
-
-  <h6 style="color: darkgrey">{{ game?.date.toDate() | date }}</h6>
+  <h6 style="color: darkgrey; margin-bottom: -20px">
+    Defensive Scheme: {{ game?.expectedFront }}
+  </h6>
+  <h6 style="color: darkgrey; margin-bottom: -5px">
+    {{ game?.date.toDate() | date }}
+  </h6>
 </div>
 
 <div fxLayout="row wrap">
@@ -42,7 +46,7 @@
     <div fxLayout="row wrap">
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card
+        <mat-card class="mat-elevation-z12"
           ><mat-card-header>
             <mat-card-title>Total Plays</mat-card-title>
           </mat-card-header>
@@ -251,6 +255,42 @@
         [pageSizeOptions]="[10, 25, 50, 100]"
         class="mat-elevation-z8"
       ></mat-paginator>
+    </div>
+    <div>
+      <mat-card>
+        <mat-card-header
+          ><mat-card-title>Game Information</mat-card-title>
+        </mat-card-header>
+        <form class="example-form" style="padding: 15px" [formGroup]="gameForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="location">
+              <mat-option value="Home">Home</mat-option>
+              <mat-option value="Away">Away</mat-option>
+              <mat-option value="Neutral">Neutral</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Expected Front</mat-label>
+            <mat-select formControlName="expectedFront">
+              <mat-option *ngFor="let front of fronts" [value]="front.name">
+                {{ front.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <div style="text-align: center; padding: 15px">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="editGame()"
+          >
+            Edit Game
+          </button>
+        </div>
+      </mat-card>
     </div>
   </div>
   <!-- column -->

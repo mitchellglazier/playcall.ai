@@ -17,6 +17,7 @@ export class GamesService {
       location: game.location,
       gamePlays: game.gamePlays,
       outcome: game.outcome,
+      expectedFront: game.expectedFront,
     });
   }
 

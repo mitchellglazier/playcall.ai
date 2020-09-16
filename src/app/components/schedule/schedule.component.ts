@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { GamesService } from "app/services/games.service";
 import { TeamsService } from "app/services/teams.service";
 import { Subscription } from "rxjs";
+import { SettingsService } from "app/services/settings.service";
+import { Setting } from "app/models/setting";
 
 @Component({
   selector: "app-schedule",
@@ -24,10 +26,22 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   gameForm!: FormGroup;
   games!: Array<any>;
   teams: Array<any> = [];
+  fronts: string[] = [];
+  wins = 0;
+  losses = 0;
+  pointsFor = 0;
+  pointsAgainst = 0;
+  completedGames = 0;
+  avgPoints!: string;
+  avgPointsAgainst!: string;
+
+  settingUserKey = "UAK9rOvMQ854IgMQm8Do";
+  $settingSub!: Subscription;
 
   constructor(
     private gamesService: GamesService,
-    private teamsService: TeamsService
+    private teamsService: TeamsService,
+    private settingsService: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +53,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       location: new FormControl(null),
       gamePlays: new FormControl([]),
       outcome: new FormControl(null),
+      expectedFront: new FormControl(null),
     });
     this.$gamesSub = this.gamesService.getGames().subscribe((result) => {
       this.games = result;
@@ -53,12 +68,43 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         }
         return 0;
       });
+      const wins = [];
+      const losses = [];
+      this.games.map((game) => {
+        if (game.payload.doc.data().outcome === "Win") {
+          this.wins++;
+        } else if (game.payload.doc.data().outcome === "Loss") {
+          this.losses++;
+        }
+        if (game.payload.doc.data().outcome) {
+          this.completedGames++;
+          if (game.payload.doc.data().ourScore) {
+            this.pointsFor = this.pointsFor + game.payload.doc.data().ourScore;
+          }
+          if (game.payload.doc.data().opponentScore) {
+            this.pointsAgainst =
+              this.pointsAgainst + game.payload.doc.data().opponentScore;
+          }
+        }
+      });
+      this.avgPoints = (this.pointsFor / this.completedGames).toFixed(2);
+      this.avgPointsAgainst = (
+        this.pointsAgainst / this.completedGames
+      ).toFixed(2);
     });
     this.$teamsSub = this.teamsService.getTeams().subscribe((result) => {
       result.map((team) => {
         this.teams.push(team.payload.doc.data());
       });
     });
+    this.$settingSub = this.settingsService
+      .getSetting(this.settingUserKey)
+      .subscribe((setting: any) => {
+        const currentSetting: Setting = setting.payload.data();
+        if (currentSetting.fronts) {
+          this.fronts = currentSetting.fronts;
+        }
+      });
   }
 
   ngOnDestroy() {

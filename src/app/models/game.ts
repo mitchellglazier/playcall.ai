@@ -10,4 +10,5 @@ export interface Game {
   location?: string;
   gamePlays?: GamePlay[];
   outcome?: string;
+  expectedFront?: string;
 }

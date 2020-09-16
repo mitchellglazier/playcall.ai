@@ -13,6 +13,7 @@ export class SettingsService {
       playCats: setting.playCats,
       positions: setting.positions,
       formations: setting.formations,
+      fronts: setting.fronts,
     });
   }
 
