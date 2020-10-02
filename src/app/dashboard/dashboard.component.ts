@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   seasonPlays: any[] = [];
   seasonTotalYards: any;
   gameAvg: any;
+  gamePlayAvg: any;
   completedGames = 0;
   seasonAvgYards: any;
   seasonRunPlays: GamePlay[] = [];
@@ -113,6 +114,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         .map((p) => p.result * 1)
         .reduce((acc, value) => acc + value, 0);
       this.gameAvg = (this.seasonTotalYards / this.completedGames).toFixed(2);
+      this.gamePlayAvg = (
+        this.seasonPlays.length / this.completedGames
+      ).toFixed(2);
       this.seasonAvgYards = (
         this.seasonTotalYards / this.seasonPlays.length
       ).toFixed(2);
