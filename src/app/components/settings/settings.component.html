@@ -5,7 +5,11 @@
   <div fxFlex="25">
     <mat-card
       ><mat-card-header
-        ><mat-card-title>Play Categories</mat-card-title></mat-card-header
+        ><mat-card-title
+          >Play Categories ({{
+            currentSetting?.playCats?.length
+          }})</mat-card-title
+        ></mat-card-header
       ><mat-card-content>
         <form class="example-form" style="padding: 15px" [formGroup]="catForm">
           <div fxLayout="row wrap">
@@ -60,7 +64,11 @@
   <div fxFlex="25">
     <mat-card
       ><mat-card-header
-        ><mat-card-title>Offensive Positions</mat-card-title></mat-card-header
+        ><mat-card-title
+          >Offensive Positions ({{
+            currentSetting?.positions?.length
+          }})</mat-card-title
+        ></mat-card-header
       ><mat-card-content>
         <form class="example-form" style="padding: 15px" [formGroup]="posForm">
           <div fxLayout="row wrap">
@@ -115,7 +123,11 @@
   <div fxFlex="25">
     <mat-card
       ><mat-card-header
-        ><mat-card-title>Offensive Formations</mat-card-title></mat-card-header
+        ><mat-card-title
+          >Offensive Formations ({{
+            currentSetting?.formations?.length
+          }})</mat-card-title
+        ></mat-card-header
       ><mat-card-content>
         <form
           class="example-form"
@@ -172,7 +184,11 @@
   <div fxFlex="25">
     <mat-card
       ><mat-card-header
-        ><mat-card-title>Defensive Schemes</mat-card-title></mat-card-header
+        ><mat-card-title
+          >Defensive Schemes ({{
+            currentSetting?.fronts?.length
+          }})</mat-card-title
+        ></mat-card-header
       ><mat-card-content>
         <form
           class="example-form"
