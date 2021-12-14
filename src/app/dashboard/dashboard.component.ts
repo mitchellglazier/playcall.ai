@@ -100,12 +100,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.$playsSub = this.playsService.getPlays().subscribe((result) => {
       this.plays = result;
     });
-    this.$gamesSub = this.gamesService.getGames().subscribe((result) => {
-      this.games = result;
-      result.map((game: any) => {
-        game.gamePlays.map((gamePlay: GamePlay) => {
-          this.seasonPlays.push(gamePlay);
-        });
+    this.$gamesSub = this.gamesService.getGames().subscribe((games: Game[]) => {
+      this.games = games;
+      games.map((game: any) => {
+        if (game.gamePlays) {
+          game.gamePlays.map((gamePlay: GamePlay) => {
+            this.seasonPlays.push(gamePlay);
+          });
+        }
         if (game.outcome) {
           this.completedGames++;
         }
