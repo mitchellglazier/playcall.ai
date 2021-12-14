@@ -50,7 +50,8 @@ export class GameComponent implements OnInit, OnDestroy {
   totalRushYards!: number;
   passPlays: GamePlay[] = [];
   totalPassYards!: number;
-  totalYards!: number;
+  totalYards: number = 0;
+  totalProjectedPoints: number = 0;
   avgYards: number = 0;
 
   runAvg!: string;
@@ -148,6 +149,9 @@ export class GameComponent implements OnInit, OnDestroy {
         if (this.gamePlaysArray.data) {
           this.totalYards = this.gamePlaysArray.data
             .map((p) => p.result * 1)
+            .reduce((acc, value) => acc + value, 0);
+          this.totalProjectedPoints = this.gamePlaysArray.data
+            .map((p) => p.ppp * 1)
             .reduce((acc, value) => acc + value, 0);
           if (this.gamePlaysArray.data.length) {
             this.avgYards = parseFloat(
