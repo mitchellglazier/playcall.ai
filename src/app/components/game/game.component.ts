@@ -22,7 +22,16 @@ import pppArray from "assets/data/ppp.json";
 })
 export class GameComponent implements OnInit, OnDestroy {
   gamePlaysArray!: MatTableDataSource<any>;
-  displayedColumns1: string[] = ["play", "result", "yardLine", "pp", "delete"];
+  displayedColumns1: string[] = [
+    "play",
+    "result",
+    "down",
+    "distance",
+    "yardLine",
+    "pp",
+    "success",
+    "delete",
+  ];
   @ViewChild("TableTwoPaginator", { static: true })
   tableTwoPaginator!: MatPaginator;
 
@@ -108,6 +117,9 @@ export class GameComponent implements OnInit, OnDestroy {
       result: new FormControl(null, Validators.required),
       yardLine: new FormControl(null, Validators.required),
       ppp: new FormControl(null),
+      down: new FormControl(null, Validators.required),
+      distance: new FormControl(null, Validators.required),
+      success: new FormControl(null),
     });
     this.outcomeForm = new FormGroup({
       outcome: new FormControl(null, Validators.required),
@@ -334,6 +346,40 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   saveGamePlay() {
+    let down = this.gamePlayForm.value.down;
+    let distance = this.gamePlayForm.value.distance;
+    let result = this.gamePlayForm.value.result;
+    if (down === 1) {
+      if (result >= distance * 0.33) {
+        this.gamePlayForm.patchValue({
+          success: true,
+        });
+      } else {
+        this.gamePlayForm.patchValue({
+          success: false,
+        });
+      }
+    } else if (down === 2) {
+      if (result >= distance * 0.5) {
+        this.gamePlayForm.patchValue({
+          success: true,
+        });
+      } else {
+        this.gamePlayForm.patchValue({
+          success: false,
+        });
+      }
+    } else {
+      if (result >= distance) {
+        this.gamePlayForm.patchValue({
+          success: true,
+        });
+      } else {
+        this.gamePlayForm.patchValue({
+          success: false,
+        });
+      }
+    }
     let startingObj = pppArray.find(
       (x: any) => x.yardLine === this.gamePlayForm.value.yardLine
     );

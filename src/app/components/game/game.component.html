@@ -244,6 +244,24 @@
           </td>
         </ng-container>
 
+        <!-- down Column -->
+        <ng-container matColumnDef="down">
+          <th mat-header-cell *matHeaderCellDef>Down</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element?.down || "--" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- distance Column -->
+        <ng-container matColumnDef="distance">
+          <th mat-header-cell *matHeaderCellDef>Distance</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element?.distance || "--" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
         <!-- yardLine Column -->
         <ng-container matColumnDef="yardLine">
           <th mat-header-cell *matHeaderCellDef>Yard Line</th>
@@ -261,6 +279,18 @@
           </td>
           <td mat-footer-cell *matFooterCellDef>
             <b>{{ totalProjectedPoints }}</b>
+          </td>
+        </ng-container>
+
+        <!-- success Column -->
+        <ng-container matColumnDef="success">
+          <th mat-header-cell *matHeaderCellDef>Successful Play</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.success">Success</span>
+            <span *ngIf="!element.success">Fail</span>
+          </td>
+          <td mat-footer-cell *matFooterCellDef>
+            <b></b>
           </td>
         </ng-container>
 
@@ -364,14 +394,21 @@
               </mat-option>
             </div>
           </mat-form-field>
-
           <mat-form-field class="example-full-width">
-            <mat-label>Result</mat-label>
-            <input matInput formControlName="result" type="number" />
+            <mat-label>Down</mat-label>
+            <input matInput formControlName="down" type="number" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Distance</mat-label>
+            <input matInput formControlName="distance" type="number" />
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <mat-label>Yard Line</mat-label>
             <input matInput formControlName="yardLine" type="number" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Result</mat-label>
+            <input matInput formControlName="result" type="number" />
           </mat-form-field>
         </form>
         <div style="text-align: center; padding: 15px">
