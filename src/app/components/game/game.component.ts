@@ -13,6 +13,7 @@ import { SettingsService } from "app/services/settings.service";
 import { Play } from "app/models/play";
 import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from "@angular/cdk/overlay/typings/overlay-directives";
 import { TeamsService } from "app/services/teams.service";
+import { Game } from "app/models/game";
 
 @Component({
   selector: "app-game",
@@ -21,7 +22,7 @@ import { TeamsService } from "app/services/teams.service";
 })
 export class GameComponent implements OnInit, OnDestroy {
   gamePlaysArray!: MatTableDataSource<any>;
-  displayedColumns1: string[] = ["play", "result", "delete"];
+  displayedColumns1: string[] = ["play", "result", "yardLine", "pp", "delete"];
   @ViewChild("TableTwoPaginator", { static: true })
   tableTwoPaginator!: MatPaginator;
 
@@ -50,7 +51,7 @@ export class GameComponent implements OnInit, OnDestroy {
   passPlays: GamePlay[] = [];
   totalPassYards!: number;
   totalYards!: number;
-  avgYards!: string;
+  avgYards: number = 0;
 
   runAvg!: string;
   passAvg!: string;
@@ -101,8 +102,10 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.gamePlayForm = new FormGroup({
       date: new FormControl(null),
+      gameId: new FormControl(null),
       play: new FormControl(null, Validators.required),
       result: new FormControl(null, Validators.required),
+      yardLine: new FormControl(null, Validators.required),
     });
     this.outcomeForm = new FormGroup({
       outcome: new FormControl(null, Validators.required),
@@ -124,151 +127,53 @@ export class GameComponent implements OnInit, OnDestroy {
       .subscribe((profile) => {
         this.currentProfile = profile.payload.data();
       });
-    this.$gameSub = this.gamesService.getGame(this.gameId).subscribe((game) => {
-      this.game = game.payload.data();
-      if (this.game) {
-        this.gameForm.patchValue({
-          ...this.game,
-        });
-      }
-      if (this.game.outcome) {
-        this.outcomeForm.patchValue({
-          outcome: this.game.outcome,
-          opponentScore: this.game.opponentScore,
-          ourScore: this.game.ourScore,
-        });
-      }
-      this.gamePlaysArray.data = this.game.gamePlays;
-      if (this.gamePlaysArray.data) {
-        this.totalYards = this.gamePlaysArray.data
-          .map((p) => p.result * 1)
-          .reduce((acc, value) => acc + value, 0);
-        this.avgYards = (
-          this.totalYards / this.gamePlaysArray.data.length
-        ).toFixed(2);
-        this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
-          if (gamePlay.play.runPass === "Run") {
-            this.runPlays.push(gamePlay);
-          } else {
-            this.passPlays.push(gamePlay);
+    this.$gameSub = this.gamesService
+      .getGame(this.gameId)
+      .subscribe((game: Game) => {
+        this.game = game;
+        if (this.game) {
+          this.gameForm.patchValue({
+            ...this.game,
+          });
+        }
+        if (this.game.outcome) {
+          this.outcomeForm.patchValue({
+            outcome: this.game.outcome,
+            opponentScore: this.game.opponentScore,
+            ourScore: this.game.ourScore,
+          });
+        }
+        this.gamePlaysArray.data = this.game.gamePlays;
+        if (this.gamePlaysArray.data) {
+          this.totalYards = this.gamePlaysArray.data
+            .map((p) => p.result * 1)
+            .reduce((acc, value) => acc + value, 0);
+          if (this.gamePlaysArray.data.length) {
+            this.avgYards = parseFloat(
+              (this.totalYards / this.gamePlaysArray.data.length).toFixed(2)
+            );
           }
-          this.playTypeStats();
-        });
-      }
-    });
+          this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
+            if (gamePlay.play.runPass === "Run") {
+              this.runPlays.push(gamePlay);
+            } else {
+              this.passPlays.push(gamePlay);
+            }
+            this.playTypeStats();
+          });
+        }
+      });
     this.settingsSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting: any) => {
-        this.fronts = setting.payload.data().fronts;
-        this.playTypeHeaders = setting.payload.data().playCats;
-        this.playTypeHeaders.map((playType: any) => {
-          const playCat = playType.name;
-          const catPlays: any = [];
-          this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
-            if (playType.name === gamePlay.play.playCat) {
-              catPlays.push(gamePlay);
-            }
-          });
-          this.playTypesArray.push({ name: playCat, plays: catPlays });
-          if (this.playTypesArray.length) {
-            this.playTypesArray.map((pc) => {
-              const rightPlays: Array<any> = [];
-              const leftPlays: Array<any> = [];
-              pc.plays.sort((b: any, a: any) => {
-                const x = a.result;
-                const y = b.result;
-                if (x < y) {
-                  return -1;
-                }
-                if (x > y) {
-                  return 1;
-                }
-                return 0;
-              });
-              if (pc.plays.length) {
-                pc.biggestPlay = pc.plays[0];
-              }
-              pc.plays.map((play: GamePlay) => {
-                if (play.play.Direction === "Right") {
-                  rightPlays.push(play);
-                } else if (play.play.Direction === "Left") {
-                  leftPlays.push(play);
-                }
-                if (rightPlays.length) {
-                  pc.rightPlays = rightPlays.length;
-                  pc.rightYards = rightPlays
-                    .map((p: any) => p.result * 1)
-                    .reduce((acc: any, value: any) => acc + value, 0);
-                  pc.rightAvgYards = (
-                    pc.rightYards / rightPlays.length
-                  ).toFixed(2);
-                }
-                if (leftPlays.length) {
-                  pc.leftPlays = leftPlays.length;
-                  pc.leftYards = leftPlays
-                    .map((p: any) => p.result * 1)
-                    .reduce((acc: any, value: any) => acc + value, 0);
-                  pc.leftAvgYards = (pc.leftYards / leftPlays.length).toFixed(
-                    2
-                  );
-                }
-              });
-              pc.totalYards = pc.plays
-                .map((p: any) => p.result * 1)
-                .reduce((acc: any, value: any) => acc + value, 0);
-              pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
-            });
-          }
-          this.playTypesArray.sort((b, a) => {
-            const x = a.totalYards;
-            const y = b.totalYards;
-            if (x < y) {
-              return -1;
-            }
-            if (x > y) {
-              return 1;
-            }
-            return 0;
-          });
-        });
-        this.positionTypeHeaders = setting.payload.data().positions;
-        this.positionTypeHeaders.map((positionType: any) => {
-          const position = positionType.name;
-          const positionPlays: any = [];
-          this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
-            if (positionType.name === gamePlay.play.primaryPos) {
-              positionPlays.push(gamePlay);
-            }
-          });
-          this.positionTypesArray.push({
-            name: position,
-            plays: positionPlays,
-          });
-          if (this.positionTypesArray.length) {
-            this.positionTypesArray.map((pc) => {
-              pc.totalYards = pc.plays
-                .map((p: any) => p.result * 1)
-                .reduce((acc: any, value: any) => acc + value, 0);
-              pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
-            });
-          }
-          this.positionTypesArray.sort((b, a) => {
-            const x = a.totalYards;
-            const y = b.totalYards;
-            if (x < y) {
-              return -1;
-            }
-            if (x > y) {
-              return 1;
-            }
-            return 0;
-          });
-        });
+        this.fronts = setting.fronts;
+        this.playTypeHeaders = setting.playCats;
+        this.calculateCatStats();
+        this.positionTypeHeaders = setting.positions;
+        this.calculatePositionStats();
       });
-    this.$playsSub = this.playsService.getPlays().subscribe((result) => {
-      result.map((play) => {
-        this.selectPlays.push(play.payload.doc.data());
-      });
+    this.$playsSub = this.playsService.getPlays().subscribe((plays: Play[]) => {
+      this.selectPlays = plays;
       this.playsArray.data = this.selectPlays;
       if (this.playsArray.data.length) {
         this.playsArray.data.map((play) => {
@@ -304,6 +209,110 @@ export class GameComponent implements OnInit, OnDestroy {
     this.settingsSub.unsubscribe();
   }
 
+  calculateCatStats() {
+    this.playTypeHeaders.map((playType: any) => {
+      const playCat = playType.name;
+      const catPlays: any = [];
+      this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
+        if (playType.name === gamePlay.play.playCat) {
+          catPlays.push(gamePlay);
+        }
+      });
+      this.playTypesArray.push({ name: playCat, plays: catPlays });
+      if (this.playTypesArray.length) {
+        this.playTypesArray.map((pc) => {
+          const rightPlays: Array<any> = [];
+          const leftPlays: Array<any> = [];
+          pc.plays.sort((b: any, a: any) => {
+            const x = a.result;
+            const y = b.result;
+            if (x < y) {
+              return -1;
+            }
+            if (x > y) {
+              return 1;
+            }
+            return 0;
+          });
+          if (pc.plays.length) {
+            pc.biggestPlay = pc.plays[0];
+          }
+          pc.plays.map((play: GamePlay) => {
+            if (play.play.Direction === "Right") {
+              rightPlays.push(play);
+            } else if (play.play.Direction === "Left") {
+              leftPlays.push(play);
+            }
+            if (rightPlays.length) {
+              pc.rightPlays = rightPlays.length;
+              pc.rightYards = rightPlays
+                .map((p: any) => p.result * 1)
+                .reduce((acc: any, value: any) => acc + value, 0);
+              pc.rightAvgYards = (pc.rightYards / rightPlays.length).toFixed(2);
+            }
+            if (leftPlays.length) {
+              pc.leftPlays = leftPlays.length;
+              pc.leftYards = leftPlays
+                .map((p: any) => p.result * 1)
+                .reduce((acc: any, value: any) => acc + value, 0);
+              pc.leftAvgYards = (pc.leftYards / leftPlays.length).toFixed(2);
+            }
+          });
+          pc.totalYards = pc.plays
+            .map((p: any) => p.result * 1)
+            .reduce((acc: any, value: any) => acc + value, 0);
+          pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
+        });
+      }
+      this.playTypesArray.sort((b, a) => {
+        const x = a.totalYards;
+        const y = b.totalYards;
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
+    });
+  }
+
+  calculatePositionStats() {
+    this.positionTypeHeaders.map((positionType: any) => {
+      const position = positionType.name;
+      const positionPlays: any = [];
+      this.gamePlaysArray.data.map((gamePlay: GamePlay) => {
+        if (positionType.name === gamePlay.play.primaryPos) {
+          positionPlays.push(gamePlay);
+        }
+      });
+      this.positionTypesArray.push({
+        name: position,
+        plays: positionPlays,
+      });
+      if (this.positionTypesArray.length) {
+        this.positionTypesArray.map((pc) => {
+          pc.totalYards = pc.plays
+            .map((p: any) => p.result * 1)
+            .reduce((acc: any, value: any) => acc + value, 0);
+          pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
+        });
+      }
+      this.positionTypesArray.sort((b, a) => {
+        const x = a.totalYards;
+        const y = b.totalYards;
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
+    });
+  }
+
   delete(element: any) {
     this.gamePlaysArray.data = this.gamePlaysArray.data.filter(function (obj) {
       return obj.date !== element.date;
@@ -322,18 +331,16 @@ export class GameComponent implements OnInit, OnDestroy {
   saveGamePlay() {
     this.runPlays = [];
     this.passPlays = [];
+    this.positionTypesArray = [];
+    this.playTypesArray = [];
     this.gamePlayForm.patchValue({
       date: new Date(),
       play: this.selectedPlay,
+      gameId: this.gameId,
     });
     this.gamePlaysArray.data.push(this.gamePlayForm.value);
     this.gameForm.patchValue({
-      team: this.game.team,
-      date: this.game.date,
-      ourScore: this.game.ourScore,
-      opponentScore: this.game.opponentScore,
-      location: this.game.location,
-      outcome: this.game.outcome,
+      ...this.game,
       gamePlays: this.gamePlaysArray.data,
     });
     this.playsArray.data = this.selectPlays;
@@ -355,6 +362,9 @@ export class GameComponent implements OnInit, OnDestroy {
     });
     this.gamesService.updateGame(this.gameId, this.gameForm.value);
     this.gamePlayForm.reset();
+    this.calculatePositionStats();
+    this.calculateCatStats();
+    this.playTypeStats();
   }
 
   editGame() {
@@ -363,13 +373,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   saveOutcome() {
     this.gameForm.patchValue({
-      team: this.game.team,
-      date: this.game.date,
+      ...this.game,
       ourScore: this.outcomeForm.value.ourScore,
       opponentScore: this.outcomeForm.value.opponentScore,
-      location: this.game.location,
       outcome: this.outcomeForm.value.outcome,
-      gamePlays: this.game.gamePlays,
     });
     this.gamesService.updateGame(this.gameId, this.gameForm.value);
   }

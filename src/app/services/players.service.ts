@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Player } from "app/models/player";
 import { AngularFirestore } from "@angular/fire/firestore";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -15,19 +16,30 @@ export class PlayersService {
     });
   }
 
-  getPlayer(userKey: any) {
-    return this.db.collection("players").doc(userKey).snapshotChanges();
+  getPlayer(playerId: string) {
+    return this.db.collection("players").doc(playerId).snapshotChanges();
   }
 
   getPlayers() {
-    return this.db.collection("players").snapshotChanges();
+    return this.db
+      .collection("players", (ref) => ref.orderBy("graduationYear"))
+      .snapshotChanges()
+      .pipe(
+        map((res) => {
+          return res.map((p: any) => {
+            let player = p.payload.doc.data();
+            player.id = p.payload.doc.id;
+            return player as Player;
+          });
+        })
+      );
   }
 
-  updatePlayer(userKey: any, value: any) {
-    return this.db.collection("players").doc(userKey).set(value);
+  updatePlayer(playerId: any, player: Player) {
+    return this.db.collection("players").doc(playerId).set(player);
   }
 
-  deletePlayer(userKey: any) {
-    return this.db.collection("players").doc(userKey).delete();
+  deletePlayer(playerId: any) {
+    return this.db.collection("players").doc(playerId).delete();
   }
 }

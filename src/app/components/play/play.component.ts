@@ -6,6 +6,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { GamesService } from "app/services/games.service";
 import { GamePlay } from "app/models/gamePlay";
+import { Game } from "app/models/game";
 
 @Component({
   selector: "app-play",
@@ -18,8 +19,8 @@ export class PlayComponent implements OnInit, OnDestroy {
   playId: any;
   play: any;
   plays: GamePlay[] = [];
-  playYards!: number;
-  playAvg!: string;
+  playYards: number = 0;
+  playAvg: number = 0;
 
   playForm!: FormGroup;
 
@@ -53,7 +54,7 @@ export class PlayComponent implements OnInit, OnDestroy {
     this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting) => {
-        this.currentSetting = setting.payload.data();
+        this.currentSetting = setting;
         this.catArray = this.currentSetting.playCats;
         this.posArray = this.currentSetting.positions;
         this.formationsArray = this.currentSetting.formations;
@@ -70,17 +71,21 @@ export class PlayComponent implements OnInit, OnDestroy {
           Direction: this.play.Direction,
         });
         this.gamesService.getGames().subscribe((results) => {
-          results.map((game: any) => {
-            game.payload.doc.data().gamePlays.map((gamePlay: GamePlay) => {
+          results.map((game: Game) => {
+            game.gamePlays.map((gamePlay: GamePlay) => {
               if (gamePlay.play.fullPlay === this.play.fullPlay) {
                 this.plays.push(gamePlay);
               }
             });
           });
-          this.playYards = this.plays
-            .map((p) => p.result * 1)
-            .reduce((acc, value) => acc + value, 0);
-          this.playAvg = (this.playYards / this.plays.length).toFixed(2);
+          if (this.plays.length) {
+            this.playYards = this.plays
+              .map((p) => p.result * 1)
+              .reduce((acc, value) => acc + value, 0);
+            this.playAvg = parseInt(
+              (this.playYards / this.plays.length).toFixed(2)
+            );
+          }
         });
       }
     });

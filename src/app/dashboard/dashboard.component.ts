@@ -24,10 +24,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   seasonPlays: any[] = [];
   seasonTotalYards: any;
-  gameAvg: any;
-  gamePlayAvg: any;
+  gameAvg: number = 0;
+  gamePlayAvg: number = 0;
   completedGames = 0;
-  seasonAvgYards: any;
+  seasonAvgYards: number = 0;
   seasonRunPlays: GamePlay[] = [];
   seasonPassPlays: GamePlay[] = [];
 
@@ -103,27 +103,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.$gamesSub = this.gamesService.getGames().subscribe((result) => {
       this.games = result;
       result.map((game: any) => {
-        game.payload.doc.data().gamePlays.map((gamePlay: GamePlay) => {
+        game.gamePlays.map((gamePlay: GamePlay) => {
           this.seasonPlays.push(gamePlay);
         });
-        if (game.payload.doc.data().outcome) {
+        if (game.outcome) {
           this.completedGames++;
         }
       });
       this.seasonTotalYards = this.seasonPlays
         .map((p) => p.result * 1)
         .reduce((acc, value) => acc + value, 0);
-      this.gameAvg = (this.seasonTotalYards / this.completedGames).toFixed(2);
-      this.gamePlayAvg = (
-        this.seasonPlays.length / this.completedGames
-      ).toFixed(2);
-      this.seasonAvgYards = (
-        this.seasonTotalYards / this.seasonPlays.length
-      ).toFixed(2);
+      if (this.completedGames) {
+        this.gameAvg = parseFloat(
+          (this.seasonTotalYards / this.completedGames).toFixed(2)
+        );
+      }
+      if (this.seasonPlays.length) {
+        this.gamePlayAvg = parseFloat(
+          (this.seasonPlays.length / this.completedGames).toFixed(2)
+        );
+        this.seasonAvgYards = parseFloat(
+          (this.seasonTotalYards / this.seasonPlays.length).toFixed(2)
+        );
+      }
       this.$settingsSub = this.settingService
         .getSetting(this.settingUserKey)
         .subscribe((setting: any) => {
-          this.playTypeHeaders = setting.payload.data().playCats;
+          this.playTypeHeaders = setting.playCats;
           this.playTypeHeaders.map((playType: any) => {
             const playCat = playType.name;
             const catPlays: any = [];
@@ -162,24 +168,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     pc.rightYards = rightPlays
                       .map((p: any) => p.result * 1)
                       .reduce((acc: any, value: any) => acc + value, 0);
-                    pc.rightAvgYards = (
-                      pc.rightYards / rightPlays.length
-                    ).toFixed(2);
+                    pc.rightAvgYards = parseFloat(
+                      (pc.rightYards / rightPlays.length).toFixed(2)
+                    );
                   }
                   if (leftPlays.length) {
                     pc.leftPlays = leftPlays.length;
                     pc.leftYards = leftPlays
                       .map((p: any) => p.result * 1)
                       .reduce((acc: any, value: any) => acc + value, 0);
-                    pc.leftAvgYards = (pc.leftYards / leftPlays.length).toFixed(
-                      2
+                    pc.leftAvgYards = parseFloat(
+                      (pc.leftYards / leftPlays.length).toFixed(2)
                     );
                   }
                 });
                 pc.totalYards = pc.plays
                   .map((p: any) => p.result * 1)
                   .reduce((acc: any, value: any) => acc + value, 0);
-                pc.avgYards = (pc.totalYards / pc.plays.length).toFixed(2);
+                pc.avgYards = parseFloat(
+                  (pc.totalYards / pc.plays.length).toFixed(2)
+                );
               });
             }
             this.playTypesArray.sort((b, a) => {
@@ -194,7 +202,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
               return 0;
             });
           });
-          this.positionTypeHeaders = setting.payload.data().positions;
+          this.positionTypeHeaders = setting.positions;
           this.positionTypeHeaders.map((positionType: any) => {
             const position = positionType.name;
             const positionPlays: any = [];

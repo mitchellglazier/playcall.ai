@@ -46,53 +46,59 @@
     <div fxLayout="row wrap">
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card class="mat-elevation-z12"
-          ><mat-card-header>
-            <mat-card-title>Total Plays</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ gamePlaysArray?.data?.length }}</b></i
-                >
-              </p>
-            </div>
-          </mat-card-content></mat-card
+        <mat-card
+          ><div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Total Plays</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ gamePlaysArray?.data?.length }}</b></i
+                  >
+                </p>
+              </div>
+            </mat-card-content>
+          </div></mat-card
         >
       </div>
       <!-- column -->
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
-          ><mat-card-header>
-            <mat-card-title>Total Yards</mat-card-title> </mat-card-header
-          ><mat-card-content>
-            <div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ totalYards }}</b></i
-                >
-              </p>
-            </div>
-          </mat-card-content></mat-card
+          ><div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Total Yards</mat-card-title> </mat-card-header
+            ><mat-card-content>
+              <div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ totalYards }}</b></i
+                  >
+                </p>
+              </div>
+            </mat-card-content>
+          </div></mat-card
         >
       </div>
       <!-- column -->
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
-          ><mat-card-header>
-            <mat-card-title>Avg. Yards</mat-card-title> </mat-card-header
-          ><mat-card-content>
-            <div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ avgYards }}</b></i
-                >
-              </p>
-            </div>
-          </mat-card-content></mat-card
+          ><div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Avg. Yards</mat-card-title> </mat-card-header
+            ><mat-card-content>
+              <div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ avgYards }}</b></i
+                  >
+                </p>
+              </div>
+            </mat-card-content>
+          </div></mat-card
         >
       </div>
       <!-- column -->
@@ -164,54 +170,56 @@
       ></mat-paginator>
     </div>
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Game Outcome</mat-card-title>
-      </mat-card-header>
-      <form
-        class="example-form"
-        style="padding: 15px"
-        [formGroup]="outcomeForm"
-      >
-        <div fxLayout="row wrap">
-          <!-- column -->
-          <div fxFlex="30" style="margin: 5px">
-            <mat-form-field class="example-full-width">
-              <mat-label>Outcome</mat-label>
-              <mat-select formControlName="outcome">
-                <mat-option value="Win"> Win </mat-option>
-                <mat-option value="Loss"> Loss </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <!-- column -->
-          <!-- column -->
-          <div fxFlex="30" style="margin: 5px">
-            <mat-form-field class="example-full-width">
-              <mat-label>{{ currentProfile?.name }} Score</mat-label>
-              <input matInput formControlName="ourScore" type="number" />
-            </mat-form-field>
-          </div>
-          <!-- column -->
-          <!-- column -->
-          <div fxFlex="30" style="margin: 5px">
-            <mat-form-field class="example-full-width">
-              <mat-label>{{ game?.team?.name }} Score</mat-label>
-              <input matInput formControlName="opponentScore" type="number" />
-            </mat-form-field>
-          </div>
-          <!-- column -->
-        </div>
-      </form>
-      <div style="text-align: center; padding: 15px">
-        <button
-          type="button"
-          mat-raised-button
-          color="primary"
-          (click)="saveOutcome()"
-          [disabled]="outcomeForm.invalid"
+      <div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Game Outcome</mat-card-title>
+        </mat-card-header>
+        <form
+          class="example-form"
+          style="padding: 15px"
+          [formGroup]="outcomeForm"
         >
-          Save
-        </button>
+          <div fxLayout="row wrap">
+            <!-- column -->
+            <div fxFlex="30" style="margin: 5px">
+              <mat-form-field class="example-full-width">
+                <mat-label>Outcome</mat-label>
+                <mat-select formControlName="outcome">
+                  <mat-option value="Win"> Win </mat-option>
+                  <mat-option value="Loss"> Loss </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="30" style="margin: 5px">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{ currentProfile?.name }} Score</mat-label>
+                <input matInput formControlName="ourScore" type="number" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+            <!-- column -->
+            <div fxFlex="30" style="margin: 5px">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{ game?.team?.name }} Score</mat-label>
+                <input matInput formControlName="opponentScore" type="number" />
+              </mat-form-field>
+            </div>
+            <!-- column -->
+          </div>
+        </form>
+        <div style="text-align: center; padding: 15px">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="saveOutcome()"
+            [disabled]="outcomeForm.invalid"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </mat-card>
     <div style="margin: 15px">
@@ -229,6 +237,22 @@
           <mat-header-cell *matHeaderCellDef> Result </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element?.result }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- yardLine Column -->
+        <ng-container matColumnDef="yardLine">
+          <mat-header-cell *matHeaderCellDef> Yard Line </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.yardLine }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- pp Column -->
+        <ng-container matColumnDef="pp">
+          <mat-header-cell *matHeaderCellDef> Project Points </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element?.pp || "--" }}
           </mat-cell>
         </ng-container>
 
@@ -258,37 +282,43 @@
     </div>
     <div>
       <mat-card>
-        <mat-card-header
-          ><mat-card-title>Game Information</mat-card-title>
-        </mat-card-header>
-        <form class="example-form" style="padding: 15px" [formGroup]="gameForm">
-          <mat-form-field class="example-full-width">
-            <mat-label>Location</mat-label>
-            <mat-select formControlName="location">
-              <mat-option value="Home">Home</mat-option>
-              <mat-option value="Away">Away</mat-option>
-              <mat-option value="Neutral">Neutral</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="example-full-width">
-            <mat-label>Expected Front</mat-label>
-            <mat-select formControlName="expectedFront">
-              <mat-option *ngFor="let front of fronts" [value]="front.name">
-                {{ front.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </form>
-        <div style="text-align: center; padding: 15px">
-          <button
-            type="button"
-            mat-raised-button
-            color="primary"
-            (click)="editGame()"
+        <div class="mat-elevation-z8">
+          <mat-card-header
+            ><mat-card-title>Game Information</mat-card-title>
+          </mat-card-header>
+          <form
+            class="example-form"
+            style="padding: 15px"
+            [formGroup]="gameForm"
           >
-            Edit Game
-          </button>
+            <mat-form-field class="example-full-width">
+              <mat-label>Location</mat-label>
+              <mat-select formControlName="location">
+                <mat-option value="Home">Home</mat-option>
+                <mat-option value="Away">Away</mat-option>
+                <mat-option value="Neutral">Neutral</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Expected Front</mat-label>
+              <mat-select formControlName="expectedFront">
+                <mat-option *ngFor="let front of fronts" [value]="front.name">
+                  {{ front.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+          <div style="text-align: center; padding: 15px">
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              (click)="editGame()"
+            >
+              Edit Game
+            </button>
+          </div>
         </div>
       </mat-card>
     </div>
@@ -297,188 +327,201 @@
   <!-- column -->
   <div fxFlex.gt-lg="33" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Create New Game Play</mat-card-title>
-      </mat-card-header>
-      <form
-        class="example-form"
-        style="padding: 15px"
-        [formGroup]="gamePlayForm"
-      >
-        <mat-form-field class="example-full-width">
-          <input
-            matInput
-            type="string"
-            [placeholder]="placeholder"
-            (keyup)="onKeyUp($event.target.value)"
-            autocomplete="off"
-            formControlName="play"
-          />
-          <div>
-            <mat-option
-              *ngFor="let result of results"
-              (click)="selectPlay(result.payload.doc.data())"
-            >
-              <div>{{ result.payload.doc.data().fullPlay }}</div>
-            </mat-option>
-          </div>
-        </mat-form-field>
-
-        <mat-form-field class="example-full-width">
-          <mat-label>Result</mat-label>
-          <input matInput formControlName="result" type="number" />
-        </mat-form-field>
-      </form>
-      <div style="text-align: center; padding: 15px">
-        <button
-          type="button"
-          mat-raised-button
-          color="primary"
-          (click)="saveGamePlay()"
-          [disabled]="gamePlayForm.invalid"
+      <div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Create New Game Play</mat-card-title>
+        </mat-card-header>
+        <form
+          class="example-form"
+          style="padding: 15px"
+          [formGroup]="gamePlayForm"
         >
-          Save
-        </button>
+          <mat-form-field class="example-full-width">
+            <input
+              matInput
+              type="string"
+              [placeholder]="placeholder"
+              (keyup)="onKeyUp($event.target.value)"
+              autocomplete="off"
+              formControlName="play"
+            />
+            <div>
+              <mat-option
+                *ngFor="let result of results"
+                (click)="selectPlay(result)"
+              >
+                <div>{{ result.fullPlay }}</div>
+              </mat-option>
+            </div>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Result</mat-label>
+            <input matInput formControlName="result" type="number" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Yard Line</mat-label>
+            <input matInput formControlName="yardLine" type="number" />
+          </mat-form-field>
+        </form>
+        <div style="text-align: center; padding: 15px">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="saveGamePlay()"
+            [disabled]="gamePlayForm.invalid"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </mat-card>
 
     <div *ngFor="let playCat of playTypesArray">
       <mat-card *ngIf="playCat?.plays?.length">
-        <mat-card-header>
-          <mat-card-title
-            ><b>{{ playCat.name }} </b> - {{ playCat?.plays?.length }} Plays ({{
-              playCat?.plays?.length / gamePlaysArray?.data?.length | percent
-            }})</mat-card-title
-          >
-          <mat-card-subtitle
-            >Biggest Play:
-            {{ playCat?.biggestPlay?.play?.fullPlay || "--" }} ({{
-              playCat?.biggestPlay?.result
-            }}
-            Yards)</mat-card-subtitle
-          >
-        </mat-card-header>
-        <mat-card-content>
-          <div fxLayout="flex wrap" class="display-font">
-            <div fxFlex="60">
-              <p>
-                Total Yards: {{ playCat.totalYards }} Yards ({{
-                  playCat.totalYards / totalYards | percent
-                }})
-              </p>
-              <p *ngIf="playCat.rightPlays > 0">
-                Rt Yards: {{ playCat.rightYards || "0" }} Yards ({{
-                  playCat.rightPlays
-                }}
-                Plays)
-              </p>
-              <p *ngIf="playCat.leftPlays > 0">
-                Lt Yards: {{ playCat.leftYards || "0" }} Yards ({{
-                  playCat.leftPlays
-                }}
-                Plays)
-              </p>
+        <div class="mat-elevation-z8">
+          <mat-card-header>
+            <mat-card-title
+              ><b>{{ playCat.name }} </b> - {{ playCat?.plays?.length }} Plays
+              ({{
+                playCat?.plays?.length / gamePlaysArray?.data?.length | percent
+              }})</mat-card-title
+            >
+            <mat-card-subtitle
+              >Biggest Play:
+              {{ playCat?.biggestPlay?.play?.fullPlay || "--" }} ({{
+                playCat?.biggestPlay?.result
+              }}
+              Yards)</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-content>
+            <div fxLayout="flex wrap" class="display-font">
+              <div fxFlex="60">
+                <p>
+                  Total Yards: {{ playCat.totalYards }} Yards ({{
+                    playCat.totalYards / totalYards | percent
+                  }})
+                </p>
+                <p *ngIf="playCat.rightPlays > 0">
+                  Rt Yards: {{ playCat.rightYards || "0" }} Yards ({{
+                    playCat.rightPlays
+                  }}
+                  Plays)
+                </p>
+                <p *ngIf="playCat.leftPlays > 0">
+                  Lt Yards: {{ playCat.leftYards || "0" }} Yards ({{
+                    playCat.leftPlays
+                  }}
+                  Plays)
+                </p>
+              </div>
+              <div fxFlex="40">
+                <p *ngIf="playCat.avgYards">Avg: {{ playCat.avgYards }}</p>
+                <p *ngIf="playCat.rightPlays > 0">
+                  Rt Avg: {{ playCat.rightAvgYards || "0.00" }}
+                </p>
+                <p *ngIf="playCat.leftPlays > 0">
+                  Lt Avg: {{ playCat.leftAvgYards || "0.00" }}
+                </p>
+              </div>
             </div>
-            <div fxFlex="40">
-              <p *ngIf="playCat.avgYards">Avg: {{ playCat.avgYards }}</p>
-              <p *ngIf="playCat.rightPlays > 0">
-                Rt Avg: {{ playCat.rightAvgYards || "0.00" }}
-              </p>
-              <p *ngIf="playCat.leftPlays > 0">
-                Lt Avg: {{ playCat.leftAvgYards || "0.00" }}
-              </p>
-            </div>
-          </div>
-        </mat-card-content>
+          </mat-card-content>
+        </div>
       </mat-card>
     </div>
 
     <mat-card *ngIf="gamePlaysArray?.data?.length"
-      ><mat-card-header>
-        <mat-card-title
-          ><b>Rushing</b> - {{ runPlays?.length }} Plays
-          <span *ngIf="runPlays.length"
-            >({{
-              runPlays.length / gamePlaysArray?.data?.length | percent
-            }})</span
-          ></mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content>
-        <div fxFlex="60" class="display-font">
-          <p>
-            Total Yards: {{ totalRushYards || "0" }}
+      ><div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title
+            ><b>Rushing</b> - {{ runPlays?.length }} Plays
             <span *ngIf="runPlays.length"
-              >({{ totalRushYards / totalYards | percent }})</span
-            >
-          </p>
-          <p>Rt Yards: {{ rightRunYards || "0" }}</p>
-          <p>Lt Yards: {{ leftRunYards || "0" }}</p>
-        </div>
-        <div fxFlex="40" class="display-font">
-          <p>Avg: {{ runAvg || "0" }}</p>
-          <p>Rt Avg: {{ rightRunAvg || "0" }}</p>
-          <p>Lt Avg: {{ leftRunAvg || "0" }}</p>
-        </div>
-      </mat-card-content>
-      <mat-card-header>
-        <mat-card-title
-          ><b>Passing</b> - {{ passPlays?.length }} Plays
-          <span *ngIf="passPlays?.length"
-            >({{
-              passPlays.length / gamePlaysArray?.data?.length | percent
-            }})</span
-          ></mat-card-title
-        >
-      </mat-card-header>
-      <mat-card-content>
-        <div fxFlex="60" class="display-font">
-          <p>
-            Total Yards: {{ totalPassYards || "0" }}
+              >({{
+                runPlays.length / gamePlaysArray?.data?.length | percent
+              }})</span
+            ></mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <div fxFlex="60" class="display-font">
+            <p>
+              Total Yards: {{ totalRushYards || "0" }}
+              <span *ngIf="runPlays.length"
+                >({{ totalRushYards / totalYards | percent }})</span
+              >
+            </p>
+            <p>Rt Yards: {{ rightRunYards || "0" }}</p>
+            <p>Lt Yards: {{ leftRunYards || "0" }}</p>
+          </div>
+          <div fxFlex="40" class="display-font">
+            <p>Avg: {{ runAvg || "0" }}</p>
+            <p>Rt Avg: {{ rightRunAvg || "0" }}</p>
+            <p>Lt Avg: {{ leftRunAvg || "0" }}</p>
+          </div>
+        </mat-card-content>
+        <mat-card-header>
+          <mat-card-title
+            ><b>Passing</b> - {{ passPlays?.length }} Plays
             <span *ngIf="passPlays?.length"
-              >({{ totalPassYards / totalYards | percent }})</span
-            >
-          </p>
-          <p>Rt Yards: {{ rightPassYards || "0" }}</p>
-          <p>Lt Yards: {{ leftPassYards || "0" }}</p>
-        </div>
-        <div fxFlex="40" class="display-font">
-          <p>Avg: {{ passAvg || "0" }}</p>
-          <p>Rt Avg: {{ rightPassAvg || "0" }}</p>
-          <p>Lt Avg: {{ leftPassAvg || "0" }}</p>
-        </div>
-      </mat-card-content>
+              >({{
+                passPlays.length / gamePlaysArray?.data?.length | percent
+              }})</span
+            ></mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <div fxFlex="60" class="display-font">
+            <p>
+              Total Yards: {{ totalPassYards || "0" }}
+              <span *ngIf="passPlays?.length"
+                >({{ totalPassYards / totalYards | percent }})</span
+              >
+            </p>
+            <p>Rt Yards: {{ rightPassYards || "0" }}</p>
+            <p>Lt Yards: {{ leftPassYards || "0" }}</p>
+          </div>
+          <div fxFlex="40" class="display-font">
+            <p>Avg: {{ passAvg || "0" }}</p>
+            <p>Rt Avg: {{ rightPassAvg || "0" }}</p>
+            <p>Lt Avg: {{ leftPassAvg || "0" }}</p>
+          </div>
+        </mat-card-content>
+      </div>
     </mat-card>
     <mat-card *ngIf="gamePlaysArray?.data?.length">
-      <mat-card-header>
-        <mat-card-title>Primary Option Stats</mat-card-title>
-        <mat-card-subtitle>2020 Season</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div fxLayout="flex wrap">
-          <div fxFlex="50" *ngFor="let position of positionTypesArray">
-            <div *ngIf="position?.plays?.length">
-              <p>
-                <b>{{ position.name }}</b>
-              </p>
-              <p class="display-font">
-                {{ position.name }} Yards: {{ position.totalYards }} ({{
-                  position.totalYards / totalYards | percent
-                }})
-              </p>
-              <p class="display-font">
-                {{ position.name }} Plays: {{ position?.plays?.length }} ({{
-                  position?.plays?.length / gamePlaysArray?.data?.length
-                    | percent
-                }})
-              </p>
-              <p class="display-font">
-                {{ position.name }} Avg: {{ position.avgYards }}
-              </p>
+      <div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Primary Option Stats</mat-card-title>
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="flex wrap">
+            <div fxFlex="50" *ngFor="let position of positionTypesArray">
+              <div *ngIf="position?.plays?.length">
+                <p>
+                  <b>{{ position.name }}</b>
+                </p>
+                <p class="display-font">
+                  {{ position.name }} Yards: {{ position.totalYards }} ({{
+                    position.totalYards / totalYards | percent
+                  }})
+                </p>
+                <p class="display-font">
+                  {{ position.name }} Plays: {{ position?.plays?.length }} ({{
+                    position?.plays?.length / gamePlaysArray?.data?.length
+                      | percent
+                  }})
+                </p>
+                <p class="display-font">
+                  {{ position.name }} Avg: {{ position.avgYards }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-card-content>
+        </mat-card-content>
+      </div>
     </mat-card>
   </div>
   <!-- column -->

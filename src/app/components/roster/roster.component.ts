@@ -33,32 +33,23 @@ export class RosterComponent implements OnInit, OnDestroy {
       name: new FormControl(null),
       graduationYear: new FormControl(null),
     });
-    this.$playersSub = this.playersService.getPlayers().subscribe((result) => {
-      const players: any[] = [];
-      result.map((player) => {
-        const p: any = player.payload.doc.data();
-        const playerId = player.payload.doc.id;
-        const playerInfo: Player = {
-          id: playerId,
-          name: p.name,
-          graduationYear: p.graduationYear,
-        };
-        players.push(playerInfo);
-      });
-      this.players.data = players;
-      this.graduationYears = this.groupBy(players, "graduationYear");
-      this.graduationHeaders = Object.keys(this.graduationYears);
-      this.graduationHeaders.map((year: string) => {
-        const gradYear = year;
-        const yearPlayers: any = [];
-        players.map((player: Player) => {
-          if (year === player.graduationYear?.toString()) {
-            yearPlayers.push(player);
-          }
+    this.$playersSub = this.playersService
+      .getPlayers()
+      .subscribe((players: Player[]) => {
+        this.players.data = players;
+        this.graduationYears = this.groupBy(players, "graduationYear");
+        this.graduationHeaders = Object.keys(this.graduationYears);
+        this.graduationHeaders.map((year: string) => {
+          const gradYear = year;
+          const yearPlayers: any = [];
+          players.map((player: Player) => {
+            if (year === player.graduationYear?.toString()) {
+              yearPlayers.push(player);
+            }
+          });
+          this.graduationArray.push({ year: gradYear, players: yearPlayers });
         });
-        this.graduationArray.push({ year: gradYear, players: yearPlayers });
       });
-    });
     this.players.paginator = this.tableOnePaginator;
     this.players.sort = this.tableOneSort;
   }

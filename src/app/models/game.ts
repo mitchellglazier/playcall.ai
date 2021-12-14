@@ -4,11 +4,11 @@ import { GamePlay } from "../models/gamePlay";
 export interface Game {
   id?: string;
   team: Team;
-  date?: Date;
+  date: Date;
   opponentScore?: string;
   ourScore?: string;
   location?: string;
-  gamePlays?: GamePlay[];
+  gamePlays: GamePlay[];
   outcome?: string;
   expectedFront?: string;
 }

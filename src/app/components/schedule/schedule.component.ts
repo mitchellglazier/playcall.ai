@@ -5,6 +5,7 @@ import { TeamsService } from "app/services/teams.service";
 import { Subscription } from "rxjs";
 import { SettingsService } from "app/services/settings.service";
 import { Setting } from "app/models/setting";
+import { Game } from "app/models/game";
 
 @Component({
   selector: "app-schedule",
@@ -24,7 +25,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   ];
   dataSource = [];
   gameForm!: FormGroup;
-  games!: Array<any>;
+  games!: Array<Game>;
   teams: Array<any> = [];
   fronts: string[] = [];
   wins = 0;
@@ -32,8 +33,8 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   pointsFor = 0;
   pointsAgainst = 0;
   completedGames = 0;
-  avgPoints!: string;
-  avgPointsAgainst!: string;
+  avgPoints: number = 0;
+  avgPointsAgainst: number = 0;
 
   settingUserKey = "UAK9rOvMQ854IgMQm8Do";
   $settingSub!: Subscription;
@@ -55,43 +56,36 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       outcome: new FormControl(null),
       expectedFront: new FormControl(null),
     });
-    this.$gamesSub = this.gamesService.getGames().subscribe((result) => {
-      this.games = result;
-      this.games.sort((a, b) => {
-        const x = a.payload.doc.data().date.toLocaleString();
-        const y = b.payload.doc.data().date.toLocaleString();
-        if (x < y) {
-          return -1;
-        }
-        if (x > y) {
-          return 1;
-        }
-        return 0;
-      });
-      const wins = [];
-      const losses = [];
-      this.games.map((game) => {
-        if (game.payload.doc.data().outcome === "Win") {
-          this.wins++;
-        } else if (game.payload.doc.data().outcome === "Loss") {
-          this.losses++;
-        }
-        if (game.payload.doc.data().outcome) {
-          this.completedGames++;
-          if (game.payload.doc.data().ourScore) {
-            this.pointsFor = this.pointsFor + game.payload.doc.data().ourScore;
+    this.$gamesSub = this.gamesService
+      .getGames()
+      .subscribe((result: Game[]) => {
+        this.games = result;
+        this.games.map((game) => {
+          if (game.outcome === "Win") {
+            this.wins++;
+          } else if (game.outcome === "Loss") {
+            this.losses++;
           }
-          if (game.payload.doc.data().opponentScore) {
-            this.pointsAgainst =
-              this.pointsAgainst + game.payload.doc.data().opponentScore;
+          if (game.outcome) {
+            this.completedGames++;
+            if (game.ourScore) {
+              this.pointsFor = this.pointsFor + parseFloat(game.ourScore);
+            }
+            if (game.opponentScore) {
+              this.pointsAgainst =
+                this.pointsAgainst + parseFloat(game.opponentScore);
+            }
           }
+        });
+        if (this.completedGames > 0) {
+          this.avgPoints = parseFloat(
+            (this.pointsFor / this.completedGames).toFixed(2)
+          );
+          this.avgPointsAgainst = parseFloat(
+            (this.pointsAgainst / this.completedGames).toFixed(2)
+          );
         }
       });
-      this.avgPoints = (this.pointsFor / this.completedGames).toFixed(2);
-      this.avgPointsAgainst = (
-        this.pointsAgainst / this.completedGames
-      ).toFixed(2);
-    });
     this.$teamsSub = this.teamsService.getTeams().subscribe((result) => {
       result.map((team) => {
         this.teams.push(team.payload.doc.data());
@@ -99,8 +93,8 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     });
     this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
-      .subscribe((setting: any) => {
-        const currentSetting: Setting = setting.payload.data();
+      .subscribe((setting: Setting) => {
+        const currentSetting: Setting = setting;
         if (currentSetting.fronts) {
           this.fronts = currentSetting.fronts;
         }
@@ -117,7 +111,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     this.gameForm.reset();
   }
 
-  delete(element: any) {
-    this.gamesService.deleteGame(element.payload.doc.id);
+  delete(game: Game) {
+    this.gamesService.deleteGame(game.id);
   }
 }

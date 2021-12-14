@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting) => {
-        this.currentSetting = setting.payload.data();
+        this.currentSetting = setting;
         this.catArray = this.currentSetting.playCats;
         this.posArray = this.currentSetting.positions;
         this.formationsArray = this.currentSetting.formations;

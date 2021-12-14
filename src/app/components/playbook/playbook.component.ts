@@ -59,39 +59,13 @@ export class PlaybookComponent implements OnInit, OnDestroy {
       runPass: new FormControl(null),
       Direction: new FormControl(null),
     });
-    this.$playsSub = this.playsService.getPlays().subscribe((result) => {
-      result.map((play) => {
-        const playId = play.payload.doc.id;
-        const p: any = play.payload.doc.data();
-        const playInfo = {
-          id: playId,
-          name: p.name,
-          formation: p.formation,
-          playCat: p.playCat,
-          runPass: p.runPass,
-          fullPlay: p.fullPlay,
-          primaryPos: p.primaryPos,
-          Direction: p.Direction,
-        };
-        this.selectPlays.push(playInfo);
-      });
-      this.plays.data = this.selectPlays;
-      this.plays.data.sort((a, b) => {
-        const x = a.fullPlay.toLocaleString();
-        const y = b.fullPlay.toLocaleString();
-        if (x < y) {
-          return -1;
-        }
-        if (x > y) {
-          return 1;
-        }
-        return 0;
-      });
+    this.$playsSub = this.playsService.getPlays().subscribe((plays: Play[]) => {
+      this.plays.data = plays;
     });
     this.$settingSub = this.settingsService
       .getSetting(this.settingUserKey)
       .subscribe((setting) => {
-        this.currentSetting = setting.payload.data();
+        this.currentSetting = setting;
         this.catArray = this.currentSetting.playCats;
         this.posArray = this.currentSetting.positions;
         this.formationsArray = this.currentSetting.formations;

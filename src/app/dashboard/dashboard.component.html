@@ -12,259 +12,294 @@
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
-          ><mat-card-header>
-            <mat-card-title>Total Plays</mat-card-title>
-            <mat-card-subtitle>2020 Season</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ seasonPlays?.length }}</b></i
-                >
-              </p>
-            </div>
-            <div style="text-align: center">
-              <p>({{ gamePlayAvg }} Game Avg)</p>
-            </div>
-          </mat-card-content></mat-card
+          ><div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Total Plays</mat-card-title>
+              <mat-card-subtitle>2020 Season</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ seasonPlays?.length }}</b></i
+                  >
+                </p>
+              </div>
+              <div style="text-align: center">
+                <p>({{ gamePlayAvg }} Game Avg)</p>
+              </div>
+            </mat-card-content>
+          </div></mat-card
         >
       </div>
       <!-- column -->
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
-          ><mat-card-header>
-            <mat-card-title>Total Yards</mat-card-title>
-            <mat-card-subtitle>2020 Season</mat-card-subtitle> </mat-card-header
-          ><mat-card-content>
-            <div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ seasonTotalYards }}</b></i
-                >
-              </p>
-            </div>
-            <div style="text-align: center">
-              <p>({{ gameAvg }} Game Avg)</p>
-            </div>
-          </mat-card-content></mat-card
+          ><div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Total Yards</mat-card-title>
+              <mat-card-subtitle
+                >2020 Season</mat-card-subtitle
+              > </mat-card-header
+            ><mat-card-content>
+              <div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ seasonTotalYards }}</b></i
+                  >
+                </p>
+              </div>
+              <div style="text-align: center">
+                <p>({{ gameAvg }} Game Avg)</p>
+              </div>
+            </mat-card-content>
+          </div></mat-card
         >
       </div>
       <!-- column -->
       <!-- column -->
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card
-          ><mat-card-header>
-            <mat-card-title>Avg. Yards</mat-card-title>
-            <mat-card-subtitle>2020 Season</mat-card-subtitle> </mat-card-header
-          ><mat-card-content>
-            <div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ seasonAvgYards }}</b></i
-                >
-              </p>
-            </div>
-            <div style="text-align: center">
-              <p>&nbsp;</p>
-            </div>
-          </mat-card-content></mat-card
+          ><div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Avg. Yards</mat-card-title>
+              <mat-card-subtitle
+                >2020 Season</mat-card-subtitle
+              > </mat-card-header
+            ><mat-card-content>
+              <div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ seasonAvgYards }}</b></i
+                  >
+                </p>
+              </div>
+              <div style="text-align: center">
+                <p>&nbsp;</p>
+              </div>
+            </mat-card-content>
+          </div></mat-card
         >
       </div>
     </div>
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Play Type Stats</mat-card-title>
-        <mat-card-subtitle>2020 Season</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div fxLayout="flex wrap">
-          <div fxFlex="50" *ngFor="let playCat of playTypesArray">
-            <mat-card-header>
-              <mat-card-title>
-                <b>{{ playCat.name }}</b> - {{ playCat?.plays?.length }} Plays
-                ({{ playCat?.plays?.length / seasonPlays?.length | percent }})
-              </mat-card-title>
-              <mat-card-subtitle class="mat-display-1">
-                Biggest Play:
-                {{ playCat?.biggestPlay?.play?.fullPlay || "--" }}
-              </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <div fxLayout="flex wrap" class="display-font">
-                <div fxFlex="65">
-                  <p>
-                    Total Yards: {{ playCat.totalYards }} ({{
-                      playCat.totalYards / seasonTotalYards | percent
-                    }})
-                  </p>
-                  <p *ngIf="playCat.rightPlays > 0">
-                    Rt Yards: {{ playCat.rightYards || "0" }} Yards ({{
-                      playCat.rightPlays
-                    }}
-                    Plays)
-                  </p>
-                  <p *ngIf="playCat.leftPlays > 0">
-                    Lt Yards: {{ playCat.leftYards || "0" }} Yards ({{
-                      playCat.leftPlays
-                    }}
-                    Plays)
-                  </p>
+      <div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Play Type Stats</mat-card-title>
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="flex wrap">
+            <div fxFlex="50" *ngFor="let playCat of playTypesArray">
+              <mat-card-header>
+                <mat-card-title>
+                  <b>{{ playCat.name }}</b> - {{ playCat?.plays?.length }} Plays
+                  ({{ playCat?.plays?.length / seasonPlays?.length | percent }})
+                </mat-card-title>
+                <mat-card-subtitle class="mat-display-1">
+                  Biggest Play:
+                  {{ playCat?.biggestPlay?.play?.fullPlay || "--" }}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div fxLayout="flex wrap" class="display-font">
+                  <div fxFlex="65">
+                    <p>
+                      Total Yards: {{ playCat.totalYards }} ({{
+                        playCat.totalYards / seasonTotalYards | percent
+                      }})
+                    </p>
+                    <p *ngIf="playCat.rightPlays > 0">
+                      Rt Yards: {{ playCat.rightYards || "0" }} Yards ({{
+                        playCat.rightPlays
+                      }}
+                      Plays)
+                    </p>
+                    <p *ngIf="playCat.leftPlays > 0">
+                      Lt Yards: {{ playCat.leftYards || "0" }} Yards ({{
+                        playCat.leftPlays
+                      }}
+                      Plays)
+                    </p>
+                  </div>
+                  <div fxFlex="30">
+                    <p *ngIf="playCat.avgYards">Avg: {{ playCat.avgYards }}</p>
+                    <p *ngIf="playCat.rightPlays > 0">
+                      Rt Avg: {{ playCat.rightAvgYards || "0.00" }}
+                    </p>
+                    <p *ngIf="playCat.leftPlays > 0">
+                      Lt Avg: {{ playCat.leftAvgYards || "0.00" }}
+                    </p>
+                  </div>
                 </div>
-                <div fxFlex="30">
-                  <p *ngIf="playCat.avgYards">Avg: {{ playCat.avgYards }}</p>
-                  <p *ngIf="playCat.rightPlays > 0">
-                    Rt Avg: {{ playCat.rightAvgYards || "0.00" }}
-                  </p>
-                  <p *ngIf="playCat.leftPlays > 0">
-                    Lt Avg: {{ playCat.leftAvgYards || "0.00" }}
-                  </p>
-                </div>
-              </div>
-            </mat-card-content>
+              </mat-card-content>
+            </div>
           </div>
-        </div>
-      </mat-card-content>
+        </mat-card-content>
+      </div>
     </mat-card>
   </div>
   <!-- column -->
   <!-- column -->
   <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
-      <div fxFlex.gt-lg="30" fxFlex.gt-md="25" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card-header>
-          <mat-card-title
-            >Roster&nbsp;&nbsp; <br />
-            ({{ players?.length }})
-            <span
-              class="material-icons"
-              style="color: rgb(28, 125, 225); cursor: pointer"
-              [routerLink]="['/roster']"
+      <div class="mat-elevation-z8">
+        <div
+          fxFlex.gt-lg="30"
+          fxFlex.gt-md="25"
+          fxFlex.gt-xs="100"
+          fxFlex="100"
+        >
+          <mat-card-header>
+            <mat-card-title
+              >Roster&nbsp;&nbsp; <br />
+              ({{ players?.length }})
+              <span
+                class="material-icons"
+                style="color: rgb(28, 125, 225); cursor: pointer"
+                [routerLink]="['/roster']"
+              >
+                call_made
+              </span></mat-card-title
             >
-              call_made
-            </span></mat-card-title
-          >
-        </mat-card-header>
-      </div>
-      <div fxFlex.gt-lg="30" fxFlex.gt-md="35" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card-header>
-          <mat-card-title
-            >Playbook <br />
-            ({{ plays?.length }})
-            <span
-              class="material-icons"
-              style="color: rgb(28, 125, 225); cursor: pointer"
-              [routerLink]="['/playbook']"
+          </mat-card-header>
+        </div>
+        <div
+          fxFlex.gt-lg="30"
+          fxFlex.gt-md="35"
+          fxFlex.gt-xs="100"
+          fxFlex="100"
+        >
+          <mat-card-header>
+            <mat-card-title
+              >Playbook <br />
+              ({{ plays?.length }})
+              <span
+                class="material-icons"
+                style="color: rgb(28, 125, 225); cursor: pointer"
+                [routerLink]="['/playbook']"
+              >
+                call_made
+              </span></mat-card-title
             >
-              call_made
-            </span></mat-card-title
-          >
-        </mat-card-header>
-      </div>
-      <div fxFlex.gt-lg="40" fxFlex.gt-md="40" fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card-header>
-          <mat-card-title
-            >Schedule <br />
-            ({{ games?.length }})
-            <span
-              class="material-icons"
-              style="color: rgb(28, 125, 225); cursor: pointer"
-              [routerLink]="['/schedule']"
+          </mat-card-header>
+        </div>
+        <div
+          fxFlex.gt-lg="40"
+          fxFlex.gt-md="40"
+          fxFlex.gt-xs="100"
+          fxFlex="100"
+        >
+          <mat-card-header>
+            <mat-card-title
+              >Schedule <br />
+              ({{ games?.length }})
+              <span
+                class="material-icons"
+                style="color: rgb(28, 125, 225); cursor: pointer"
+                [routerLink]="['/schedule']"
+              >
+                call_made
+              </span></mat-card-title
             >
-              call_made
-            </span></mat-card-title
-          >
-        </mat-card-header>
+          </mat-card-header>
+        </div>
       </div>
     </mat-card>
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Primary Option Stats</mat-card-title>
-        <mat-card-subtitle>2020 Season</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div fxLayout="flex wrap">
-          <div fxFlex="50" *ngFor="let position of positionTypesArray">
-            <p>
-              <b>{{ position.name }}</b> - {{ position?.plays?.length }} Plays
-              ({{ position?.plays?.length / seasonPlays?.length | percent }})
-            </p>
-            <p class="display-font">
-              {{ position.name }} Yards: {{ position?.totalYards }} ({{
-                position.totalYards / seasonTotalYards | percent
-              }})
-            </p>
-            <p class="display-font">
-              {{ position.name }} Avg: {{ position.avgYards }}
-            </p>
+      <div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Primary Option Stats</mat-card-title>
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="flex wrap">
+            <div fxFlex="50" *ngFor="let position of positionTypesArray">
+              <p>
+                <b>{{ position.name }}</b> - {{ position?.plays?.length }} Plays
+                ({{ position?.plays?.length / seasonPlays?.length | percent }})
+              </p>
+              <p class="display-font">
+                {{ position.name }} Yards: {{ position?.totalYards }} ({{
+                  position.totalYards / seasonTotalYards | percent
+                }})
+              </p>
+              <p class="display-font">
+                {{ position.name }} Avg: {{ position.avgYards }}
+              </p>
+            </div>
           </div>
-        </div>
-      </mat-card-content>
+        </mat-card-content>
+      </div>
     </mat-card>
     <mat-card
-      ><mat-card-header>
-        <mat-card-title>Run Pass Stats</mat-card-title>
-        <mat-card-subtitle>2020 Season</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div fxLayout="flex wrap">
-          <div fxFlex="100">
-            <p>
-              <b>Rushing</b> - {{ seasonRunPlays?.length }} Plays
-              <span *ngIf="seasonRunPlays.length"
-                >({{
-                  seasonRunPlays?.length / seasonPlays?.length | percent
-                }})</span
-              >
-            </p>
+      ><div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Run Pass Stats</mat-card-title>
+          <mat-card-subtitle>2020 Season</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="flex wrap">
+            <div fxFlex="100">
+              <p>
+                <b>Rushing</b> - {{ seasonRunPlays?.length }} Plays
+                <span *ngIf="seasonRunPlays.length"
+                  >({{
+                    seasonRunPlays?.length / seasonPlays?.length | percent
+                  }})</span
+                >
+              </p>
+            </div>
           </div>
-        </div>
-        <div fxLayout="flex wrap" class="display-font">
-          <div fxFlex="50">
-            <p>
-              Rush Yards: {{ totalRushYards || "0" }} ({{
-                totalRushYards / seasonTotalYards | percent
-              }})
-            </p>
-            <p>Rt Rush Yards: {{ rightRunYards || "0" }}</p>
-            <p>Lt Rush Yards: {{ leftRunYards || "0" }}</p>
+          <div fxLayout="flex wrap" class="display-font">
+            <div fxFlex="50">
+              <p>
+                Rush Yards: {{ totalRushYards || "--" }}
+                <span *ngIf="seasonRunPlays.length"
+                  >({{ totalRushYards / seasonTotalYards | percent }})</span
+                >
+              </p>
+              <p>Rt Rush Yards: {{ rightRunYards || "--" }}</p>
+              <p>Lt Rush Yards: {{ leftRunYards || "--" }}</p>
+            </div>
+            <div fxFlex="50">
+              <p>Rush Avg: {{ runAvg || "--" }}</p>
+              <p>Rt Rush Avg: {{ rightRunAvg || "--" }}</p>
+              <p>Lt Rush Avg: {{ leftRunAvg || "--" }}</p>
+            </div>
           </div>
-          <div fxFlex="50">
-            <p>Rush Avg: {{ runAvg }}</p>
-            <p>Rt Rush Avg: {{ rightRunAvg }}</p>
-            <p>Lt Rush Avg: {{ leftRunAvg }}</p>
+          <div fxLayout="flex wrap">
+            <div fxFlex="100">
+              <p>
+                <b>Passing</b> - {{ seasonPassPlays?.length }} Plays
+                <span *ngIf="seasonPassPlays.length"
+                  >({{
+                    seasonPassPlays?.length / seasonPlays?.length | percent
+                  }})</span
+                >
+              </p>
+            </div>
           </div>
-        </div>
-        <div fxLayout="flex wrap">
-          <div fxFlex="100">
-            <p>
-              <b>Passing</b> - {{ seasonPassPlays?.length }} Plays
-              <span *ngIf="seasonPassPlays.length"
-                >({{
-                  seasonPassPlays?.length / seasonPlays?.length | percent
-                }})</span
-              >
-            </p>
+          <div fxLayout="flex wrap" class="display-font">
+            <div fxFlex="50">
+              <p>
+                Pass Yards: {{ totalPassYards || "--" }}
+                <span *ngIf="seasonPassPlays.length">
+                  ({{ totalPassYards / seasonTotalYards | percent }})
+                </span>
+              </p>
+              <p>Rt Pass Yards: {{ rightPassYards || "--" }}</p>
+              <p>Lt Pass Yards: {{ leftPassYards || "--" }}</p>
+            </div>
+            <div fxFlex="50">
+              <p>Pass Avg: {{ passAvg || "--" }}</p>
+              <p>Rt Pass Avg: {{ rightPassAvg || "--" }}</p>
+              <p>Lt Pass Avg: {{ leftPassAvg || "--" }}</p>
+            </div>
           </div>
-        </div>
-        <div fxLayout="flex wrap" class="display-font">
-          <div fxFlex="50">
-            <p>
-              Pass Yards: {{ totalPassYards || "0" }} ({{
-                totalPassYards / seasonTotalYards | percent
-              }})
-            </p>
-            <p>Rt Pass Yards: {{ rightPassYards || "0" }}</p>
-            <p>Lt Pass Yards: {{ leftPassYards || "0" }}</p>
-          </div>
-          <div fxFlex="50">
-            <p>Pass Avg: {{ passAvg }}</p>
-            <p>Rt Pass Avg: {{ rightPassAvg }}</p>
-            <p>Lt Pass Avg: {{ leftPassAvg }}</p>
-          </div>
-        </div>
-      </mat-card-content>
+        </mat-card-content>
+      </div>
     </mat-card>
   </div>
   <!-- column -->

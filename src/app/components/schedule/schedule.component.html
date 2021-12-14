@@ -62,7 +62,7 @@
       <ng-container matColumnDef="team">
         <mat-header-cell *matHeaderCellDef> Team </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().team?.name }}
+          {{ element.team?.name }}
         </mat-cell>
       </ng-container>
 
@@ -70,7 +70,7 @@
       <ng-container matColumnDef="date">
         <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().date.toDate() | date }}
+          {{ element.date.toDate() | date }}
         </mat-cell>
       </ng-container>
 
@@ -78,7 +78,7 @@
       <ng-container matColumnDef="outcome">
         <mat-header-cell *matHeaderCellDef> Outcome </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().outcome || "-" }}
+          {{ element.outcome || "-" }}
         </mat-cell>
       </ng-container>
 
@@ -86,8 +86,8 @@
       <ng-container matColumnDef="score">
         <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().ourScore }} -
-          {{ element.payload.doc.data().opponentScore }}
+          {{ element.ourScore }} -
+          {{ element.opponentScore }}
         </mat-cell>
       </ng-container>
 
@@ -95,7 +95,7 @@
       <ng-container matColumnDef="location">
         <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.payload.doc.data().location }}
+          {{ element.location }}
         </mat-cell>
       </ng-container>
 
@@ -117,7 +117,7 @@
       <mat-row
         *matRowDef="let row; columns: displayedColumns"
         style="cursor: pointer"
-        [routerLink]="['/game/', row.payload.doc.id]"
+        [routerLink]="['/game/', row.id]"
       ></mat-row>
     </mat-table>
   </div>
