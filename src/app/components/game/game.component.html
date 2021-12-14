@@ -290,7 +290,9 @@
             <span *ngIf="!element.success">Fail</span>
           </td>
           <td mat-footer-cell *matFooterCellDef>
-            <b></b>
+            <b>{{
+              this.successfulPlays / this.gamePlaysArray.data.length | percent
+            }}</b>
           </td>
         </ng-container>
 

@@ -5,4 +5,9 @@ export interface GamePlay {
   date?: Date;
   play: Play;
   result: number;
+  success: boolean;
+  down: number;
+  distance: number;
+  yardLine: number;
+  ppp: number;
 }
