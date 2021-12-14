@@ -8,12 +8,12 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ProfileService } from "app/services/profile.service";
-import { Subject, Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { SettingsService } from "app/services/settings.service";
 import { Play } from "app/models/play";
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from "@angular/cdk/overlay/typings/overlay-directives";
 import { TeamsService } from "app/services/teams.service";
 import { Game } from "app/models/game";
+import pppArray from "assets/data/ppp.json";
 
 @Component({
   selector: "app-game",
@@ -106,6 +106,7 @@ export class GameComponent implements OnInit, OnDestroy {
       play: new FormControl(null, Validators.required),
       result: new FormControl(null, Validators.required),
       yardLine: new FormControl(null, Validators.required),
+      ppp: new FormControl(null),
     });
     this.outcomeForm = new FormGroup({
       outcome: new FormControl(null, Validators.required),
@@ -329,6 +330,23 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   saveGamePlay() {
+    let startingObj = pppArray.find(
+      (x: any) => x.yardLine === this.gamePlayForm.value.yardLine
+    );
+
+    let endingObj = pppArray.find(
+      (x: any) =>
+        x.yardLookup ===
+        startingObj?.yardLookup + this.gamePlayForm.value.result
+    );
+    if (endingObj && startingObj) {
+      this.gamePlayForm.patchValue({
+        ppp: parseFloat(
+          (endingObj?.startingPoint - startingObj?.startingPoint).toFixed(2)
+        ),
+      });
+    }
+
     this.runPlays = [];
     this.passPlays = [];
     this.positionTypesArray = [];
