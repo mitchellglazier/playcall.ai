@@ -6,50 +6,56 @@
     <div fxLayout="row wrap">
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-          <mat-card-header>
-            <mat-card-title>Record</mat-card-title>
-          </mat-card-header>
-          <mat-card-content
-            ><div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ wins }} - {{ losses }}</b></i
-                >
-              </p>
-            </div></mat-card-content
-          >
+          <div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Record</mat-card-title>
+            </mat-card-header>
+            <mat-card-content
+              ><div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ wins }} - {{ losses }}</b></i
+                  >
+                </p>
+              </div></mat-card-content
+            >
+          </div>
         </mat-card>
       </div>
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-          <mat-card-header>
-            <mat-card-title>Points For</mat-card-title>
-          </mat-card-header>
-          <mat-card-content
-            ><div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ pointsFor }}</b> ({{ avgPoints }} avg)</i
-                >
-              </p>
-            </div></mat-card-content
-          >
+          <div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Points For</mat-card-title>
+            </mat-card-header>
+            <mat-card-content
+              ><div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ pointsFor }}</b> ({{ avgPoints }} avg)</i
+                  >
+                </p>
+              </div></mat-card-content
+            >
+          </div>
         </mat-card>
       </div>
       <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-          <mat-card-header>
-            <mat-card-title>Points Against</mat-card-title>
-          </mat-card-header>
-          <mat-card-content
-            ><div style="text-align: center; font-size: 25px">
-              <p>
-                <i
-                  ><b>{{ pointsAgainst }}</b> ({{ avgPointsAgainst }} avg)</i
-                >
-              </p>
-            </div></mat-card-content
-          >
+          <div class="mat-elevation-z8">
+            <mat-card-header>
+              <mat-card-title>Points Against</mat-card-title>
+            </mat-card-header>
+            <mat-card-content
+              ><div style="text-align: center; font-size: 25px">
+                <p>
+                  <i
+                    ><b>{{ pointsAgainst }}</b> ({{ avgPointsAgainst }} avg)</i
+                  >
+                </p>
+              </div></mat-card-content
+            >
+          </div>
         </mat-card>
       </div>
     </div>
@@ -125,56 +131,58 @@
   <!-- column -->
   <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Schedule New Game</mat-card-title>
-      </mat-card-header>
-      <form class="example-form" style="padding: 15px" [formGroup]="gameForm">
-        <mat-form-field class="example-full-width">
-          <mat-label>Team</mat-label>
-          <mat-select formControlName="team">
-            <mat-option *ngFor="let team of teams" [value]="team">
-              {{ team.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>Schedule New Game</mat-card-title>
+        </mat-card-header>
+        <form class="example-form" style="padding: 15px" [formGroup]="gameForm">
+          <mat-form-field class="example-full-width">
+            <mat-label>Team</mat-label>
+            <mat-select formControlName="team">
+              <mat-option *ngFor="let team of teams" [value]="team">
+                {{ team.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Date</mat-label>
-          <input matInput formControlName="date" [matDatepicker]="picker" />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Date</mat-label>
+            <input matInput formControlName="date" [matDatepicker]="picker" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Location</mat-label>
-          <mat-select formControlName="location">
-            <mat-option value="Home">Home</mat-option>
-            <mat-option value="Away">Away</mat-option>
-            <mat-option value="Neutral">Neutral</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="location">
+              <mat-option value="Home">Home</mat-option>
+              <mat-option value="Away">Away</mat-option>
+              <mat-option value="Neutral">Neutral</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <mat-label>Expected Front</mat-label>
-          <mat-select formControlName="expectedFront">
-            <mat-option *ngFor="let front of fronts" [value]="front.name">
-              {{ front.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </form>
-      <div style="text-align: center; padding: 15px">
-        <button
-          type="button"
-          mat-raised-button
-          color="primary"
-          (click)="save()"
-        >
-          Save
-        </button>
+          <mat-form-field class="example-full-width">
+            <mat-label>Expected Front</mat-label>
+            <mat-select formControlName="expectedFront">
+              <mat-option *ngFor="let front of fronts" [value]="front.name">
+                {{ front.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+        <div style="text-align: center; padding: 15px">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="save()"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </mat-card>
   </div>
